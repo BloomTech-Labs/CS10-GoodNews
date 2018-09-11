@@ -5,21 +5,22 @@ const Article = require('./Article');
 router
     .route('/')
     .get(get)
-    .post(postSavedArticle)
+    .put(putSavedArticle)
 
 // GET request
 function get(req, res) {
-    Article.find()
+    ArticleObj.find()
         .then(expected => {
+            // console.log(expected);
             res.status(200).json(expected);
         })
         .catch(err => {
-            res.status(500).json({ errorMessage: 'There was an error in GET' });
+            res.status(500).json(err.message);
         });
 }
 
-// POST request to User's saved_articles
-function postSavedArticle(req, res) {
+// PUT request to User's saved_articles
+function putSavedArticle(req, res) {
     const id = req.params.id;
     const { user_id } = req.headers;
     Article.findById(id)
@@ -31,7 +32,7 @@ function postSavedArticle(req, res) {
         })
     })
     .catch(err => {
-        res.status(500).json({ message: 'Unable to save the article!' })
+        res.status(500).json(err.message);
     });
 }
 

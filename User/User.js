@@ -4,7 +4,8 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 const User = mongoose.Schema({
     name: {
         first: String,
-        last: String
+        last: String,
+        username: String
     },
     email: {
         type: String,

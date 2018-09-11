@@ -13,18 +13,18 @@ router
     .get(getid)
     .delete(deleteid);
 
-// GET request
+// GET request PostmanResult=Works
 function get(req, res) {
     User.find()
         .then(expected => {
             res.status(200).json(expected);
         })
         .catch(err => {
-            res.status(500).json({ errorMessage: 'There was an error in GET' });
+            res.status(500).json(err.message);
         });
 }
 
-// POST request
+// POST request PostmanResult=Works
 function post(req, res) {
     const user = new User(req.body);
     user.save()
@@ -32,7 +32,7 @@ function post(req, res) {
             res.status(201).json(expected);
         })
         .catch(err => {
-            res.status(500).json({ message: 'There was an error in POST' });
+            res.status(500).json(err.message);
         });
 }
 
@@ -45,38 +45,38 @@ function getid(req, res) {
             res.status(200).json(expected);
         })
         .catch(err => {
-            res.status(500).json({ message: 'Error on GETID' });
+            res.status(500).json(err.message);
         });
 }
 
 // PUT request
 function put(req, res) {
     const id = req.params.id;
-    const { name, email, saved_articles, account_type } = req.body;
-    if (!User.findById(id)) {
-        res.status(404).json({ message: 'User not found' });
-    }
+    const { name, email, password, saved_articles, account_type } = req.body;
+    // if (!User.findById(id)) {
+    //     res.status(404).json({ message: 'User not found' });
+    // }
     User.findByIdAndUpdate(id, req.body)
         .then(expected => {
             res.status(201).json(expected);
         })
         .catch(err => {
-            res.status(500).json({ message: 'Error on PUT' });
+            res.status(500).json(err.message);
         });
 }
 
 // DELETE request
 function deleteid(req, res) {
     const id = req.params.id;
-    if (!User.findById(id)) {
-        res.status(404).json({ message: 'User not found' });
-    }
+    // if (!User.findById(id)) {
+    //     res.status(404).json({ message: 'User not found' });
+    // }
     User.findByIdAndRemove(id)
         .then(expected => {
             res.status(204).json(expected);
         })
         .catch(err => {
-            res.status(500).json({ message: 'Error on DEL' });
+            res.status(500).json(err.message);
         });
 }
 
