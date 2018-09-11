@@ -4,7 +4,7 @@ class Nav extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      
+
     }
   }
 
@@ -29,7 +29,7 @@ class Nav extends Component {
           <div>
             Menu
           </div>
-          <div onClick={()=>{this.props.toggleModal('signInModal')}}>
+          <div onClick={()=>{this.props.toggleModal('signIn')}}>
             Sign in
           </div>
         </div>

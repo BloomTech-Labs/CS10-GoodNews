@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Nav from './Nav/Nav';
+import SignIn from './Modals/SignIn';
+import Register from './Modals/Register';
 
 class App extends Component {
   constructor(props) {
@@ -7,20 +9,32 @@ class App extends Component {
     this.state = {
       enteredSite: false,
       loggedIn: false,
-      signInModal: false,
-      registerModal: false
+      showModal: ''
     }
   }
 
-  toggleModal = (modal) => {
-    const on = !this.state[modal];
-    this.setState({[modal]: on});
+  toggleModal = (showModal) => {
+    this.setState({ showModal });
+  }
+
+  switchModals = (modal) => {
+    switch(modal) {
+      case 'signIn':
+        return <SignIn toggleModal={this.toggleModal}/>
+      case 'register':
+        return <Register toggleModal={this.toggleModal}/>
+      // case 'settings':
+      //   return <Settings/>
+      default:
+        return null;
+    }
   }
 
   render() {
     return (
       <div className="App">
         <Nav toggleModal={this.toggleModal}/>
+        {this.switchModals(this.state.showModal)}
       </div>
     );
   }
