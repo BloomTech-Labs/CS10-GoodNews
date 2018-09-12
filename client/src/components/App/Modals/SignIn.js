@@ -53,6 +53,26 @@ class SignIn extends Component {
           <Grid columns={3} stackable divided>
             <Grid.Column
               width={7}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                alignItems: 'center'
+              }}>
+              <Header size="large" textAlign="center">CREATE AN ACCOUNT</Header>
+              <List bulleted>
+                <List.Item>Save articles (coming soon)</List.Item>
+                <List.Item>Get the weather in location (coming soon)</List.Item>
+                <List.Item>Comment on articles (coming soon)</List.Item>
+              </List>
+              <Divider/>
+              <Button primary onClick={() => this.props.toggleModal('register')}>CREATE ACCOUNT</Button>
+            </Grid.Column>
+            <Grid.Column width={2}>
+              <Divider vertical>OR</Divider>
+            </Grid.Column>
+            <Grid.Column
+              width={7}
               textAlign="center"
               style={{
                 display: 'flex',
@@ -60,7 +80,7 @@ class SignIn extends Component {
                 justifyContent: 'space-between',
                 alignItems: 'center'
               }}>
-              <Header>SIGN IN</Header>
+              <Header size="large">SIGN IN</Header>
               {/* Display message when form submission has failed */}
               {this.state.failLogin && <span style={{color:'red'}}>Username or Password is incorrect</span>}
               <Form onSubmit={this.handleSubmit}>
@@ -73,26 +93,6 @@ class SignIn extends Component {
                 <Divider/>
                 <Button type='submit' style={{border: '1px solid #BDBDBD'}}>SIGN IN</Button>
               </Form>
-            </Grid.Column>
-            <Grid.Column width={2}>
-              <Divider vertical>OR</Divider>
-            </Grid.Column>
-            <Grid.Column
-              width={7}
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                alignItems: 'center'
-              }}>
-              <Header>CREATE AN ACCOUNT</Header>
-              <List bulleted>
-                <List.Item>Save articles (coming soon)</List.Item>
-                <List.Item>Get the weather in location (coming soon)</List.Item>
-                <List.Item>Comment on articles (coming soon)</List.Item>
-              </List>
-              <Divider/>
-              <Button primary onClick={() => this.props.toggleModal('register')}>CREATE ACCOUNT</Button>
             </Grid.Column>
           </Grid>
         </Modal.Content>

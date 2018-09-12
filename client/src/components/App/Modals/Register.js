@@ -36,10 +36,10 @@ class Register extends Component {
       const name = {
         first: this.state.firstName,
         last: this.state.lastName,
-        username: this.state.username
       }
       const newUser = {
         name: name,
+        username: this.state.username,
         email: this.state.email,
         password: this.state.password
       }
@@ -69,7 +69,7 @@ class Register extends Component {
         onClose={this.close} 
         style={{ minHeight: '350px', padding: '50px', textAlign: 'center' }}>
         <Icon name="close" onClick={this.close}/>
-        <Header>CREATE AN ACCOUNT</Header>
+        <Header size="large">CREATE AN ACCOUNT</Header>
         <Modal.Content>
           {/* Display message when form submission has failed */}
           {this.state.failRegister && <span style={{color:'red'}}>Unable to create account</span>}
