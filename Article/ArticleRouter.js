@@ -1,11 +1,12 @@
 const router = require('express').Router();
 const Article = require('./Article');
 const User = require('../User/User');
+const { isLoggedIn } = require('../middleware');
 
 // Router to /api/article endpoint
 router.route('/').get(get).post(post);
 router.route('/:id').get(getID);
-router.route('/:article_id/:type').put(putSavedArticle);
+router.route('/:article_id/:type').put(isLoggedIn, putSavedArticle);
 
 // GET request for all articles
 function get(req, res) {
