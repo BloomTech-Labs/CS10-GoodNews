@@ -31,7 +31,7 @@ const User = mongoose.Schema({
     }
 })
 
-UserSchema.pre('save', function(next) {
+User.pre('save', function(next) {
     let user = this;
     bcrypt.hash(user.password, process.env.SALT_ROUNDS, (err, hashed) => {
         if(err) throw new Error(err);
@@ -41,7 +41,7 @@ UserSchema.pre('save', function(next) {
     })
 });
   
-UserSchema.methods.checkPassword = (user, potentialPassword) => {
+User.methods.checkPassword = (user, potentialPassword) => {
     return new Promise((resolve, reject) => {
         return bcrypt.compare(potentialPassword, user.password)
         .then((isMatch) => {
