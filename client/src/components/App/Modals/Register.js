@@ -1,6 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
-import { Modal, Header, Form, Button, Divider } from 'semantic-ui-react';
+import { Modal, Header, Form, Button, Divider, Icon } from 'semantic-ui-react';
 
 class Register extends Component {
   constructor(props) {
@@ -11,6 +11,7 @@ class Register extends Component {
       username: '',
       password: '',
       verifyPassword: '',
+      // location: '',
       hovering: 'none'
     }
   }
@@ -31,13 +32,13 @@ class Register extends Component {
   render() { 
     return (
       <Modal 
-        open={true} 
-        size='large' 
+        open={true}
         onClose={this.close} 
-        style={{ minHeight: '350px', padding: '50px', textAlign:'center' }}>
-        <Header>CREATE A NEW ACCOUNT</Header>
-        <Modal.Content textAlign='center'>
-          <Form>
+        style={{ minHeight: '350px', padding: '50px', textAlign: 'center' }}>
+        <Icon name="close" onClick={this.close}/>
+        <Header>CREATE AN ACCOUNT</Header>
+        <Modal.Content>
+          <Form autoComplete="on">
             <Form.Field required>
               <input onChange={this.handleInput} placeholder="Name" name="name" value={this.state.name}/>
             </Form.Field>
@@ -53,6 +54,9 @@ class Register extends Component {
             <Form.Field required>
               <input onChange={this.handleInput} placeholder="Verify Password" type="password" name="verifyPassword" value={this.state.verifyPassword}/>
             </Form.Field>
+            {/* <Form.Field>
+              <input onChange={this.handleInput} placeholder="City, State" name="location" value={this.state.location}/>
+            </Form.Field> */}
             <Button type='submit' primary>CREATE ACCOUNT</Button>
           </Form>
           <Divider/>
