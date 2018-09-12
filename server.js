@@ -1,12 +1,11 @@
 require('dotenv').config();
 const express = require('express');
+const server = express();
 const helmet = require('helmet');
 const cors = require('cors');
 
 const UserRouter = require('./User/UserRouter');
 const ArticleRouter = require('./Article/ArticleRouter');
-
-const server = express();
 
 const authMiddleware = (req, res, next) => {
 	// TODO: Implement Authentication and Authorization
@@ -16,7 +15,12 @@ const authMiddleware = (req, res, next) => {
 	next();
 };
 
-server.use(cors());
+const corsOptions = {
+	origin: '*',
+	credentials: true
+  };
+
+server.use(cors(corsOptions));
 server.use(helmet());
 server.use(express.json());
 server.use(express.static('./client/build/'));
