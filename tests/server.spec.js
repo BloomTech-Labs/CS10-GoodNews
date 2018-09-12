@@ -24,13 +24,15 @@ describe('server', () => {
         const response = await request(server).get('/api/user');
         expect(response.status).toBe(200);
     });
-    test('User - test 2: GET should return 200', async () => {
-        const newUserEmail = 'johnsmith@gmail.com'
-        const mockUser = { email: 'johnsmith@gmail.com', password: '123' };
+    test('User - test 2: POST should return 201', async () => {
+        const newUserEmail = 'sammy@gmail.com';
+        const newUsername = 'sammy';
+        const mockUser = { username: 'sammy', email: 'sammy@gmail.com', password: '123' };
         const newUser = await User.create(mockUser);
-        const response = await request(server).get('/api/user').send(newUser);
-        expect(response.status).toBe(200);
+        const response = await request(server).post('/api/user/register').send(newUser);
+        expect(response.status).toBe(201);
         expect(newUser.email).toBe(newUserEmail);
+        expect(newUser.username).toBe(newUsername);
         await mongoose.connection.db.dropCollection('users');
     });
     test('User - test 3: GET should return 200', async () => {
