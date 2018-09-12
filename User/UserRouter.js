@@ -13,7 +13,7 @@ router
     .get(getid)
     .delete(deleteid);
 
-// GET request PostmanResult=Works
+// GET request for all users
 function get(req, res) {
     User.find()
         .then(expected => {
@@ -24,7 +24,7 @@ function get(req, res) {
         });
 }
 
-// POST request PostmanResult=Works
+// POST request to create a new user
 function post(req, res) {
     const user = new User(req.body);
     user.save()
@@ -36,11 +36,11 @@ function post(req, res) {
         });
 }
 
-// GET specific User by its id
+// GET specific user by its id
 function getid(req, res) {
     const id = req.params.id;
     User.findById(id)
-        .populate('Article')
+        .populate('saved_articles')
         .then(expected => {
             res.status(200).json(expected);
         })
