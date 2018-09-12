@@ -26,13 +26,15 @@ function getAll(req, res) {
 
 // POST request to create a new user
 function postRegister(req, res) {
-    const { username, password } = req.body;
-    const newUser = { username, password };
+    const { name, username, password, email }  = req.body;
+    console.log(`name from req body ${name}`);
+    const reqUser = { name, username, email, password };
+    console.log(`reqUser object - ${reqUser}`);
     if (!username || !password) {
         res.status(422).json({ error: 'Username and Password required' });
     } else {
-        const user = new User(newUser);
-        user.save().then((savedUser) => {
+        const newUser = new User(reqUser);
+        newUser.save().then((savedUser) => {
             let userInfo = {
             _id: savedUser._id,
             username: savedUser.username,
@@ -42,7 +44,7 @@ function postRegister(req, res) {
               token,
               user: userInfo,
           };
-            res.status(200).json(userObj);
+            res.status(201).json(userObj);
         })
         .catch((err) => res.status(500).json({message: err.message}));
     }
