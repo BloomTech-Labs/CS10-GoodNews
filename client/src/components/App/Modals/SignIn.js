@@ -1,5 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
+import axios from 'axios';
 import { Modal, Grid, Header, Form, Button, Divider, List, Icon } from 'semantic-ui-react';
 
 class SignIn extends Component {
@@ -8,18 +9,36 @@ class SignIn extends Component {
     this.state = {
       username: '',
       password: '',
-      hovering: 'none'
+      failLogin: false
     }
   }
 
   handleInput = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({ 
+      [e.target.name]: e.target.value,
+      failLogin: false
+    });
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
-    // make a post request with username and password, save token in local storage
-    console.log("submitted")
+    this.setState({ failPassword: false });
+    const user = {
+      username: this.state.username,
+      password: this.state.password
+    }
+    this.loginUser(user);
+  }
+
+  loginUser = (user) => {
+    axios.post(`http://localhost:5000/api/user/login`, user)
+      .then( user => {
+        localStorage.setItem("auth-token", user.data.token);
+        this.close();
+      })
+      .catch( err => {
+        this.setState({ failLogin: true })
+      })
   }
 
   close = () => {
@@ -42,6 +61,8 @@ class SignIn extends Component {
                 alignItems: 'center'
               }}>
               <Header>SIGN IN</Header>
+              {/* Display message when form submission has failed */}
+              {this.state.failLogin && <span style={{color:'red'}}>Username or Password is incorrect</span>}
               <Form onSubmit={this.handleSubmit}>
                 <Form.Field required>
                   <input onChange={this.handleInput} placeholder="Username" name="username" value={this.state.username}/>
