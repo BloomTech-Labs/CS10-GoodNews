@@ -74,8 +74,11 @@ class Register extends Component {
           {/* Display message when form submission has failed */}
           {this.state.failRegister && <span style={{color:'red'}}>Unable to create account</span>}
           <Form onSubmit={this.handleSubmit}>
+          <Form.Field required>
+              <input onChange={this.handleInput} placeholder="First Name" name="firstName" value={this.state.firstName}/>
+            </Form.Field>
             <Form.Field required>
-              <input onChange={this.handleInput} placeholder="Name" name="name" value={this.state.name}/>
+              <input onChange={this.handleInput} placeholder="Last Name" name="lastName" value={this.state.lastName}/>
             </Form.Field>
             <Form.Field required>
               <input onChange={this.handleInput} placeholder="Email" type="email" name="email" value={this.state.email}/>
