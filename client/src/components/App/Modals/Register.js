@@ -1,6 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
-import { Modal, Header, Form, Button } from 'semantic-ui-react';
+import { Modal, Header, Form, Button, Divider, Icon } from 'semantic-ui-react';
 
 class Register extends Component {
   constructor(props) {
@@ -11,8 +11,18 @@ class Register extends Component {
       username: '',
       password: '',
       verifyPassword: '',
+      // location: '',
       hovering: 'none'
     }
+  }
+
+  handleInput = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    // make a post request with new user info, save token in local storage
   }
 
   close = () => {
@@ -21,27 +31,35 @@ class Register extends Component {
 
   render() { 
     return (
-      <Modal open={true} onClose={this.close}>
-        <Header>CREATE A NEW ACCOUNT</Header>
+      <Modal 
+        open={true}
+        onClose={this.close} 
+        style={{ minHeight: '350px', padding: '50px', textAlign: 'center' }}>
+        <Icon name="close" onClick={this.close}/>
+        <Header>CREATE AN ACCOUNT</Header>
         <Modal.Content>
-          <Form>
+          <Form autoComplete="on">
             <Form.Field required>
-              <input placeholder="Name" name="name" value={this.state.name}/>
+              <input onChange={this.handleInput} placeholder="Name" name="name" value={this.state.name}/>
             </Form.Field>
             <Form.Field required>
-              <input placeholder="Email" type="email" name="email" value={this.state.email}/>
+              <input onChange={this.handleInput} placeholder="Email" type="email" name="email" value={this.state.email}/>
             </Form.Field>
             <Form.Field required>
-              <input placeholder="Username" name="username" value={this.state.username}/>
+              <input onChange={this.handleInput} placeholder="Username" name="username" value={this.state.username}/>
             </Form.Field>
             <Form.Field required>
-              <input placeholder="Password" type="password" name="password" value={this.state.password}/>
+              <input onChange={this.handleInput} placeholder="Password" type="password" name="password" value={this.state.password}/>
             </Form.Field>
             <Form.Field required>
-              <input placeholder="Verify Password" type="password" name="verifyPassword" value={this.state.verifyPassword}/>
+              <input onChange={this.handleInput} placeholder="Verify Password" type="password" name="verifyPassword" value={this.state.verifyPassword}/>
             </Form.Field>
-            <Button type='submit'>CREATE ACCOUNT</Button>
+            {/* <Form.Field>
+              <input onChange={this.handleInput} placeholder="City, State" name="location" value={this.state.location}/>
+            </Form.Field> */}
+            <Button type='submit' primary>CREATE ACCOUNT</Button>
           </Form>
+          <Divider/>
           <span 
             onClick={() => this.props.toggleModal('signIn')}
             onMouseEnter={() => this.setState({ hovering: 'underline' })}
