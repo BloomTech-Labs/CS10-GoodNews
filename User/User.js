@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Schema.Types.ObjectId;
 const bcrypt = require('bcrypt');
+const SALT = parseInt(process.env.SALT_ROUNDS, 10);
 
 const User = mongoose.Schema({
     name: {
@@ -33,7 +34,7 @@ const User = mongoose.Schema({
 
 User.pre('save', function(next) {
     let user = this;
-    bcrypt.hash(user.password, 11, (err, hashed) => {
+    bcrypt.hash(user.password, SALT, (err, hashed) => {
         if(err) throw new Error(err);
 
         user.password = hashed;
