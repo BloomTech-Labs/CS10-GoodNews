@@ -34,6 +34,7 @@ class SignIn extends Component {
     axios.post(`http://localhost:5000/api/user/login`, user)
       .then( user => {
         localStorage.setItem("auth-token", user.data.token);
+        localStorage.setItem("userid", user.data.userid);
         this.close();
       })
       .catch( err => {
@@ -47,10 +48,36 @@ class SignIn extends Component {
 
   render() { 
     return (
-      <Modal open={true} onClose={this.close} style={{minHeight: '350px', padding: '50px'}}>
+      <Modal 
+        open={true} 
+        onClose={this.close} 
+        style={{minHeight: '350px', padding: '2em'}}>
         <Icon name="close" onClick={this.close}/>
         <Modal.Content> 
           <Grid columns={3} stackable divided>
+            <Grid.Column
+              only='tablet computer'
+              width={7}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                alignItems: 'center'
+              }}>
+              <Header size="large" textAlign="center">CREATE AN ACCOUNT</Header>
+              <List bulleted>
+                <List.Item>Save articles (coming soon)</List.Item>
+                <List.Item>Get the weather in location (coming soon)</List.Item>
+                <List.Item>Comment on articles (coming soon)</List.Item>
+              </List>
+              <Divider/>
+              <Button primary onClick={() => this.props.toggleModal('register')}>
+                CREATE ACCOUNT
+              </Button>
+            </Grid.Column>
+            <Grid.Column width={2} only='tablet computer'>
+              <Divider vertical>OR</Divider>
+            </Grid.Column>
             <Grid.Column
               width={7}
               textAlign="center"
@@ -60,7 +87,7 @@ class SignIn extends Component {
                 justifyContent: 'space-between',
                 alignItems: 'center'
               }}>
-              <Header>SIGN IN</Header>
+              <Header size="large">SIGN IN</Header>
               {/* Display message when form submission has failed */}
               {this.state.failLogin && <span style={{color:'red'}}>Username or Password is incorrect</span>}
               <Form onSubmit={this.handleSubmit}>
@@ -74,26 +101,9 @@ class SignIn extends Component {
                 <Button type='submit' style={{border: '1px solid #BDBDBD'}}>SIGN IN</Button>
               </Form>
             </Grid.Column>
-            <Grid.Column width={2}>
-              <Divider vertical>OR</Divider>
-            </Grid.Column>
-            <Grid.Column
-              width={7}
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                alignItems: 'center'
-              }}>
-              <Header>CREATE AN ACCOUNT</Header>
-              <List bulleted>
-                <List.Item>Save articles (coming soon)</List.Item>
-                <List.Item>Get the weather in location (coming soon)</List.Item>
-                <List.Item>Comment on articles (coming soon)</List.Item>
-              </List>
-              <Divider/>
-              <Button primary onClick={() => this.props.toggleModal('register')}>CREATE ACCOUNT</Button>
-            </Grid.Column>
+            <Grid.Row only="mobile" centered onClick={() => this.props.toggleModal('register')}>
+              Sign up
+            </Grid.Row>
           </Grid>
         </Modal.Content>
       </Modal>

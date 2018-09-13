@@ -36,10 +36,10 @@ class Register extends Component {
       const name = {
         first: this.state.firstName,
         last: this.state.lastName,
-        username: this.state.username
       }
       const newUser = {
         name: name,
+        username: this.state.username,
         email: this.state.email,
         password: this.state.password
       }
@@ -51,6 +51,7 @@ class Register extends Component {
     axios.post(`http://localhost:5000/api/user/register`, user)
       .then( user => {
         localStorage.setItem("auth-token", user.data.token);
+        localStorage.setItem("userid", user.data.userid);
         this.close();
       })
       .catch( err => {
@@ -67,15 +68,18 @@ class Register extends Component {
       <Modal 
         open={true}
         onClose={this.close} 
-        style={{ minHeight: '350px', padding: '50px', textAlign: 'center' }}>
+        style={{ minHeight: '350px', padding: '2em', textAlign: 'center' }}>
         <Icon name="close" onClick={this.close}/>
-        <Header>CREATE AN ACCOUNT</Header>
+        <Header size="large">CREATE AN ACCOUNT</Header>
         <Modal.Content>
           {/* Display message when form submission has failed */}
           {this.state.failRegister && <span style={{color:'red'}}>Unable to create account</span>}
           <Form onSubmit={this.handleSubmit}>
+          <Form.Field required>
+              <input onChange={this.handleInput} placeholder="First Name" name="firstName" value={this.state.firstName}/>
+            </Form.Field>
             <Form.Field required>
-              <input onChange={this.handleInput} placeholder="Name" name="name" value={this.state.name}/>
+              <input onChange={this.handleInput} placeholder="Last Name" name="lastName" value={this.state.lastName}/>
             </Form.Field>
             <Form.Field required>
               <input onChange={this.handleInput} placeholder="Email" type="email" name="email" value={this.state.email}/>
