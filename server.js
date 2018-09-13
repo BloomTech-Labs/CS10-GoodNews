@@ -18,7 +18,7 @@ const authMiddleware = (req, res, next) => {
 const corsOptions = {
 	origin: '*',
 	credentials: true
-  };
+};
 
 server.use(cors(corsOptions));
 server.use(helmet());
