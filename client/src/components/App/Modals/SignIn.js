@@ -35,6 +35,7 @@ class SignIn extends Component {
       .then( user => {
         localStorage.setItem("auth-token", user.data.token);
         localStorage.setItem("userid", user.data.userid);
+        this.props.login();
         this.close();
       })
       .catch( err => {

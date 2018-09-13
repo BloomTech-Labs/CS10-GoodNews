@@ -43,6 +43,7 @@ class Register extends Component {
         email: this.state.email,
         password: this.state.password
       }
+      console.log(newUser);
       this.createUser(newUser);
     }
   }
@@ -52,10 +53,12 @@ class Register extends Component {
       .then( user => {
         localStorage.setItem("auth-token", user.data.token);
         localStorage.setItem("userid", user.data.userid);
+        this.props.login();
         this.close();
       })
       .catch( err => {
         this.setState({ failRegister: true })
+        console.log(err.message);
       })
   }
 
@@ -82,10 +85,10 @@ class Register extends Component {
               <input onChange={this.handleInput} placeholder="Last Name" name="lastName" value={this.state.lastName}/>
             </Form.Field>
             <Form.Field required>
-              <input onChange={this.handleInput} placeholder="Email" type="email" name="email" value={this.state.email}/>
+              <input onChange={this.handleInput} placeholder="Username" name="username" value={this.state.username}/>
             </Form.Field>
             <Form.Field required>
-              <input onChange={this.handleInput} placeholder="Username" name="username" value={this.state.username}/>
+              <input onChange={this.handleInput} placeholder="Email" type="email" name="email" value={this.state.email}/>
             </Form.Field>
             <Form.Field required>
               {/* Display message when passwords do not match */}
