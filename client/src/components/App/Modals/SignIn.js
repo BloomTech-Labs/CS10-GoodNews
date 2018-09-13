@@ -101,9 +101,9 @@ class SignIn extends Component {
                 <Button type='submit' style={{border: '1px solid #BDBDBD'}}>SIGN IN</Button>
               </Form>
             </Grid.Column>
-            <Grid.Column only="mobile" textAlign="center" onClick={() => this.props.toggleModal('register')}>
+            <Grid.Row only="mobile" centered onClick={() => this.props.toggleModal('register')}>
               Sign up
-            </Grid.Column>
+            </Grid.Row>
           </Grid>
         </Modal.Content>
       </Modal>
