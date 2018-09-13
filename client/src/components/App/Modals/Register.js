@@ -51,6 +51,7 @@ class Register extends Component {
     axios.post(`http://localhost:5000/api/user/register`, user)
       .then( user => {
         localStorage.setItem("auth-token", user.data.token);
+        localStorage.setItem("userid", user.data.userid);
         this.close();
       })
       .catch( err => {
@@ -67,7 +68,7 @@ class Register extends Component {
       <Modal 
         open={true}
         onClose={this.close} 
-        style={{ minHeight: '350px', padding: '50px', textAlign: 'center' }}>
+        style={{ minHeight: '350px', padding: '2em', textAlign: 'center' }}>
         <Icon name="close" onClick={this.close}/>
         <Header size="large">CREATE AN ACCOUNT</Header>
         <Modal.Content>

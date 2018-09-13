@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Nav from './Nav/Nav';
 import SignIn from './Modals/SignIn';
 import Register from './Modals/Register';
+import NewsFeed from './NewsFeed/NewsFeed';
 
 class App extends Component {
   constructor(props) {
@@ -34,6 +35,7 @@ class App extends Component {
     return (
       <div className="App">
         <Nav toggleModal={this.toggleModal}/>
+        <NewsFeed/>
         {this.switchModals(this.state.showModal)}
       </div>
     );

@@ -34,6 +34,7 @@ class SignIn extends Component {
     axios.post(`http://localhost:5000/api/user/login`, user)
       .then( user => {
         localStorage.setItem("auth-token", user.data.token);
+        localStorage.setItem("userid", user.data.userid);
         this.close();
       })
       .catch( err => {
@@ -47,11 +48,15 @@ class SignIn extends Component {
 
   render() { 
     return (
-      <Modal open={true} onClose={this.close} style={{minHeight: '350px', padding: '50px'}}>
+      <Modal 
+        open={true} 
+        onClose={this.close} 
+        style={{minHeight: '350px', padding: '2em'}}>
         <Icon name="close" onClick={this.close}/>
         <Modal.Content> 
           <Grid columns={3} stackable divided>
             <Grid.Column
+              only='tablet computer'
               width={7}
               style={{
                 display: 'flex',
@@ -66,9 +71,11 @@ class SignIn extends Component {
                 <List.Item>Comment on articles (coming soon)</List.Item>
               </List>
               <Divider/>
-              <Button primary onClick={() => this.props.toggleModal('register')}>CREATE ACCOUNT</Button>
+              <Button primary onClick={() => this.props.toggleModal('register')}>
+                CREATE ACCOUNT
+              </Button>
             </Grid.Column>
-            <Grid.Column width={2}>
+            <Grid.Column width={2} only='tablet computer'>
               <Divider vertical>OR</Divider>
             </Grid.Column>
             <Grid.Column
@@ -93,6 +100,9 @@ class SignIn extends Component {
                 <Divider/>
                 <Button type='submit' style={{border: '1px solid #BDBDBD'}}>SIGN IN</Button>
               </Form>
+            </Grid.Column>
+            <Grid.Column only="mobile" textAlign="center" onClick={() => this.props.toggleModal('register')}>
+              Sign up
             </Grid.Column>
           </Grid>
         </Modal.Content>
