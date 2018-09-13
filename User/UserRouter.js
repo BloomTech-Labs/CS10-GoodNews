@@ -1,19 +1,20 @@
 const router = require('express').Router();
 const User = require('./User');
-const { newToken, isLoggedIn } = require('../middleware/');
+const { newToken, isLoggedIn } = require('../controllers/auth');
 
 // Router to /api/user endpoint
 router.route('/').get(isLoggedIn, getAll);
 router.route('/register').post(postRegister);
 router.route('/login').post(postLoginUser);
 
+// Routes to /api/user/userid endpoint
 router
-    .route('/:id')
-    .put(isLoggedIn, put)
+    .route('/logged')
     .get(isLoggedIn, getById)
+    .put(isLoggedIn, put)
     .delete(isLoggedIn, deleteById);
 
-// GET request for all users
+// GET request to get all users
 function getAll(req, res) {
     User.find()
         .then(expected => {
@@ -26,14 +27,13 @@ function getAll(req, res) {
 
 // POST request to create a new user
 function postRegister(req, res) {
-    const { name, username, password, email }  = req.body;
-    console.log(`name from req body ${name}`);
+    const { name, username, email, password }  = req.body;
     const reqUser = { name, username, email, password };
-    console.log(`reqUser object - ${reqUser}`);
     if (!username || !password) {
         res.status(422).json({ error: 'Username and Password required' });
     } else {
         const newUser = new User(reqUser);
+        console.log(`newUser ${newUser}`);
         newUser.save().then((savedUser) => {
             let userInfo = {
             _id: savedUser._id,
@@ -93,7 +93,8 @@ function postLoginUser(req, res) {
 
 // GET specific user by its id
 function getById(req, res) {
-    const userid = req.params.userid;
+    // const userid = req.params.userid;
+    const userid = req.headers.userid;
     User.findById(userid)
         .populate('saved_articles')
         .then(expected => {
@@ -106,12 +107,13 @@ function getById(req, res) {
 
 // PUT request
 function put(req, res) {
-    const id = req.params.id;
-    const { name, email, password, saved_articles, account_type } = req.body;
+    const userid = req.headers.userid;
+    const { name, username, email, password, saved_articles, account_type } = req.body;
+    console.log(req.body);
     // if (!User.findById(id)) {
     //     res.status(404).json({ message: 'User not found' });
     // }
-    User.findByIdAndUpdate(id, req.body)
+    User.findByIdAndUpdate(userid, { name, email, username, password, saved_articles, account_type })
         .then(expected => {
             res.status(201).json(expected);
         })
@@ -122,11 +124,11 @@ function put(req, res) {
 
 // DELETE request
 function deleteById(req, res) {
-    const id = req.params.id;
+    const userid = req.headers.userid;
     // if (!User.findById(id)) {
     //     res.status(404).json({ message: 'User not found' });
     // }
-    User.findByIdAndRemove(id)
+    User.findByIdAndRemove(userid)
         .then(expected => {
             res.status(204).json(expected);
         })
