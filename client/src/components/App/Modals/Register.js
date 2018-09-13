@@ -14,7 +14,6 @@ class Register extends Component {
       password: '',
       verifyPassword: '',
       // location: '',
-      hovering: 'none',
       failPassword: false,
       failRegister: false,
     }
@@ -103,14 +102,9 @@ class Register extends Component {
             </Form.Field> */}
             <Button type='submit' primary>CREATE ACCOUNT</Button>
           </Form>
-          <Divider/>
           <span 
             onClick={() => this.props.toggleModal('signIn')}
-            onMouseEnter={() => this.setState({ hovering: 'underline' })}
-            onMouseLeave={() => this.setState({ hovering: 'none' })}
-            style={{
-              textDecoration: this.state.hovering
-            }}>
+            className="login-register-button">
             Sign in
           </span>
         </Modal.Content>

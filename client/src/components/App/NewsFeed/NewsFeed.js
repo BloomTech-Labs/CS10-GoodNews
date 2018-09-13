@@ -30,6 +30,9 @@ class NewsFeed extends Component {
       <Container text style={{ 
           minHeight: '100vh',
           padding: '100px 1em',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center'
         }}>
         {this.state.articles.map( article => {
           return <Article key={article._id} article={article}/>
