@@ -46,7 +46,7 @@ function postRegister(req, res) {
           };
             res.status(201).json(userObj);
         })
-        .catch((err) => res.status(500).json({message: err.message}));
+        .catch((err) => res.send({message: err.message}));
     }
 }
 // function postRegister(req, res) {

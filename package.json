@@ -8,9 +8,9 @@
     "node": "8.11.3"
   },
   "scripts": {
-    "build": "cd client && npm run build && cd ..",
     "start": "node index.js",
     "start-dev": "nodemon index.js",
+    "heroku-postbuild": "cd client && npm install && npm run build && cd ..",
     "test": "jest"
   },
   "repository": {
