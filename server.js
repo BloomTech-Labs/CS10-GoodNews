@@ -23,10 +23,12 @@ const corsOptions = {
 server.use(cors(corsOptions));
 server.use(helmet());
 server.use(express.json());
-server.use(express.static('./client/build/'));
 
 // User and Article API Routes
 server.use('/api/article', authMiddleware, ArticleRouter);
 server.use('/api/user', authMiddleware, UserRouter);
+
+// For serving static files to root endpoint
+server.use(express.static('./client/build/'));
 
 module.exports = server;
