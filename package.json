@@ -1,12 +1,16 @@
 {
-  "name": "CS10-GoodNews",
+  "name": "labs7-goodnews",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "private": true,
+  "engines": {
+    "node": "8.11.3"
+  },
   "scripts": {
     "build": "cd client && npm run build && cd ..",
-    "start": "nodemon index.js",
+    "start": "node index.js",
+    "start-dev": "nodemon index.js",
     "test": "jest"
   },
   "repository": {
