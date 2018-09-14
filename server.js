@@ -28,7 +28,4 @@ server.use(express.json());
 server.use('/api/article', authMiddleware, ArticleRouter);
 server.use('/api/user', authMiddleware, UserRouter);
 
-// For serving static files to root endpoint
-server.use(express.static('./client/build/'));
-
 module.exports = server;
