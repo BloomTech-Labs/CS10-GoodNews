@@ -49,7 +49,9 @@ class Register extends Component {
   }
 
   createUser = (user) => {
-    axios.post(`http://localhost:5000/api/user/register`, user)
+    // console.log(`SERVER_URL string: ${process.env.SERVER_URL}`);
+    let serverUrl = process.env.SERVER_URL + '/api/user/register';
+    axios.post(serverUrl, user)
       .then( user => {
         localStorage.setItem("auth-token", user.data.token);
         localStorage.setItem("userid", user.data.userid);
@@ -58,7 +60,7 @@ class Register extends Component {
       })
       .catch( err => {
         this.setState({ failRegister: true })
-        console.log(err.message);
+        console.log(err);
       })
   }
 

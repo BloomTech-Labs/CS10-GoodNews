@@ -4,7 +4,8 @@ const server = require('./server');
 const path = require('path');
 const port = process.env.PORT || 5000;
 const mongoose = require('mongoose');
-const mongoURL = process.env.NODE_ENV === 'production' ? process.env.MONGOLAB_URL : process.env.MONGODB_LOCAL;
+// const mongoURL = process.env.NODE_ENV === 'production' ? process.env.MONGOLAB_URL : process.env.MONGODB_LOCAL;
+const mongoURL = process.env.NODE_ENV === 'production' ? process.env.MONGODB_URI : process.env.MONGODB_LOCAL;
 
 //process.env if it exists OR local version for testing offline.
 
