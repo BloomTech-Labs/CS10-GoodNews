@@ -55,7 +55,8 @@ class SignIn extends Component {
         style={{minHeight: '350px', padding: '2em'}}>
         <Icon name="close" onClick={this.close}/>
         <Modal.Content> 
-          <Grid columns={3} stackable divided>
+          <Grid columns={3} stackable>
+            {/* Only display this section on desktop or tablet screens */}
             <Grid.Column
               only='tablet computer'
               width={7}
@@ -102,6 +103,7 @@ class SignIn extends Component {
                 <Button type='submit' style={{border: '1px solid #BDBDBD'}}>SIGN IN</Button>
               </Form>
             </Grid.Column>
+            {/* Display this only on mobile screens */}
             <Grid.Row only="mobile" centered onClick={() => this.props.toggleModal('register')}>
               Sign up
             </Grid.Row>

@@ -18,15 +18,14 @@ const Article = (props) => {
   return (
     <Card fluid
       style={{ 
-        padding: '1em', 
-        border: '1px solid #BDBDBD',
+        padding: '1em',
         margin: '1em',
         display: 'flex',
         alignItems: 'flex-end',
         // boxShadow: '4px 4px 5px 0 rgba(0,0,0,0.14), 1px 1px 10px 0 rgba(0,0,0,0.12), 2px 2px 4px -1px rgba(0,0,0,0.2)'
       }}>
       <Icon name="ellipsis horizontal" color="grey"/>
-      <Card.Content>
+      <Card.Content style={{ borderStyle: 'none' }}>
         <Header href={props.article.url}>
           {props.article.name}
         </Header>
