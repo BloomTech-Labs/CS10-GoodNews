@@ -1,5 +1,7 @@
 require('dotenv').config();
+const express = require('express');
 const server = require('./server');
+const path = require('path');
 const port = process.env.PORT || 5000;
 const mongoose = require('mongoose');
 const mongoURL = process.env.NODE_ENV === 'production' ? process.env.MONGOLAB_URL : process.env.MONGODB_LOCAL;
@@ -18,4 +20,6 @@ mongoose
         console.error('error', err);
     });
 
+// For serving static files to root endpoint
+server.use(express.static(path.join(__dirname, 'client', 'build')));
 server.listen(port, () => console.log(`=== API running on port: ${port}! ===`));
