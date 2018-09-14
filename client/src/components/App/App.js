@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Nav from './Nav/Nav';
 import SignIn from './Modals/SignIn';
 import Register from './Modals/Register';
+import Settings from './Modals/Settings'
 import NewsFeed from './NewsFeed/NewsFeed';
 import NavLogin from './Nav/NavLogin';
 import NavLogout from './Nav/NavLogout';
@@ -14,6 +15,10 @@ class App extends Component {
       loggedIn: false,
       showModal: ''
     }
+  }
+
+  componentDidMount() {
+    this.toggleLoginLogout();
   }
 
   toggleModal = (showModal) => {
@@ -35,8 +40,8 @@ class App extends Component {
         return <Register 
           toggleModal={this.toggleModal} 
           login={this.toggleLoginLogout}/>
-      // case 'settings':
-      //   return <Settings/>
+      case 'settings':
+        return <Settings toggleModal={this.toggleModal}/>
       default:
         return null;
     }
@@ -45,7 +50,9 @@ class App extends Component {
   switchLoginLogout = (loggedIn) => {
     switch(loggedIn) {
       case true:
-        return <NavLogout toggleLogout={this.toggleLoginLogout.bind(this)}/>
+        return <NavLogout 
+          toggleLogout={this.toggleLoginLogout.bind(this)}
+          toggleModal={this.toggleModal}/>
       case false:
         return <NavLogin toggleModal={this.toggleModal}/>
       default:

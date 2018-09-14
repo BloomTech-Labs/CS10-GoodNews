@@ -1,7 +1,7 @@
 import React from 'react';
 import { Component } from 'react';
 import axios from 'axios';
-import { Modal, Header, Form, Button, Divider, Icon } from 'semantic-ui-react';
+import { Modal, Header, Form, Button, Icon } from 'semantic-ui-react';
 
 class Register extends Component {
   constructor(props) {
@@ -42,18 +42,15 @@ class Register extends Component {
         email: this.state.email,
         password: this.state.password
       }
-      console.log(newUser);
       this.createUser(newUser);
     }
   }
 
   createUser = (user) => {
-    // console.log(`SERVER_URL string: ${process.env.SERVER_URL}`);
     let serverUrl = process.env.SERVER_URL + '/api/user/register';
     axios.post(serverUrl, user)
       .then( user => {
         localStorage.setItem("auth-token", user.data.token);
-        localStorage.setItem("userid", user.data.userid);
         this.props.login();
         this.close();
       })

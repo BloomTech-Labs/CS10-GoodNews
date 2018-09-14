@@ -35,7 +35,6 @@ class SignIn extends Component {
     axios.post(serverUrl, user)
       .then( user => {
         localStorage.setItem("auth-token", user.data.token);
-        localStorage.setItem("userid", user.data.userid);
         this.props.login();
         this.close();
       })

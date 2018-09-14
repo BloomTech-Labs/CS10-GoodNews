@@ -9,11 +9,14 @@ const NavLogout = (props) => {
 
   return (
     <Menu.Item position='right'>
-      <Dropdown icon='angle down'>
+      <Dropdown icon='angle down' pointing='top right'>
         <Dropdown.Menu>
           <Dropdown.Item 
             text='Sign out' 
             onClick={logout}/>
+          <Dropdown.Item
+            text='Settings'
+            onClick={()=>props.toggleModal('settings')}/>
         </Dropdown.Menu>
       </Dropdown>
       <Icon name='user'/>
