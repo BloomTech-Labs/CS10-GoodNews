@@ -31,7 +31,8 @@ class SignIn extends Component {
   }
 
   loginUser = (user) => {
-    axios.post(`http://localhost:5000/api/user/login`, user)
+    let serverUrl = process.env.SERVER_URL + '/api/user/login';
+    axios.post(serverUrl, user)
       .then( user => {
         localStorage.setItem("auth-token", user.data.token);
         localStorage.setItem("userid", user.data.userid);
