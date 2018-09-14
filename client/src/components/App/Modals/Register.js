@@ -49,7 +49,7 @@ class Register extends Component {
   }
 
   createUser = (user) => {
-    axios.post(`http://localhost:5000/api/user/register`, user)
+    axios.post(`${process.env.SERVER_URL}/api/user/register`, user)
       .then( user => {
         localStorage.setItem("auth-token", user.data.token);
         localStorage.setItem("userid", user.data.userid);
