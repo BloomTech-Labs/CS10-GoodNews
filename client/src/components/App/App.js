@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import Nav from './Nav/Nav';
+import NavLogin from './Nav/NavLogin';
+import NavLogout from './Nav/NavLogout';
 import SignIn from './Modals/SignIn';
 import Register from './Modals/Register';
 import Settings from './Modals/Settings'
 import NewsFeed from './NewsFeed/NewsFeed';
-import NavLogin from './Nav/NavLogin';
-import NavLogout from './Nav/NavLogout';
+import Article from './NewsFeed/Article/Article';
 
 class App extends Component {
   constructor(props) {
@@ -13,21 +15,36 @@ class App extends Component {
     this.state = {
       enteredSite: false,
       loggedIn: false,
-      showModal: ''
+      showModal: '',
+      articles: []
     }
   }
 
-  componentDidMount() {
-    this.toggleLoginLogout();
+  componentWillMount() {
+    this.isLoggedIn();
+    this.fetchArticles()
+  }
+
+  fetchArticles = () => {
+    // let serverUrl = process.env.SERVER_URL + '/api/article';
+    axios.get('http://localhost:5000/api/article')
+      .then( articles => {
+        this.setState({ articles: articles.data });
+      })
+      .catch( err => {
+        console.log(err.message)
+      })
   }
 
   toggleModal = (showModal) => {
     this.setState({ showModal });
   }
 
-  toggleLoginLogout = () => {
+  isLoggedIn = () => {
     const loggedIn = localStorage.getItem('auth-token') ? true : false;
-    this.setState({ loggedIn })
+    if (this.state.loggedIn !== loggedIn) {
+      this.setState({ loggedIn });
+    }
   }
 
   switchModals = (modal) => {
@@ -35,11 +52,11 @@ class App extends Component {
       case 'signIn':
         return <SignIn 
           toggleModal={this.toggleModal} 
-          login={this.toggleLoginLogout}/>
+          login={this.isLoggedIn}/>
       case 'register':
         return <Register 
           toggleModal={this.toggleModal} 
-          login={this.toggleLoginLogout}/>
+          login={this.isLoggedIn}/>
       case 'settings':
         return <Settings toggleModal={this.toggleModal}/>
       default:
@@ -51,7 +68,7 @@ class App extends Component {
     switch(loggedIn) {
       case true:
         return <NavLogout 
-          toggleLogout={this.toggleLoginLogout.bind(this)}
+          toggleLogout={this.isLoggedIn.bind(this)}
           toggleModal={this.toggleModal}/>
       case false:
         return <NavLogin toggleModal={this.toggleModal}/>
@@ -64,7 +81,16 @@ class App extends Component {
     return (
       <div className="App">
         <Nav>{this.switchLoginLogout(this.state.loggedIn)}</Nav>
-        <NewsFeed/>
+        <NewsFeed>
+          {this.state.articles.map( article => {
+            return (
+              <Article 
+                key={article._id} 
+                article={article} 
+                articleOptions={this.state.loggedIn}
+              />)
+          })}
+        </NewsFeed>
         {this.switchModals(this.state.showModal)}
       </div>
     );

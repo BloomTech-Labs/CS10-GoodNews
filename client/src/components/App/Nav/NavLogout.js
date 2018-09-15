@@ -4,6 +4,7 @@ import { Menu, Icon, Dropdown } from 'semantic-ui-react';
 const NavLogout = (props) => {
   const logout = () => {
     localStorage.removeItem('auth-token');
+    localStorage.removeItem('user');
     props.toggleLogout();
   }
 
