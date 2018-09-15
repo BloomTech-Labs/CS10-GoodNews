@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Oswald:700');
+
 /* http://meyerweb.com/eric/tools/css/reset/ 
   v2.0 | 20110126
   License: none (public domain)
@@ -82,9 +84,14 @@ p {
   cursor: pointer;
 }
 
+a.article-title:hover {
+  color: #37bc9b !important;
+}
+
 .logo {
   font-size: 4.5em;
   font-weight: bold;
+  font-family: 'Oswald', sans-serif;
 }
 
 @media only screen and (max-width: 750px) {

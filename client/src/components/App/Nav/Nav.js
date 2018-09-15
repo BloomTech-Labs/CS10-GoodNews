@@ -9,10 +9,10 @@ const Nav = (props) => {
       borderless
       size='large'
       style={{
-        // boxShadow: '0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.2)',
+        boxShadow: '0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.2)',
         // padding: '0 1.2em',
         backgroundColor: '#37bc9b',
-        height: '5em'
+        height: '5.5em'
       }}>
       <Menu.Item position="left">
         <Icon name="sidebar" style={{ color: '#3d3d3d' }} size='large'/>
@@ -20,7 +20,7 @@ const Nav = (props) => {
       <Menu.Item position="center" className="logo"
         style={{ padding: 0, margin: 0 }}
         onClick={()=>window.scrollTo(0,0)}>
-        <span style={{ color: '#3d3d3d'}}>GOOD</span>
+        <span style={{ color: '#3d3d3d', paddingRight: '0.2em' }}>GOOD</span>
         <span style={{ color: 'white'}}>NEWS</span>
       </Menu.Item>
       {props.children}
