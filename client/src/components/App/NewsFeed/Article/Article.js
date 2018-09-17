@@ -45,7 +45,7 @@ const Article = (props) => {
         alignItems: 'flex-end'}}>
       {props.articleOptions && <ArticleOptions save={saveArticle}/>}
       <Card.Content style={{ borderStyle: 'none' }}>
-        <Header href={props.article.url}>
+        <Header href={props.article.url} className='article-title'>
           {props.article.name}
         </Header>
         <Card.Meta  style={{ marginBottom: '1em' }}>
