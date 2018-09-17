@@ -3,11 +3,18 @@ import { Menu } from 'semantic-ui-react';
 
 const NavLogin = (props) => {
   return (
-    <Menu.Item 
-      onClick={()=>{props.toggleModal('signIn')}} 
-      position='right'>
-      Sign in
-    </Menu.Item>
+    <div style={{display:'flex'}}>
+      <Menu.Item 
+        onClick={()=>{props.toggleModal('register')}} 
+        position='right'>
+        Sign up
+      </Menu.Item>
+      <Menu.Item 
+        onClick={()=>{props.toggleModal('signIn')}} 
+        position='right'>
+        Sign in
+      </Menu.Item>
+    </div>
   );
 }
  

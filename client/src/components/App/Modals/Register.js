@@ -1,7 +1,7 @@
 import React from 'react';
 import { Component } from 'react';
 import axios from 'axios';
-import { Modal, Header, Form, Button, Divider, Icon } from 'semantic-ui-react';
+import { Modal, Header, Form, Button, Icon } from 'semantic-ui-react';
 
 class Register extends Component {
   constructor(props) {
@@ -14,7 +14,6 @@ class Register extends Component {
       password: '',
       verifyPassword: '',
       // location: '',
-      hovering: 'none',
       failPassword: false,
       failRegister: false,
     }
@@ -43,7 +42,6 @@ class Register extends Component {
         email: this.state.email,
         password: this.state.password
       }
-      console.log(newUser);
       this.createUser(newUser);
     }
   }
@@ -54,7 +52,7 @@ class Register extends Component {
     axios.post(serverUrl, user)
       .then( user => {
         localStorage.setItem("auth-token", user.data.token);
-        localStorage.setItem("userid", user.data.userid);
+        localStorage.setItem("userid", user.data.user._id);
         this.props.login();
         this.close();
       })
@@ -105,14 +103,9 @@ class Register extends Component {
             </Form.Field> */}
             <Button type='submit' primary>CREATE ACCOUNT</Button>
           </Form>
-          <Divider/>
           <span 
             onClick={() => this.props.toggleModal('signIn')}
-            onMouseEnter={() => this.setState({ hovering: 'underline' })}
-            onMouseLeave={() => this.setState({ hovering: 'none' })}
-            style={{
-              textDecoration: this.state.hovering
-            }}>
+            className="login-register-button">
             Sign in
           </span>
         </Modal.Content>
