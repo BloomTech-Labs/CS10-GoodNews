@@ -5,7 +5,6 @@ const path = require('path');
 const port = process.env.PORT || 5000;
 const mongoose = require('mongoose');
 const mongoURL = process.env.NODE_ENV === 'production' ? process.env.PROD_MONGODB : process.env.MONGODB_LOCAL;
-// const mongoURL = process.env.NODE_ENV === 'production' ? process.env.MONGODB_URI : process.env.MONGODB_LOCAL;
 // const mongoURL = process.env.MONGODB_URI;
 // const mongoURL = process.env.PROD_MONGODB;
 
