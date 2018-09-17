@@ -76,8 +76,8 @@ class Register extends Component {
         <Modal.Content>
           {/* Display message when form submission has failed */}
           {this.state.failRegister && <span style={{color:'red'}}>Unable to create account</span>}
-          <Form onSubmit={this.handleSubmit}>
-          <Form.Field required>
+          <Form onSubmit={this.handleSubmit} style={{ paddingBottom: '1em' }}>
+            <Form.Field required>
               <input onChange={this.handleInput} placeholder="First Name" name="firstName" value={this.state.firstName}/>
             </Form.Field>
             <Form.Field required>
@@ -100,11 +100,13 @@ class Register extends Component {
             {/* <Form.Field>
               <input onChange={this.handleInput} placeholder="City, State" name="location" value={this.state.location}/>
             </Form.Field> */}
-            <Button type='submit' primary>CREATE ACCOUNT</Button>
+            <Button type='submit' primary style={{ backgroundColor: '#37bc9b' }}>SIGN UP</Button>
           </Form>
+          <span>Already have an account? </span>
           <span 
             onClick={() => this.props.toggleModal('signIn')}
-            className="login-register-button">
+            className="login-register-button"
+            style={{ color: '#37bc9b' }}>
             Sign in
           </span>
         </Modal.Content>

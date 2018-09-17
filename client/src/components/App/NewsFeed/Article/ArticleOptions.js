@@ -8,6 +8,9 @@ const ArticleOptions = (props) => {
       <Dropdown.Menu>
         <Dropdown.Item 
           text="Save for later" onClick={props.save}/>
+        <Dropdown.Item 
+          text="Report as clickbait" 
+          onClick={()=>console.log("reporting clickbait")}/>
       </Dropdown.Menu>
     </Dropdown>
   );

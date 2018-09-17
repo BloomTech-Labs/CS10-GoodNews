@@ -75,8 +75,8 @@ class SignIn extends Component {
                 <List.Item>Comment on articles (coming soon)</List.Item>
               </List>
               <Divider/>
-              <Button primary onClick={() => this.props.toggleModal('register')}>
-                CREATE ACCOUNT
+              <Button primary style={{ backgroundColor: '#37bc9b' }} onClick={() => this.props.toggleModal('register')}>
+                SIGN UP
               </Button>
             </Grid.Column>
             <Grid.Column width={2} only='tablet computer'>
@@ -102,12 +102,13 @@ class SignIn extends Component {
                   <input onChange={this.handleInput} placeholder="Password" type="password" name="password" value={this.state.password}/>
                 </Form.Field>
                 <Divider/>
-                <Button type='submit' style={{border: '1px solid #BDBDBD'}}>SIGN IN</Button>
+                <Button type='submit'>SIGN IN</Button>
               </Form>
             </Grid.Column>
             {/* Display this only on mobile screens */}
             <Grid.Row only="mobile" centered onClick={() => this.props.toggleModal('register')}>
-              Sign up
+              <span>"Don't have an account?"</span>
+              <span style={{ color: '#37bc9b', paddingLeft: '0.5em' }}>Sign up</span>
             </Grid.Row>
           </Grid>
         </Modal.Content>
