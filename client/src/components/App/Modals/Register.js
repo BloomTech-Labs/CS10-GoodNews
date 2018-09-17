@@ -47,7 +47,9 @@ class Register extends Component {
   }
 
   createUser = (user) => {
+    // https://labs7goodnews.herokuapp.com
     const serverUrl = process.env.SERVER_URL + '/api/user/register';
+    // const serverUrl = 'http://localhost:5000/api/user/register';
     axios.post(serverUrl, user)
       .then( user => {
         localStorage.setItem("auth-token", user.data.token);
