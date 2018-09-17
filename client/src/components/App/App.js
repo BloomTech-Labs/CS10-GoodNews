@@ -26,9 +26,10 @@ class App extends Component {
   }
 
   fetchArticles = () => {
-    // const serverUrl = process.env.SERVER_URL + '/api/article';
+    // 'https://labs7goodnews.herokuapp.com/api/article'
+    const serverUrl = process.env.SERVER_URL + '/api/article';
     // const serverUrl = 'http://localhost:5000/api/article';
-    axios.get('https://labs7goodnews.herokuapp.com/api/article')
+    axios.get(serverUrl)
       .then( articles => {
         this.setState({ articles: articles.data });
       })

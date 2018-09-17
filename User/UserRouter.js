@@ -33,7 +33,7 @@ function postRegister(req, res) {
         res.status(422).json({ error: 'Username and Password required' });
     } else {
         const newUser = new User(reqUser);
-        console.log(`newUser ${newUser}`);
+        // console.log(`newUser ${newUser}`);
         newUser.save().then((savedUser) => {
             let userInfo = {
             _id: savedUser._id,

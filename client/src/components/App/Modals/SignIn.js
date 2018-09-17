@@ -31,9 +31,10 @@ class SignIn extends Component {
   }
 
   loginUser = (user) => {
-    // const serverUrl = process.env.SERVER_URL + '/api/user/login';
+    // https://labs7goodnews.herokuapp.com
+    const serverUrl = process.env.SERVER_URL + '/api/user/login';
     // const serverUrl = 'http://localhost:5000/api/user/login'
-    axios.post('https://labs7goodnews.herokuapp.com/api/user/login', user)
+    axios.post(serverUrl, user)
       .then( user => {
         console.log(user)
         localStorage.setItem("auth-token", user.data.token);
