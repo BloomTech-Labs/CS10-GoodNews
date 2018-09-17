@@ -19,7 +19,7 @@ const Article = (props) => {
 
   const saveArticle = () => {
     const id = props.article._id
-    const serverUrl = process.env.SERVER_URL + `/api/article/${id}/add`;
+    // const serverUrl = process.env.SERVER_URL + `/api/article/${id}/add`;
     // const serverUrl = 'http://localhost:5000/api/article/${id}/add';
     const config = {
       headers: {
@@ -27,7 +27,7 @@ const Article = (props) => {
         'userid': localStorage.getItem("userid")
       }
     }
-    axios.put(serverUrl, null, config)
+    axios.put('https://labs7goodnews.herokuapp.com/api/article/${id}/add', null, config)
       .then( res => {
         console.log('saved')
       })
