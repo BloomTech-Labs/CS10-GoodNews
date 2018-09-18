@@ -10,7 +10,7 @@ import NewsFeed from './NewsFeed/NewsFeed';
 import Article from './NewsFeed/Article/Article';
 
 // Production Server URL
-const url = process.env.SERVER_URL ? process.env.SERVER_URL : 'http://localhost:5000';
+const url = process.env.NODE_ENV === 'production' ? process.env.SERVER_URL : 'http://localhost:5000';
 
 class App extends Component {
   constructor(props) {

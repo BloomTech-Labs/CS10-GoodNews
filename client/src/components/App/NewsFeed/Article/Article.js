@@ -4,7 +4,7 @@ import axios from 'axios';
 import ArticleOptions from './ArticleOptions';
 
 // Production Server URL
-const url = process.env.SERVER_URL ? process.env.SERVER_URL : 'http://localhost:5000';
+const url = process.env.NODE_ENV === 'production' ? process.env.SERVER_URL : 'http://localhost:5000';
 
 const Article = (props) => {
   const elapsedMilliseconds = Date.now() - Date.parse(props.article.timestamp);

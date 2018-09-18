@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Modal, Grid, Header, Form, Button, Divider, List, Icon } from 'semantic-ui-react';
 
 // Production Server URL
-const url = process.env.SERVER_URL ? process.env.SERVER_URL : 'http://localhost:5000';
+const url = process.env.NODE_ENV === 'production' ? process.env.SERVER_URL : 'http://localhost:5000';
 
 class SignIn extends Component {
   constructor(props) {
