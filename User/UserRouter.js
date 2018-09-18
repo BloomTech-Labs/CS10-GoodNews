@@ -66,9 +66,10 @@ function postLoginUser(req, res) {
     if (!username || !password) {
         res.status(422).json({ error: 'Username and Password required' });
     }
-    User.findOne({ username }).select('username _id')
+    User.findOne({ username }).select('username _id password')
         .then((user) => {
         if (user) {
+            console.log(user);
             user.checkPassword(user, password)
             .then((isMatch) => {
             if (isMatch) {
@@ -81,7 +82,7 @@ function postLoginUser(req, res) {
             } else {
                 res.status(422).json({ error: 'Wrong Password or Username' });
             }
-            });
+            }).catch(err => res.status(501).json(err));
         } else {
             res.status(422).json({ error: 'Wrong Password or Username' });
         }

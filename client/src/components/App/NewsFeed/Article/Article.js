@@ -3,6 +3,9 @@ import { Card, Header, Grid } from 'semantic-ui-react';
 import axios from 'axios';
 import ArticleOptions from './ArticleOptions';
 
+// Production Server URL or localhost for local testing
+const url = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_SERVER : 'http://localhost:5000';
+
 const Article = (props) => {
   const elapsedMilliseconds = Date.now() - Date.parse(props.article.timestamp);
 
@@ -19,16 +22,13 @@ const Article = (props) => {
 
   const saveArticle = () => {
     const id = props.article._id
-    // https://labs7goodnews.herokuapp.com
-    const serverUrl = process.env.SERVER_URL + `/api/article/${id}/add`;
-    // const serverUrl = `http://localhost:5000/api/article/${id}/add`;
     const config = {
       headers: {
         'authorization': localStorage.getItem('auth-token'),
         'userid': localStorage.getItem("userid")
       }
     }
-    axios.put(serverUrl, null, config)
+    axios.put(`${url}/api/article/${id}/add`, null, config)
       .then( res => {
         console.log('saved')
       })
