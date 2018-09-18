@@ -6,7 +6,6 @@ const NavLogin = (props) => {
     <Menu.Item 
       onClick={()=>{props.toggleModal('signIn')}} 
       position='right'
-      size='huge'
       style={{ color: '#3d3d3d' }}>
       Sign in
     </Menu.Item>

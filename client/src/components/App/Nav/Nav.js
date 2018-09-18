@@ -17,7 +17,7 @@ const Nav = (props) => {
       <Menu.Item position="left">
         <Icon name="sidebar" style={{ color: '#3d3d3d' }} size='large'/>
       </Menu.Item>
-      <Menu.Item position="center" className="logo"
+      <Menu.Item className="logo"
         style={{ padding: 0, margin: 0 }}
         onClick={()=>window.scrollTo(0,0)}>
         <span style={{ color: '#3d3d3d', paddingRight: '0.2em' }}>GOOD</span>
