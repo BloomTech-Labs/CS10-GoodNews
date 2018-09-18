@@ -34,9 +34,6 @@ class SignIn extends Component {
   }
 
   loginUser = (user) => {
-    // https://labs7goodnews.herokuapp.com
-    // const serverUrl = process.env.SERVER_URL + '/api/user/login';
-    // const serverUrl = 'http://localhost:5000/api/user/login'
     axios.post(`${url}/api/user/login`, user)
       .then( user => {
         console.log(user)

@@ -22,9 +22,6 @@ const Article = (props) => {
 
   const saveArticle = () => {
     const id = props.article._id
-    // https://labs7goodnews.herokuapp.com
-    // const serverUrl = process.env.SERVER_URL + `/api/article/${id}/add`;
-    // const serverUrl = `http://localhost:5000/api/article/${id}/add`;
     const config = {
       headers: {
         'authorization': localStorage.getItem('auth-token'),

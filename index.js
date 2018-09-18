@@ -7,7 +7,6 @@ const mongoose = require('mongoose');
 
 //process.env if it exists OR local version for testing offline.
 const mongoURL = process.env.NODE_ENV === 'production' ? process.env.PROD_MONGODB : process.env.MONGODB_LOCAL;
-// const mongoURL = process.env.PROD_MONGODB;
 
 mongoose.set('useCreateIndex', true);
 mongoose.set('useNewUrlParser', true);
