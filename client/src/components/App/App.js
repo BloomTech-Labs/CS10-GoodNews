@@ -8,6 +8,7 @@ import Register from './Modals/Register';
 import Settings from './Modals/Settings'
 import NewsFeed from './NewsFeed/NewsFeed';
 import Article from './NewsFeed/Article/Article';
+import LandingPage from './LandingPage';
 
 class App extends Component {
   constructor(props) {
@@ -22,7 +23,7 @@ class App extends Component {
 
   componentWillMount() {
     this.isLoggedIn();
-    this.fetchArticles()
+    this.fetchArticles();
   }
 
   fetchArticles = () => {
@@ -79,20 +80,24 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <Nav>{this.switchLoginLogout(this.state.loggedIn)}</Nav>
-        <NewsFeed>
-          {this.state.articles.map( article => {
-            return (
-              <Article 
-                key={article._id} 
-                article={article} 
-                articleOptions={this.state.loggedIn}
-              />)
-          })}
-        </NewsFeed>
-        {this.switchModals(this.state.showModal)}
-      </div>
+      localStorage.getItem('visited') ? (
+        <div className="App">
+          <Nav>{this.switchLoginLogout(this.state.loggedIn)}</Nav>
+          <NewsFeed>
+            {this.state.articles.map( article => {
+              return (
+                <Article 
+                  key={article._id} 
+                  article={article} 
+                  articleOptions={this.state.loggedIn}
+                />)
+            })}
+          </NewsFeed>
+          {this.switchModals(this.state.showModal)}
+        </div>
+      ) : (
+        <LandingPage/>
+      )
     );
   }
 }
