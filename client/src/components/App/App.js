@@ -8,13 +8,13 @@ import Register from './Modals/Register';
 import Settings from './Modals/Settings'
 import NewsFeed from './NewsFeed/NewsFeed';
 import Article from './NewsFeed/Article/Article';
-import LandingPage from './LandingPage';
+import LandingPage from './LandingPage/LandingPage';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      enteredSite: false,
+      visited: localStorage.getItem('visited'),
       loggedIn: false,
       showModal: '',
       articles: []
@@ -37,6 +37,11 @@ class App extends Component {
       .catch( err => {
         console.log(err.message)
       })
+  }
+
+  enterSite = () => {
+    localStorage.setItem('visited', true);
+    this.setState({ visited: true });
   }
 
   toggleModal = (showModal) => {
@@ -82,7 +87,7 @@ class App extends Component {
 
   render() {
     return (
-      localStorage.getItem('visited') ? (
+      this.state.visited ? (
         <div className="App">
           <Nav>{this.switchLoginLogout(this.state.loggedIn)}</Nav>
           <NewsFeed>
@@ -98,7 +103,7 @@ class App extends Component {
           {this.switchModals(this.state.showModal)}
         </div>
       ) : (
-        <LandingPage/>
+        <LandingPage enterSite={this.enterSite}/>
       )
     );
   }
