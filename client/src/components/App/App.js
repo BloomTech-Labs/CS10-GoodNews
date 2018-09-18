@@ -9,7 +9,7 @@ import Settings from './Modals/Settings'
 import NewsFeed from './NewsFeed/NewsFeed';
 import Article from './NewsFeed/Article/Article';
 import LandingPage from './LandingPage/LandingPage';
-import Menu from './Menu/Menu';
+import MainMenu from './Menu/MainMenu';
 
 // Production Server URL or localhost for local testing
 const url = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_SERVER : 'http://localhost:5000';
@@ -41,9 +41,16 @@ class App extends Component {
       })
   }
 
-  enterSite = () => {
-    localStorage.setItem('visited', true);
-    this.setState({ visited: true });
+  toggleLandingPage = () => {
+    let visited = localStorage.getItem('visited');
+    if (visited === 'false' || visited === false || visited === null) {
+      visited = true;
+    } else {
+      visited = false;
+    }
+    localStorage.setItem('visited', visited);
+    this.setState({ visited });
+    window.scrollTo(0,0);
   }
 
   toggleModal = (showModal) => {
@@ -98,7 +105,12 @@ class App extends Component {
           <Nav toggleMenu={this.toggleMenu}>
             {this.switchLoginLogout(this.state.loggedIn)}
           </Nav>
-          {this.state.showMenu && <Menu/>}
+          {this.state.showMenu && 
+            <MainMenu 
+              loggedIn={this.state.loggedIn} 
+              trendingTopics={this.state.trendingTopics}
+              toggleLandingPage={this.toggleLandingPage}
+            />}
           <NewsFeed>
             {this.state.articles.map( article => {
               return (
@@ -112,7 +124,7 @@ class App extends Component {
           {this.switchModals(this.state.showModal)}
         </div>
       ) : (
-        <LandingPage enterSite={this.enterSite}/>
+        <LandingPage toggleLandingPage={this.toggleLandingPage}/>
       )
     );
   }

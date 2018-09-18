@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Icon, Button, Segment } from 'semantic-ui-react';
+import { Grid, Icon, Button } from 'semantic-ui-react';
 
 const LandingPage = (props) => {
   return (
@@ -47,7 +47,7 @@ const LandingPage = (props) => {
       <Grid.Row centered>
         <Button primary size='huge' 
           style={{ backgroundColor: '#37bc9b' }}
-          onClick={props.enterSite}>GET STARTED</Button>
+          onClick={props.toggleLandingPage}>GET STARTED</Button>
       </Grid.Row>
     </Grid>
   );

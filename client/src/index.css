@@ -129,9 +129,8 @@ a.article-title:hover {
 
 .main-menu {
   position: absolute;
-  top: 0;
-  left: 0;
-  background-color: rgb(238, 238, 238);
+  left: -5px;
+  background-color: rgb(238, 238, 238) !important;
   padding: 100px 50px 50px 50px !important;
   min-height: 500px;
   min-width: 350px;
