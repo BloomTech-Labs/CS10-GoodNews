@@ -32,7 +32,7 @@ const LandingPage = (props) => {
           You can get news from a variety of sources without having to deal with clickbait.
         </Grid.Column>
         <Grid.Column width={1}>
-          <Icon name='settings' size='huge' color='grey'/>
+          <Icon name='lab' size='huge' color='grey'/>
         </Grid.Column>
         <Grid.Column className='about-app'>
           We used artificial intelligence to identify clickbait articles so you don’t have to.
