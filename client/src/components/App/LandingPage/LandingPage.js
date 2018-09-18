@@ -47,7 +47,7 @@ const LandingPage = (props) => {
       <Grid.Row centered>
         <Button primary size='huge' 
           style={{ backgroundColor: '#37bc9b' }}
-          onClick={props.enterSite}>GET STARTED</Button>
+          onClick={props.toggleLandingPage}>GET STARTED</Button>
       </Grid.Row>
     </Grid>
   );
