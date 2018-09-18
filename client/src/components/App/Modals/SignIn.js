@@ -3,6 +3,9 @@ import { Component } from 'react';
 import axios from 'axios';
 import { Modal, Grid, Header, Form, Button, Divider, List, Icon } from 'semantic-ui-react';
 
+// Production Server URL
+const url = process.env.SERVER_URL ? process.env.SERVER_URL : 'http://localhost:5000';
+
 class SignIn extends Component {
   constructor(props) {
     super(props);
@@ -32,9 +35,9 @@ class SignIn extends Component {
 
   loginUser = (user) => {
     // https://labs7goodnews.herokuapp.com
-    const serverUrl = process.env.SERVER_URL + '/api/user/login';
+    // const serverUrl = process.env.SERVER_URL + '/api/user/login';
     // const serverUrl = 'http://localhost:5000/api/user/login'
-    axios.post(serverUrl, user)
+    axios.post(`${url}/api/user/login`, user)
       .then( user => {
         console.log(user)
         localStorage.setItem("auth-token", user.data.token);
