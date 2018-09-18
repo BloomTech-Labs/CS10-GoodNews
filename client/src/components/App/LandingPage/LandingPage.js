@@ -3,13 +3,12 @@ import { Grid, Icon, Button, Segment } from 'semantic-ui-react';
 
 const LandingPage = (props) => {
   return (
-    <Grid stackable>
+    <Grid style={{ justifyContent: 'center' }} stackable>
       <Grid.Row 
         style={{
           backgroundColor: '#37bc9b',
           height: '50vh',
           flexDirection: 'column',
-          justifyContent: 'center',
           alignItems: 'center'
         }}>
         <div style={{ backgroundColor: 'white', padding: '2em' }}>
@@ -24,23 +23,24 @@ const LandingPage = (props) => {
       </Grid.Row>
       <Grid.Row 
         className='about-section'
-        centered>
+        centered
+        columns='equal'>
         <Grid.Column width={1}>
           <Icon name='newspaper outline' size='huge' color='grey'/>
         </Grid.Column>
-        <Grid.Column width={3} className='about-app'>
+        <Grid.Column className='about-app'>
           You can get news from a variety of sources without having to deal with clickbait.
         </Grid.Column>
         <Grid.Column width={1}>
           <Icon name='settings' size='huge' color='grey'/>
         </Grid.Column>
-        <Grid.Column width={3} className='about-app'>
+        <Grid.Column className='about-app'>
           We used artificial intelligence to identify clickbait articles so you don’t have to.
         </Grid.Column>
         <Grid.Column width={1}>
           <Icon name='group' size='huge' color='grey'/>
         </Grid.Column>
-        <Grid.Column width={3} className='about-app'>
+        <Grid.Column className='about-app'>
           Created by a team of Data Science and Web Development students at Lambda School.
         </Grid.Column>
       </Grid.Row>

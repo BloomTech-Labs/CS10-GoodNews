@@ -113,12 +113,14 @@ a.article-title:hover {
 
 .about-section {
   margin: 5rem;
+  max-width: 1024px;
+  display: flex;
+  justify-content: center;
 }
 
 .about-app {
   color: #3d3d3d;
-  padding: 1rem;
-  margin: 1rem;
+  margin-left: 3rem;
   font-size: 1rem;
   line-height: 1.5rem;
 }
