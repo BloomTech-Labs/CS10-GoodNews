@@ -9,6 +9,9 @@ import Settings from './Modals/Settings'
 import NewsFeed from './NewsFeed/NewsFeed';
 import Article from './NewsFeed/Article/Article';
 
+// Production Server URL or localhost for local testing
+const url = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_SERVER : 'http://localhost:5000';
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -26,10 +29,7 @@ class App extends Component {
   }
 
   fetchArticles = () => {
-    // 'https://labs7goodnews.herokuapp.com/api/article'
-    const serverUrl = process.env.SERVER_URL + '/api/article';
-    // const serverUrl = 'http://localhost:5000/api/article';
-    axios.get(serverUrl)
+    axios.get(`${url}/api/article`)
       .then( articles => {
         this.setState({ articles: articles.data });
       })

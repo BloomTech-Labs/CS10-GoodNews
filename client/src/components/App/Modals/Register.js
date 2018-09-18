@@ -3,6 +3,9 @@ import { Component } from 'react';
 import axios from 'axios';
 import { Modal, Header, Form, Button, Icon } from 'semantic-ui-react';
 
+// Production Server URL or localhost for local testing
+const url = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_SERVER : 'http://localhost:5000';
+
 class Register extends Component {
   constructor(props) {
     super(props);
@@ -47,10 +50,7 @@ class Register extends Component {
   }
 
   createUser = (user) => {
-    // https://labs7goodnews.herokuapp.com
-    const serverUrl = process.env.SERVER_URL + '/api/user/register';
-    // const serverUrl = 'http://localhost:5000/api/user/register';
-    axios.post(serverUrl, user)
+    axios.post(`${url}/api/user/register`, user)
       .then( user => {
         localStorage.setItem("auth-token", user.data.token);
         localStorage.setItem("userid", user.data.user._id);
