@@ -95,6 +95,10 @@ a.article-title:hover {
   font-family: 'Oswald', sans-serif;
 }
 
+.jumbotron {
+  height: 50vh;
+}
+
 .app-name {
   font-family: 'Oswald', sans-serif;
   font-weight: bold;
@@ -114,8 +118,6 @@ a.article-title:hover {
 .about-section {
   margin: 5rem;
   max-width: 1024px;
-  display: flex;
-  justify-content: center;
 }
 
 .about-app {
@@ -125,7 +127,7 @@ a.article-title:hover {
   line-height: 1.5rem;
 }
 
-@media only screen and (max-width: 750px) {
+@media only screen and (max-width: 770px) {
   .logo {
     font-size: 3.5em;
   }
@@ -140,7 +142,7 @@ a.article-title:hover {
   }
 
   .about-section {
-    margin: 1rem;
+    margin: 5rem 1rem;
   }
 }
 
@@ -153,5 +155,14 @@ a.article-title:hover {
 @media only screen and (max-width: 450px) {
   .logo {
     font-size: 2em;
+  }
+
+  .jumbotron {
+    max-height: 40vh;
+  }
+
+  .about-section {
+    max-width: 300px;
+    padding-bottom: 1rem;
   }
 }

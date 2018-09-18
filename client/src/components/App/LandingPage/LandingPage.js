@@ -4,10 +4,10 @@ import { Grid, Icon, Button, Segment } from 'semantic-ui-react';
 const LandingPage = (props) => {
   return (
     <Grid style={{ justifyContent: 'center' }} stackable>
-      <Grid.Row 
+      <Grid.Row
+        className='jumbotron' 
         style={{
           backgroundColor: '#37bc9b',
-          height: '50vh',
           flexDirection: 'column',
           alignItems: 'center'
         }}>
@@ -45,9 +45,9 @@ const LandingPage = (props) => {
         </Grid.Column>
       </Grid.Row>
       <Grid.Row centered>
-        <Button primary size='large' 
+        <Button primary size='huge' 
           style={{ backgroundColor: '#37bc9b' }}
-          onClick={props.enterSite}>ENTER SITE</Button>
+          onClick={props.enterSite}>GET STARTED</Button>
       </Grid.Row>
     </Grid>
   );
