@@ -3,7 +3,7 @@ import { Card, Header, Grid } from 'semantic-ui-react';
 import axios from 'axios';
 import ArticleOptions from './ArticleOptions';
 
-// Production Server URL
+// Production Server URL or localhost for local testing
 const url = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_SERVER : 'http://localhost:5000';
 
 const Article = (props) => {

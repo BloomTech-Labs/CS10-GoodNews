@@ -3,7 +3,7 @@ import { Component } from 'react';
 import axios from 'axios';
 import { Modal, Header, Form, Button, Icon } from 'semantic-ui-react';
 
-// Production Server URL
+// Production Server URL or localhost for local testing
 const url = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_SERVER : 'http://localhost:5000';
 
 class Register extends Component {
