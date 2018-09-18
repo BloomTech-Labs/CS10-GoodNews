@@ -14,7 +14,7 @@ const Nav = (props) => {
         backgroundColor: '#37bc9b',
         height: '5.5em'
       }}>
-      <Menu.Item position="left">
+      <Menu.Item position="left" onClick={props.toggleMenu}>
         <Icon name="sidebar" style={{ color: '#3d3d3d' }} size='large'/>
       </Menu.Item>
       <Menu.Item className="logo"

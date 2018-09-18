@@ -127,6 +127,17 @@ a.article-title:hover {
   line-height: 1.5rem;
 }
 
+.main-menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgb(238, 238, 238);
+  padding: 100px 50px 50px 50px !important;
+  min-height: 500px;
+  min-width: 350px;
+  z-index: 1;
+}
+
 @media only screen and (max-width: 770px) {
   .logo {
     font-size: 3.5em;

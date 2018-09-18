@@ -9,6 +9,7 @@ import Settings from './Modals/Settings'
 import NewsFeed from './NewsFeed/NewsFeed';
 import Article from './NewsFeed/Article/Article';
 import LandingPage from './LandingPage/LandingPage';
+import Menu from './Menu/Menu';
 
 // Production Server URL or localhost for local testing
 const url = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_SERVER : 'http://localhost:5000';
@@ -20,6 +21,7 @@ class App extends Component {
       visited: localStorage.getItem('visited'),
       loggedIn: false,
       showModal: '',
+      showMenu: false,
       articles: []
     }
   }
@@ -46,6 +48,10 @@ class App extends Component {
 
   toggleModal = (showModal) => {
     this.setState({ showModal });
+  }
+
+  toggleMenu = () => {
+    this.setState({ showMenu: !this.state.showMenu });
   }
 
   isLoggedIn = () => {
@@ -89,7 +95,10 @@ class App extends Component {
     return (
       this.state.visited ? (
         <div className="App">
-          <Nav>{this.switchLoginLogout(this.state.loggedIn)}</Nav>
+          <Nav toggleMenu={this.toggleMenu}>
+            {this.switchLoginLogout(this.state.loggedIn)}
+          </Nav>
+          {this.state.showMenu && <Menu/>}
           <NewsFeed>
             {this.state.articles.map( article => {
               return (
