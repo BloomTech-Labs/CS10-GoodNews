@@ -22,7 +22,11 @@ class App extends Component {
       loggedIn: false,
       showModal: '',
       showMenu: false,
-      articles: []
+      articles: [],
+      allArticles: [],
+      savedArticles: [],
+      clickbaitArticles: [],
+      trendingTopics: []
     }
   }
 
@@ -34,12 +38,19 @@ class App extends Component {
   fetchArticles = () => {
     axios.get(`${url}/api/article`)
       .then( articles => {
-        this.setState({ articles: articles.data });
+        this.setState({ articles: articles.data, allArticles: articles.data })
+        return articles.data;
       })
       .catch( err => {
         console.log(err.message)
       })
+    // get top 5 keywords
+    // set trendingTopics
   }
+
+  // fetchSavedArticles = () => {
+
+  // }
 
   toggleLandingPage = () => {
     let visited = localStorage.getItem('visited');
@@ -51,6 +62,7 @@ class App extends Component {
     localStorage.setItem('visited', visited);
     this.setState({ visited });
     window.scrollTo(0,0);
+    console.log(this.state);
   }
 
   toggleModal = (showModal) => {
@@ -59,12 +71,35 @@ class App extends Component {
 
   toggleMenu = () => {
     this.setState({ showMenu: !this.state.showMenu });
+    
   }
 
   isLoggedIn = () => {
     const loggedIn = localStorage.getItem('auth-token') ? true : false;
     if (this.state.loggedIn !== loggedIn) {
       this.setState({ loggedIn });
+    }
+  }
+
+  switchArticles = (articleSet) => {
+    let articles;
+    switch(articleSet) {
+      case 'all':
+        articles = this.state.allArticles;
+        this.setState({ articles });
+        break;
+      case 'saved':
+        articles = this.state.savedArticles;
+        this.setState({ articles });
+        break;
+      // case 'clickbait':
+      //   articles = this.state.clickbaitArticles
+      //   this.setState({ articles });
+      //   break;
+      default:
+        articles = this.state.allArticles;
+        this.setState({ articles });
+        break;
     }
   }
 
@@ -110,6 +145,8 @@ class App extends Component {
               loggedIn={this.state.loggedIn} 
               trendingTopics={this.state.trendingTopics}
               toggleLandingPage={this.toggleLandingPage}
+              switchArticles={this.switchArticles}
+              articles={this.state.articles}
             />}
           <NewsFeed>
             {this.state.articles.map( article => {
