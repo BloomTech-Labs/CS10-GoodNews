@@ -10,11 +10,10 @@ const Nav = (props) => {
       size='large'
       style={{
         boxShadow: '0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.2)',
-        // padding: '0 1.2em',
         backgroundColor: '#37bc9b',
         height: '5.5em'
       }}>
-      <Menu.Item position="left">
+      <Menu.Item position="left" onClick={props.toggleMenu}>
         <Icon name="sidebar" style={{ color: '#3d3d3d' }} size='large'/>
       </Menu.Item>
       <Menu.Item className="logo"

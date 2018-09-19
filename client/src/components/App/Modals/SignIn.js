@@ -109,7 +109,7 @@ class SignIn extends Component {
             </Grid.Column>
             {/* Display this only on mobile screens */}
             <Grid.Row only="mobile" centered onClick={() => this.props.toggleModal('register')}>
-              <span>"Don't have an account?"</span>
+              <span>{"Don't have an account?"}</span>
               <span style={{ color: '#37bc9b', paddingLeft: '0.5em' }}>Sign up</span>
             </Grid.Row>
           </Grid>

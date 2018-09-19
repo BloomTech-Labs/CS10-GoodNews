@@ -9,6 +9,7 @@ import Settings from './Modals/Settings'
 import NewsFeed from './NewsFeed/NewsFeed';
 import Article from './NewsFeed/Article/Article';
 import LandingPage from './LandingPage/LandingPage';
+import MainMenu from './Menu/MainMenu';
 
 // Production Server URL or localhost for local testing
 const url = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_SERVER : 'http://localhost:5000';
@@ -20,38 +21,106 @@ class App extends Component {
       visited: localStorage.getItem('visited'),
       loggedIn: false,
       showModal: '',
-      articles: []
+      showMenu: false,
+      articles: [],
+      allArticles: [],
+      savedArticles: [],
+      clickbaitArticles: [],
+      trendingTopics: []
     }
   }
 
   componentWillMount() {
     this.isLoggedIn();
     this.fetchArticles();
+    this.fetchTrendingTopics();
   }
 
   fetchArticles = () => {
     axios.get(`${url}/api/article`)
       .then( articles => {
-        this.setState({ articles: articles.data });
+        this.setState({ articles: articles.data, allArticles: articles.data })
       })
       .catch( err => {
-        console.log(err.message)
+        console.log(err)
+      })
+    // get top 5 keywords
+    // set trendingTopics
+  }
+
+  fetchTrendingTopics = () => {
+    axios.get(`${url}/api/article/topfive`)
+      .then( topics => {
+        const trendingTopics = topics.data.map( topic => {
+          return topic._id.keyword
+        })
+        this.setState({ trendingTopics });
+      })
+      .catch( err => {
+        console.log(err);
       })
   }
 
-  enterSite = () => {
-    localStorage.setItem('visited', true);
-    this.setState({ visited: true });
+  fetchArticlesByTopic = (topic) => {
+    axios.get(`${url}/api/article/${topic}`)
+      .then( articles => {
+        this.setState({ articles: articles.data });
+      })
+      .catch( err => console.log(err))
+  }
+
+  // fetchSavedArticles = () => {
+
+  // }
+
+  toggleLandingPage = () => {
+    let visited = localStorage.getItem('visited');
+    if (visited === 'false' || visited === false || visited === null) {
+      visited = true;
+    } else {
+      visited = false;
+    }
+    localStorage.setItem('visited', visited);
+    this.setState({ visited });
+    window.scrollTo(0,0);
+    console.log(this.state);
   }
 
   toggleModal = (showModal) => {
     this.setState({ showModal });
   }
 
+  toggleMenu = () => {
+    this.setState({ showMenu: !this.state.showMenu });
+    
+  }
+
   isLoggedIn = () => {
     const loggedIn = localStorage.getItem('auth-token') ? true : false;
     if (this.state.loggedIn !== loggedIn) {
       this.setState({ loggedIn });
+    }
+  }
+
+  switchArticles = (articleSet) => {
+    let articles;
+    switch(articleSet) {
+      case 'all':
+        articles = this.state.allArticles;
+        this.setState({ articles });
+        break;
+      case 'saved':
+        articles = this.state.savedArticles;
+        this.setState({ articles });
+        break;
+      // case 'clickbait':
+      //   articles = this.state.clickbaitArticles
+      //   this.setState({ articles });
+      //   break;
+      default:
+        articles = this.state.allArticles;
+        this.setState({ articles });
+        break;
     }
   }
 
@@ -89,7 +158,18 @@ class App extends Component {
     return (
       this.state.visited ? (
         <div className="App">
-          <Nav>{this.switchLoginLogout(this.state.loggedIn)}</Nav>
+          <Nav toggleMenu={this.toggleMenu}>
+            {this.switchLoginLogout(this.state.loggedIn)}
+          </Nav>
+          {this.state.showMenu && 
+            <MainMenu 
+              loggedIn={this.state.loggedIn} 
+              trendingTopics={this.state.trendingTopics}
+              toggleLandingPage={this.toggleLandingPage}
+              switchArticles={this.switchArticles}
+              articles={this.state.articles}
+              fetchArticlesByTopic={this.fetchArticlesByTopic}
+            />}
           <NewsFeed>
             {this.state.articles.map( article => {
               return (
@@ -103,7 +183,7 @@ class App extends Component {
           {this.switchModals(this.state.showModal)}
         </div>
       ) : (
-        <LandingPage enterSite={this.enterSite}/>
+        <LandingPage toggleLandingPage={this.toggleLandingPage}/>
       )
     );
   }
