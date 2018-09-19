@@ -69,7 +69,7 @@ function postLoginUser(req, res) {
     User.findOne({ username }).select('username _id password')
         .then((user) => {
         if (user) {
-            console.log(user);
+            // console.log(user);
             user.checkPassword(user, password)
             .then((isMatch) => {
             if (isMatch) {
