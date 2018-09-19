@@ -25,7 +25,7 @@ class App extends Component {
       articles: [],
       allArticles: [],
       savedArticles: [],
-      clickbaitArticles: [],
+      // clickbaitArticles: [],
       trendingTopics: []
     }
   }
@@ -69,9 +69,22 @@ class App extends Component {
       .catch( err => console.log(err))
   }
 
-  // fetchSavedArticles = () => {
-
-  // }
+  fetchSavedArticles = () => {
+    if (this.isLoggedIn()){
+      const config = {
+        headers: {
+          'authorization': localStorage.getItem('auth-token'),
+          'userid': localStorage.getItem("userid")
+        }
+      }
+      axios.get(`${url}/api/article/user-saved`, config)
+        .then( user => {
+          const savedArticles = user.data.saved_articles;
+          this.setState({ savedArticles });
+        })
+        .catch( err => console.log(err))
+    }
+  }
 
   toggleLandingPage = () => {
     let visited = localStorage.getItem('visited');
