@@ -3,8 +3,7 @@ import { Menu, Icon } from 'semantic-ui-react';
 
 const MainMenu = (props) => {
   const handleTopicClick = (e) => {
-    const topic = e.target.value;
-    console.log(e.target.value);
+    const topic = e.target.innerHTML;
     props.fetchArticlesByTopic(topic);
   }
 

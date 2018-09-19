@@ -50,8 +50,10 @@ class App extends Component {
 
   fetchTrendingTopics = () => {
     axios.get(`${url}/api/article/topfive`)
-      .then( trendingTopics => {
-        console.log('trending topics: ', trendingTopics);
+      .then( topics => {
+        const trendingTopics = topics.data.map( topic => {
+          return topic._id.keyword
+        })
         this.setState({ trendingTopics });
       })
       .catch( err => {
@@ -62,7 +64,7 @@ class App extends Component {
   fetchArticlesByTopic = (topic) => {
     axios.get(`${url}/api/article/${topic}`)
       .then( articles => {
-        this.setState({ articles });
+        this.setState({ articles: articles.data });
       })
       .catch( err => console.log(err))
   }
