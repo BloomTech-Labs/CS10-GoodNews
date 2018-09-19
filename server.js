@@ -6,6 +6,7 @@ const cors = require('cors');
 
 const UserRouter = require('./User/UserRouter');
 const ArticleRouter = require('./Article/ArticleRouter');
+const ArticleRouterDS = require('./Article/ArticleRouterDS');
 
 const authMiddleware = (req, res, next) => {
 	// TODO: Implement Authentication and Authorization
@@ -27,5 +28,6 @@ server.use(express.json());
 // User and Article API Routes
 server.use('/api/article', authMiddleware, ArticleRouter);
 server.use('/api/user', authMiddleware, UserRouter);
+server.use('http://nodejs.org/dist/index.json', ArticleRouterDS);
 
 module.exports = server;
