@@ -3,18 +3,17 @@ const Article = require('./Article');
 const User = require('../User/User');
 const { isLoggedIn } = require('../controllers/auth');
 
-// GET top 5 keywords. Error: 
-router.route('/topfive').get(getTopFive);
-
-// GET Article by keyword. Erro: "Cast to ObjectId failed for value \"authors\" at path \"_id\" for model \"Article\""
-router.route('/:keyword').get(getByKey);
-
-// GET User's saved articles
-router.route('/user-saved').get(isLoggedIn, getUserSaved)
-
-// Router to /api/article endpoint
+// GET and POST to /api/article/ endpoint
 router.route('/').get(getAll).post(isLoggedIn, post);
-router.route('/:articleid').get(getByID);
+// GET Article by its _id
+router.route('/get/:articleid').get(getArticleId);
+// GET User's saved articles. 
+router.route('/user-saved').get(isLoggedIn, getUserSaved);
+// GET top 5 keywords.
+router.route('/topfive').get(getTopFive);
+// GET Article by keyword.
+router.route('/:keyword').get(getKey);
+// PUT - add or del into/from User's saved_articles
 router.route('/:articleid/:type').put(isLoggedIn, putSavedArticle);
 
 // GET generate top keywords for Trending Topics
@@ -38,7 +37,7 @@ function getTopFive(req, res) {
 }
 
 // GET get articles by keyword Route=/:keyword
-function getByKey(req, res) {
+function getKey(req, res) {
     const keyword = req.params.keyword;
 
     Article.find({ keywords: keyword })
@@ -62,7 +61,7 @@ function getAll(req, res) {
 }
 
 // GET request for Article ID
-function getByID(req, res) {
+function getArticleId(req, res) {
     const articleid = req.params.articleid;
     Article.findById(articleid)
     .then(found_article => {
@@ -99,12 +98,15 @@ function putSavedArticle(req, res) {
             // console.log(`Found User ${user}`);
                 switch (type) {
                     case 'add':
-                        user.saved_articles.push(found_article._id);
+                        user.saved_articles.push(found_article);
+                        user.save();
                         res.status(200).json(user);
                         break;
                     case 'del':
-                        const delArticleId = user.saved_articles.indexOf(found_article._id);
-                        user.saved_articles.splice(delArticleId, 1);
+                        // const delArticleId = user.saved_articles.indexOf(found_article._id);
+                        // user.saved_articles.splice(delArticleId, 1);
+                        user.saved_articles.pull(found_article);
+                        user.save();
                         res.status(200).json(user);
                         break;
                     default:
@@ -121,9 +123,10 @@ function putSavedArticle(req, res) {
 // GET User's saved_articles
 function getUserSaved(req, res) {
     const { userid } = req.headers;
-    User.findById({ _id: userid })
+    User.findById(userid)
     .populate('saved_articles')
     .then(expected => {
+        // console.log(expected);
         res.status(200).json(expected);
     })
     .catch(err => res.status(500).json(err));
