@@ -2,6 +2,11 @@ import React from 'react';
 import { Menu, Icon } from 'semantic-ui-react';
 
 const MainMenu = (props) => {
+  const handleTopicClick = (e) => {
+    const topic = e.target.innerHTML;
+    props.fetchArticlesByTopic(topic);
+  }
+
   return (
     <Menu className='main-menu' borderless secondary vertical fixed='top'>
       {/* <Search size='large' results={props.articles}/> */}
@@ -20,7 +25,7 @@ const MainMenu = (props) => {
         <Menu secondary vertical 
           items={props.trendingTopics}
           className='trending-topics'
-          />
+          onItemClick={handleTopicClick}/>
       </Menu.Item>
       <Menu.Item onClick={props.toggleLandingPage}>
         <Icon name='info circle' size='large' color='grey'/>

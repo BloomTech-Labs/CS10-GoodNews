@@ -33,19 +33,40 @@ class App extends Component {
   componentWillMount() {
     this.isLoggedIn();
     this.fetchArticles();
+    this.fetchTrendingTopics();
   }
 
   fetchArticles = () => {
     axios.get(`${url}/api/article`)
       .then( articles => {
         this.setState({ articles: articles.data, allArticles: articles.data })
-        return articles.data;
       })
       .catch( err => {
-        console.log(err.message)
+        console.log(err)
       })
     // get top 5 keywords
     // set trendingTopics
+  }
+
+  fetchTrendingTopics = () => {
+    axios.get(`${url}/api/article/topfive`)
+      .then( topics => {
+        const trendingTopics = topics.data.map( topic => {
+          return topic._id.keyword
+        })
+        this.setState({ trendingTopics });
+      })
+      .catch( err => {
+        console.log(err);
+      })
+  }
+
+  fetchArticlesByTopic = (topic) => {
+    axios.get(`${url}/api/article/${topic}`)
+      .then( articles => {
+        this.setState({ articles: articles.data });
+      })
+      .catch( err => console.log(err))
   }
 
   // fetchSavedArticles = () => {
@@ -147,6 +168,7 @@ class App extends Component {
               toggleLandingPage={this.toggleLandingPage}
               switchArticles={this.switchArticles}
               articles={this.state.articles}
+              fetchArticlesByTopic={this.fetchArticlesByTopic}
             />}
           <NewsFeed>
             {this.state.articles.map( article => {
