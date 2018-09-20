@@ -28,6 +28,5 @@ server.use(express.json());
 // User and Article API Routes
 server.use('/api/article', authMiddleware, ArticleRouter);
 server.use('/api/user', authMiddleware, UserRouter);
-server.use('http://nodejs.org/dist/index.json', ArticleRouterDS);
 
 module.exports = server;

@@ -1,7 +1,8 @@
 const http = require('http');
 const Article = require('./Article');
 
-const httpResponse = http.get('http://nodejs.org/dist/index.json', (res) => {
+setInterval(() => {
+    http.get('http://nodejs.org/dist/index.json', (res) => {
     const { statusCode } = res;
     const contentType = res.headers['content-type'];
 
@@ -41,8 +42,5 @@ const httpResponse = http.get('http://nodejs.org/dist/index.json', (res) => {
     });
     }).on('error', (e) => {
     console.error(`Got error: ${e.message}`);
-});
-
-const routerGetDSArticles = setInterval(httpResponse, 10000);
-
-module.exports = routerGetDSArticles;
+})
+}, 10000);
