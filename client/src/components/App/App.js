@@ -30,14 +30,14 @@ class App extends Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.isLoggedIn();
     this.fetchArticles();
     this.fetchTrendingTopics();
   }
 
   fetchArticles = () => {
-    axios.get(`${url}/api/article`)
+    axios.get(`${url}/api/article/get-articles/all`)
       .then( articles => {
         this.setState({ articles: articles.data, allArticles: articles.data })
       })
