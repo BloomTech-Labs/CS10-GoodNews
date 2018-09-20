@@ -24,7 +24,6 @@ class App extends Component {
       showMenu: false,
       articles: [],
       allArticles: [],
-      // clickbaitArticles: [],
       trendingTopics: []
     }
   }
@@ -43,8 +42,16 @@ class App extends Component {
       .catch( err => {
         console.log(err)
       })
-    // get top 5 keywords
-    // set trendingTopics
+  }
+
+  fetchClickbait = () => {
+    axios.get(`${url}/api/article/flag/1`)
+      .then( articles => {
+        this.setState({ articles: articles.data })
+      })
+      .catch( err => {
+        console.log(err)
+      })
   }
 
   fetchTrendingTopics = () => {
@@ -124,10 +131,9 @@ class App extends Component {
       case 'saved':
         this.fetchSavedArticles();
         break;
-      // case 'clickbait':
-      //   articles = this.state.clickbaitArticles
-      //   this.setState({ articles });
-      //   break;
+      case 'clickbait':
+        this.fetchClickbait();
+        break;
       default:
         articles = this.state.allArticles;
         this.setState({ articles });
