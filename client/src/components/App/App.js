@@ -35,7 +35,7 @@ class App extends Component {
   }
 
   fetchArticles = () => {
-    axios.get(`${url}/api/article/flag/all`)
+    axios.get(`${url}/api/article/get-articles/all`)
       .then( articles => {
         this.setState({ articles: articles.data, allArticles: articles.data })
       })
@@ -45,7 +45,7 @@ class App extends Component {
   }
 
   fetchClickbait = () => {
-    axios.get(`${url}/api/article/flag/1`)
+    axios.get(`${url}/api/article/get-articles/1`)
       .then( articles => {
         this.setState({ articles: articles.data })
       })
