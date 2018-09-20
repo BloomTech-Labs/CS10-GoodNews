@@ -4,7 +4,7 @@ const User = require('../User/User');
 const { isLoggedIn } = require('../controllers/auth');
 
 // GET and POST to /api/article/ endpoint
-router.route('/').get(getAll).post(isLoggedIn, post);
+router.route('/get-articles/:flag').get(getArticles).post(isLoggedIn, post);
 // GET Article by its _id
 router.route('/get/:articleid').get(getArticleId);
 // GET User's saved articles. 
@@ -49,15 +49,26 @@ function getKey(req, res) {
     });
 }
 
-// GET request for all articles
-function getAll(req, res) {
-    Article.find()
-        .then(expected => {
-            res.status(200).json(expected);
-        })
-        .catch(err => {
-            res.status(500).json(err.message);
-        });
+// GET request for articles
+function getArticles(req, res) {
+    const flag = req.params.flag;
+    switch (flag) {
+        case '0':
+            Article.find({ clickbait: 0})
+            .then(found_articles => res.status(200).json(found_articles))
+            .catch(err => res.status(500).json(err));
+            break;
+        case '1':
+            Article.find({ clickbait: 1 })
+            .then(found_articles => res.status(200).json(found_articles))
+            .catch(err => res.status(500).json(err));
+            break;
+        default:
+            Article.find()
+            .then(expected => res.status(200).json(expected))
+            .catch(err => res.status(500).json(err.message));
+            break;
+    }
 }
 
 // GET request for Article ID
@@ -94,20 +105,30 @@ function putSavedArticle(req, res) {
     .then(found_article => {
         // console.log(`Found Article ${found_article}`);
         User.findById({ _id: userid })
-        .then(user => {
+        .then(foundUser => {
             // console.log(`Found User ${user}`);
                 switch (type) {
                     case 'add':
-                        user.saved_articles.push(found_article);
-                        user.save();
-                        res.status(200).json(user);
+                        foundUser.saved_articles.push(found_article);
+                        User.findByIdAndUpdate(userid, { saved_articles: foundUser.saved_articles })
+                            .then(() => {
+                                User.find({_id: userid})
+                                .then(updatedUser => res.status(200).json(updatedUser))
+                                .catch(err => res.status(500).json(err))
+                            })
+                            .catch(err => res.status(500).json(err));
                         break;
                     case 'del':
                         // const delArticleId = user.saved_articles.indexOf(found_article._id);
                         // user.saved_articles.splice(delArticleId, 1);
-                        user.saved_articles.pull(found_article);
-                        user.save();
-                        res.status(200).json(user);
+                        foundUser.saved_articles.pull(found_article);
+                        User.findByIdAndUpdate(userid, { saved_articles: foundUser.saved_articles })
+                            .then(() => {
+                                User.find({_id: userid})
+                                .then(deletedUser => res.status(200).json(deletedUser))
+                                .catch(err => res.status(500).json(err))
+                            })
+                            .catch(err => res.status(500).json(err))
                         break;
                     default:
                         res.status(500).json('Error adding/deleting an article!');
