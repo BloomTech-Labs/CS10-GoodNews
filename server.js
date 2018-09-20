@@ -6,7 +6,7 @@ const cors = require('cors');
 
 const UserRouter = require('./User/UserRouter');
 const ArticleRouter = require('./Article/ArticleRouter');
-const ArticleRouterDS = require('./Article/ArticleRouterDS');
+// const ArticleRouterDS = require('./Article/ArticleRouterDS');
 
 const authMiddleware = (req, res, next) => {
 	// TODO: Implement Authentication and Authorization
