@@ -24,7 +24,6 @@ class App extends Component {
       showMenu: false,
       articles: [],
       allArticles: [],
-      savedArticles: [],
       // clickbaitArticles: [],
       trendingTopics: []
     }
@@ -37,7 +36,7 @@ class App extends Component {
   }
 
   fetchArticles = () => {
-    axios.get(`${url}/api/article`)
+    axios.get(`${url}/api/article/flag/all`)
       .then( articles => {
         this.setState({ articles: articles.data, allArticles: articles.data })
       })
@@ -70,7 +69,7 @@ class App extends Component {
   }
 
   fetchSavedArticles = () => {
-    if (this.isLoggedIn()){
+    if (this.state.loggedIn){
       const config = {
         headers: {
           'authorization': localStorage.getItem('auth-token'),
@@ -80,7 +79,8 @@ class App extends Component {
       axios.get(`${url}/api/article/user-saved`, config)
         .then( user => {
           const savedArticles = user.data.saved_articles;
-          this.setState({ savedArticles });
+          this.setState({ articles: savedArticles });
+          window.scrollTo(0,0);
         })
         .catch( err => console.log(err))
     }
@@ -96,7 +96,6 @@ class App extends Component {
     localStorage.setItem('visited', visited);
     this.setState({ visited });
     window.scrollTo(0,0);
-    console.log(this.state);
   }
 
   toggleModal = (showModal) => {
@@ -105,11 +104,11 @@ class App extends Component {
 
   toggleMenu = () => {
     this.setState({ showMenu: !this.state.showMenu });
-    
   }
 
   isLoggedIn = () => {
     const loggedIn = localStorage.getItem('auth-token') ? true : false;
+    console.log("is logged in? ", loggedIn);
     if (this.state.loggedIn !== loggedIn) {
       this.setState({ loggedIn });
     }
@@ -123,8 +122,7 @@ class App extends Component {
         this.setState({ articles });
         break;
       case 'saved':
-        articles = this.state.savedArticles;
-        this.setState({ articles });
+        this.fetchSavedArticles();
         break;
       // case 'clickbait':
       //   articles = this.state.clickbaitArticles
