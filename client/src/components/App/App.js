@@ -30,7 +30,7 @@ class App extends Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.isLoggedIn();
     this.fetchArticles();
     this.fetchTrendingTopics();
