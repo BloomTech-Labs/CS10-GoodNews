@@ -4,7 +4,7 @@ const User = require('../User/User');
 const { isLoggedIn } = require('../controllers/auth');
 
 // POST to /api/article/ endpoint
-router.route('/').post(post);
+router.route('/').post(isLoggedIn, post);
 // GET Articles with either 1 or 0 flag for clickbait
 router.route('/get-articles/:flag').get(getArticles);
 // GET Article by its _id
