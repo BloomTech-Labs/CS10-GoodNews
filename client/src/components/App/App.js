@@ -37,7 +37,7 @@ class App extends Component {
   }
 
   fetchArticles = () => {
-    axios.get(`${url}/api/article/get-articles/all`)
+    axios.get(`${url}/api/article/get-articles/0`)
       .then( articles => {
         this.setState({ articles: articles.data, allArticles: articles.data })
       })

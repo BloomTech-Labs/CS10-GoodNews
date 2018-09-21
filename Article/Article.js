@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 // const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const Article = mongoose.Schema({
-    id: Number,
+    id: String,
     name: String,
     url: String,
     timestamp: Date,
@@ -10,7 +10,7 @@ const Article = mongoose.Schema({
     keywords: [String],
     summary: String,
     content: String,
-    clickbait: Number
+    clickbait: String
 });
 
 module.exports = mongoose.model('Article', Article);

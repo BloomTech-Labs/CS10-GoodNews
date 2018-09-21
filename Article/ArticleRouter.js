@@ -4,7 +4,9 @@ const User = require('../User/User');
 const { isLoggedIn } = require('../controllers/auth');
 
 // GET and POST to /api/article/ endpoint
-router.route('/get-articles/:flag').get(getArticles).post(isLoggedIn, post);
+router.route('/get-articles/:flag').get(getArticles)
+// POST to post articles
+router.route('/post-articles').post(isLoggedIn, post);
 // GET Article by its _id
 router.route('/get/:articleid').get(getArticleId);
 // GET User's saved articles. 
@@ -21,6 +23,7 @@ function getTopFive(req, res) {
     // { $match: {timestamp: {"$gt": new Date(Date.now() - 24*60*60 * 1000)}}},
     Article
     .aggregate([
+        { $match: { clickbait: 0 }},
         { $project: { keywords: 1 }},
         { $unwind: '$keywords' },
         { $group: {
@@ -52,19 +55,23 @@ function getKey(req, res) {
 // GET request for articles
 function getArticles(req, res) {
     const flag = req.params.flag;
+    // console.log(`typeof ${flag}`);
     switch (flag) {
         case '0':
-            Article.find({ clickbait: 0})
+            Article.find({ clickbait: '0' })
+            .sort({ timestamp: -1 })
             .then(found_articles => res.status(200).json(found_articles))
             .catch(err => res.status(500).json(err));
             break;
         case '1':
-            Article.find({ clickbait: 1 })
+            Article.find({ clickbait: '1' })
+            .sort({ timestamp: -1 })
             .then(found_articles => res.status(200).json(found_articles))
             .catch(err => res.status(500).json(err));
             break;
         default:
             Article.find()
+            .sort({ timestamp: -1 })
             .then(expected => res.status(200).json(expected))
             .catch(err => res.status(500).json(err.message));
             break;
