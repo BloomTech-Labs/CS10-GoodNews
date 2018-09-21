@@ -4,7 +4,7 @@ const User = require('../User/User');
 const { isLoggedIn } = require('../controllers/auth');
 
 // POST to /api/article/ endpoint
-router.route('/').post(isLoggedIn, post);
+router.route('/post-article').post(isLoggedIn, post);
 // GET Articles with either 1 or 0 flag for clickbait
 router.route('/get-articles/:flag').get(getArticles);
 // GET Article by its _id
@@ -23,8 +23,8 @@ function getTopFive(req, res) {
     // { $match: {timestamp: {"$gt": new Date(Date.now() - 24*60*60 * 1000)}}},
     Article
     .aggregate([
-        { $match: { clickbait: 0 }},
-        { $project: { keywords: 1}},
+        { $match: { 'clickbait': '0' }},
+        { $project: { keywords: 1 }},
         { $unwind: '$keywords' },
         { $group: {
             _id: { keyword: '$keywords' },
@@ -43,7 +43,8 @@ function getTopFive(req, res) {
 function getKey(req, res) {
     const keyword = req.params.keyword;
 
-    Article.find({ keywords: keyword, clickbait: 0 })
+    Article.find({ keywords: keyword, clickbait: '0' })
+    .sort({ timestamp: -1 })
     .then(articles => {
         res.status(200).json(articles);
     })
@@ -55,19 +56,23 @@ function getKey(req, res) {
 // GET request for articles
 function getArticles(req, res) {
     const flag = req.params.flag;
+    // console.log(`typeof ${flag}`);
     switch (flag) {
         case '0':
-            Article.find({ clickbait: 0})
+            Article.find({ clickbait: '0' })
+            .sort({ timestamp: -1 })
             .then(found_articles => res.status(200).json(found_articles))
             .catch(err => res.status(500).json(err));
             break;
         case '1':
-            Article.find({ clickbait: 1 })
+            Article.find({ clickbait: '1' })
+            .sort({ timestamp: -1 })
             .then(found_articles => res.status(200).json(found_articles))
             .catch(err => res.status(500).json(err));
             break;
         default:
             Article.find()
+            .sort({ timestamp: -1 })
             .then(expected => res.status(200).json(expected))
             .catch(err => res.status(500).json(err.message));
             break;
@@ -144,11 +149,11 @@ function putSavedArticle(req, res) {
     });
 }
 
-// GET User's saved_articles
+// GET User's saved_articles.
 function getUserSaved(req, res) {
     const { userid } = req.headers;
     User.findById(userid)
-    .populate('saved_articles')
+    .populate({ path: 'saved_articles', options: { sort: { timestamp: -1 }}})
     .then(expected => {
         // console.log(expected);
         res.status(200).json(expected);
