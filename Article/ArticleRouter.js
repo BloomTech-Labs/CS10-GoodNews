@@ -23,7 +23,7 @@ function getTopFive(req, res) {
     // { $match: {timestamp: {"$gt": new Date(Date.now() - 24*60*60 * 1000)}}},
     Article
     .aggregate([
-        { $match: { clickbait: 0 }},
+        { $match: { 'clickbait': '0' }},
         { $project: { keywords: 1 }},
         { $unwind: '$keywords' },
         { $group: {
@@ -43,7 +43,7 @@ function getTopFive(req, res) {
 function getKey(req, res) {
     const keyword = req.params.keyword;
 
-    Article.find({ keywords: keyword, clickbait: 0 })
+    Article.find({ keywords: keyword, clickbait: '0' })
     .then(articles => {
         res.status(200).json(articles);
     })
