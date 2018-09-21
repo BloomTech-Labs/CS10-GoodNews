@@ -24,8 +24,6 @@ class App extends Component {
       showMenu: false,
       articles: [],
       allArticles: [],
-      savedArticles: [],
-      clickbaitArticles: [],
       trendingTopics: []
     }
   }
@@ -37,15 +35,23 @@ class App extends Component {
   }
 
   fetchArticles = () => {
-    axios.get(`${url}/api/article/get-articles/all`)
+    axios.get(`${url}/api/article/get-articles/0`)
       .then( articles => {
         this.setState({ articles: articles.data, allArticles: articles.data })
       })
       .catch( err => {
         console.log(err)
       })
-    // get top 5 keywords
-    // set trendingTopics
+  }
+
+  fetchClickbait = () => {
+    axios.get(`${url}/api/article/get-articles/1`)
+      .then( articles => {
+        this.setState({ articles: articles.data })
+      })
+      .catch( err => {
+        console.log(err)
+      })
   }
 
   fetchTrendingTopics = () => {
@@ -69,9 +75,23 @@ class App extends Component {
       .catch( err => console.log(err))
   }
 
-  // fetchSavedArticles = () => {
-
-  // }
+  fetchSavedArticles = () => {
+    if (this.state.loggedIn){
+      const config = {
+        headers: {
+          'authorization': localStorage.getItem('auth-token'),
+          'userid': localStorage.getItem("userid")
+        }
+      }
+      axios.get(`${url}/api/article/user-saved`, config)
+        .then( user => {
+          const savedArticles = user.data.saved_articles;
+          this.setState({ articles: savedArticles });
+          window.scrollTo(0,0);
+        })
+        .catch( err => console.log(err))
+    }
+  }
 
   toggleLandingPage = () => {
     let visited = localStorage.getItem('visited');
@@ -83,7 +103,6 @@ class App extends Component {
     localStorage.setItem('visited', visited);
     this.setState({ visited });
     window.scrollTo(0,0);
-    console.log(this.state);
   }
 
   toggleModal = (showModal) => {
@@ -92,11 +111,11 @@ class App extends Component {
 
   toggleMenu = () => {
     this.setState({ showMenu: !this.state.showMenu });
-    
   }
 
   isLoggedIn = () => {
     const loggedIn = localStorage.getItem('auth-token') ? true : false;
+    console.log("is logged in? ", loggedIn);
     if (this.state.loggedIn !== loggedIn) {
       this.setState({ loggedIn });
     }
@@ -110,13 +129,11 @@ class App extends Component {
         this.setState({ articles });
         break;
       case 'saved':
-        articles = this.state.savedArticles;
-        this.setState({ articles });
+        this.fetchSavedArticles();
         break;
-      // case 'clickbait':
-      //   articles = this.state.clickbaitArticles
-      //   this.setState({ articles });
-      //   break;
+      case 'clickbait':
+        this.fetchClickbait();
+        break;
       default:
         articles = this.state.allArticles;
         this.setState({ articles });
