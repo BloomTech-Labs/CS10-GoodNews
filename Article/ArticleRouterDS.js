@@ -1,7 +1,7 @@
 const https = require('https');
 const Article = require('./Article');
-const urlDs = 'https://lab7goodnews-ds.herokuapp.com/stories/';
-// const urlDs = 'https://lab7goodnews-ds.herokuapp.com/stories_2/';
+// const urlDs = 'https://lab7goodnews-ds.herokuapp.com/stories/';
+const urlDs = 'https://lab7goodnews-ds.herokuapp.com/stories_2/';
 
 setInterval(() => {
     https.get(urlDs, (res) => {
@@ -35,15 +35,15 @@ setInterval(() => {
 
             Article
             .insertMany(parsedData, (err, data) => {
-                if (err) console.log(err);
+                if (err) console.log('insertMany error: ', err);
                 // console.log(data);
             });
 
         } catch (e) {
-        console.error(e.message);
+        console.error('catch error: ', e.message);
         }
     });
     }).on('error', (e) => {
     console.error(`Got error: ${e.message}`);
 })
-}, 10000);
+}, 600000);
