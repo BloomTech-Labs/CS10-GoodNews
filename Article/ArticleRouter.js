@@ -149,7 +149,7 @@ function putSavedArticle(req, res) {
     });
 }
 
-// GET User's saved_articles. TODO-test display in descending order by timestamp
+// GET User's saved_articles.
 function getUserSaved(req, res) {
     const { userid } = req.headers;
     User.findById(userid)
