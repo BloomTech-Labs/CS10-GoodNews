@@ -3,10 +3,10 @@ const Article = require('./Article');
 const User = require('../User/User');
 const { isLoggedIn } = require('../controllers/auth');
 
-// GET and POST to /api/article/ endpoint
-router.route('/get-articles/:flag').get(getArticles)
-// POST to post articles
-router.route('/post-articles').post(isLoggedIn, post);
+// POST to /api/article/ endpoint
+router.route('/post-article').post(isLoggedIn, post);
+// GET Articles with either 1 or 0 flag for clickbait
+router.route('/get-articles/:flag').get(getArticles);
 // GET Article by its _id
 router.route('/get/:articleid').get(getArticleId);
 // GET User's saved articles. 
@@ -43,7 +43,7 @@ function getTopFive(req, res) {
 function getKey(req, res) {
     const keyword = req.params.keyword;
 
-    Article.find({ keywords: keyword })
+    Article.find({ keywords: keyword, clickbait: 0 })
     .then(articles => {
         res.status(200).json(articles);
     })

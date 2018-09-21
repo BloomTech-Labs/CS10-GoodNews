@@ -17,7 +17,12 @@ const MainMenu = (props) => {
       {props.loggedIn &&
         <Menu.Item onClick={()=>props.switchArticles('saved')}>
           <Icon name='save' size='large' color='grey'/>
-          Saved articles
+          Reading list
+        </Menu.Item>}
+      {props.loggedIn &&
+        <Menu.Item onClick={()=>props.switchArticles('clickbait')}>
+          <Icon name='edit' size='large' color='grey'/>
+          Evaluate clickbait
         </Menu.Item>}
       <Menu.Item>
         <Icon name='feed' size='large' color='grey'/>
