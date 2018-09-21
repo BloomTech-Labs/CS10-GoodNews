@@ -1,7 +1,7 @@
 const https = require('https');
 const Article = require('./Article');
-// const urlDs = 'https://lab7goodnews-ds.herokuapp.com/stories/';
-const urlDs = 'https://lab7goodnews-ds.herokuapp.com/stories_2/';
+const urlDs = 'https://lab7goodnews-ds.herokuapp.com/stories/';
+// const urlDs = 'https://lab7goodnews-ds.herokuapp.com/stories_2/';
 
 setInterval(() => {
     https.get(urlDs, (res) => {
