@@ -148,7 +148,7 @@ function putSavedArticle(req, res) {
         res.status(500).json(err.message);
     });
 }
-populate({path: 'Members', options: { sort: { 'created_at': -1 } } })
+
 // GET User's saved_articles. TODO-test display in descending order by timestamp
 function getUserSaved(req, res) {
     const { userid } = req.headers;
