@@ -31,13 +31,13 @@ setInterval(() => {
     res.on('end', () => {
         try {
         const parsedData = JSON.parse(rawData);
-        console.log('parsedData: ', parsedData);
+        // console.log('parsedData: ', parsedData);
 
-            // Article
-            // .insertMany(parsedData, (err, data) => {
-            //     if (err) console.log(err);
-            //     console.log(data);
-            // });
+            Article
+            .insertMany(parsedData, (err, data) => {
+                if (err) console.log(err);
+                // console.log(data);
+            });
 
         } catch (e) {
         console.error(e.message);
@@ -46,4 +46,4 @@ setInterval(() => {
     }).on('error', (e) => {
     console.error(`Got error: ${e.message}`);
 })
-}, 5000);
+}, 10000);

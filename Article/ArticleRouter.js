@@ -44,6 +44,7 @@ function getKey(req, res) {
     const keyword = req.params.keyword;
 
     Article.find({ keywords: keyword, clickbait: '0' })
+    .sort({ timestamp: -1 })
     .then(articles => {
         res.status(200).json(articles);
     })
@@ -147,12 +148,12 @@ function putSavedArticle(req, res) {
         res.status(500).json(err.message);
     });
 }
-
-// GET User's saved_articles
+populate({path: 'Members', options: { sort: { 'created_at': -1 } } })
+// GET User's saved_articles. TODO-test display in descending order by timestamp
 function getUserSaved(req, res) {
     const { userid } = req.headers;
     User.findById(userid)
-    .populate('saved_articles')
+    .populate({ path: 'saved_articles', options: { sort: { timestamp: -1 }}})
     .then(expected => {
         // console.log(expected);
         res.status(200).json(expected);
