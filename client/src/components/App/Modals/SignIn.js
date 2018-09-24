@@ -72,9 +72,9 @@ class SignIn extends Component {
               }}>
               <Header size="large" textAlign="center">CREATE AN ACCOUNT</Header>
               <List bulleted>
-                <List.Item>Save articles (coming soon)</List.Item>
+                <List.Item>Save articles for later</List.Item>
+                <List.Item>Help us improve by reporting clickbait</List.Item>
                 <List.Item>Get the weather in location (coming soon)</List.Item>
-                <List.Item>Comment on articles (coming soon)</List.Item>
               </List>
               <Divider/>
               <Button primary style={{ backgroundColor: '#37bc9b' }} onClick={() => this.props.toggleModal('register')}>
@@ -98,10 +98,12 @@ class SignIn extends Component {
               {this.state.failLogin && <span style={{color:'red'}}>Username or Password is incorrect</span>}
               <Form onSubmit={this.handleSubmit}>
                 <Form.Field required>
-                  <input onChange={this.handleInput} placeholder="Username" name="username" value={this.state.username}/>
+                  <label style={{ textAlign: 'left' }}>Username</label>
+                  <input onChange={this.handleInput} name="username" value={this.state.username}/>
                 </Form.Field>
                 <Form.Field required>
-                  <input onChange={this.handleInput} placeholder="Password" type="password" name="password" value={this.state.password}/>
+                  <label style={{ textAlign: 'left' }}>Password</label>
+                  <input onChange={this.handleInput} type="password" name="password" value={this.state.password}/>
                 </Form.Field>
                 <Divider/>
                 <Button type='submit'>SIGN IN</Button>
