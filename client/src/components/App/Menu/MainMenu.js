@@ -16,16 +16,11 @@ const MainMenu = (props) => {
       </Menu.Item>
       {props.loggedIn &&
         <Menu.Item onClick={()=>props.switchArticles('saved')}>
-          <Icon name='save' size='large' color='grey'/>
+          <Icon name='list ul' size='large' color='grey'/>
           Reading list
         </Menu.Item>}
-      {props.loggedIn &&
-        <Menu.Item onClick={()=>props.switchArticles('clickbait')}>
-          <Icon name='edit' size='large' color='grey'/>
-          Evaluate clickbait
-        </Menu.Item>}
       <Menu.Item>
-        <Icon name='feed' size='large' color='grey'/>
+        <Icon name='tags' size='large' color='grey'/>
         Trending topics:
         <Menu secondary vertical 
           items={props.trendingTopics}
@@ -36,6 +31,11 @@ const MainMenu = (props) => {
         <Icon name='info circle' size='large' color='grey'/>
         About Good News
       </Menu.Item>
+      {props.loggedIn &&
+        <Menu.Item onClick={()=>props.switchArticles('clickbait')}>
+          <Icon name='edit' size='large' color='grey'/>
+          Evaluate clickbait
+        </Menu.Item>}
     </Menu>
   );
 }
