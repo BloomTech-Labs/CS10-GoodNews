@@ -11,6 +11,8 @@ class Weather extends Component {
       current: null,
       forecast: null,
       location: null,
+      lat: null,
+      long: null
     }
   }
 
@@ -19,16 +21,18 @@ class Weather extends Component {
   }
 
   getWeather = () => {
-    const zip = '20001'
-    axios.get(`http://api.apixu.com/v1/forecast.json?key=61e020a41ccd4b1d945190151182409&q=${zip}&days=5`)
+    const weatherAPI = 'http://api.apixu.com/v1/forecast.json'
+    const key = '61e020a41ccd4b1d945190151182409'
+    const userZip = localStorage.getItem('location')
+    const location =  userZip ? userZip : 'auto:ip'
+
+    axios.get(`${weatherAPI}?key=${key}&q=${location}&days=5`)
       .then( weather => {
-        console.log(weather.data)
         this.setState({ 
           current: weather.data.current,
           forecast: weather.data.forecast.forecastday,
           location: weather.data.location,
         })
-        console.log(this.state)
       })
   }
 
