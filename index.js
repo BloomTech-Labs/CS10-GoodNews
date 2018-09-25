@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const server = require('./server');
+// const server = require('./passport/twitter');
 const path = require('path');
 const port = process.env.PORT || 5000;
 const mongoose = require('mongoose');
@@ -21,5 +22,5 @@ mongoose
     });
 
 // For serving static files to root endpoint
-server.use(express.static(path.join(__dirname, 'client', 'build')));
+// server.use(express.static(path.join(__dirname, 'client', 'build')));
 server.listen(port, () => console.log(`=== API running on port: ${port}! ===`));

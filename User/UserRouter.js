@@ -95,15 +95,19 @@ function postLoginUser(req, res) {
 // GET specific user by its id
 function getById(req, res) {
     // const userid = req.params.userid;
-    const userid = req.headers.userid;
-    User.findById(userid)
-        .populate('saved_articles')
-        .then(expected => {
-            res.status(200).json(expected);
-        })
-        .catch(err => {
-            res.status(500).json(err.message);
-        });
+    if (!req.headers.userid) {
+        console.log(req);
+    } else {
+        const userid = req.headers.userid;
+        User.findById(userid)
+            .populate('saved_articles')
+            .then(expected => {
+                res.status(200).json(expected);
+            })
+            .catch(err => {
+                res.status(500).json(err.message);
+            });
+    }
 }
 
 // PUT request
