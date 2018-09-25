@@ -22,6 +22,7 @@ class App extends Component {
       loggedIn: false,
       showModal: '',
       showMenu: false,
+      // articleOptions: '',
       articles: [],
       allArticles: [],
       trendingTopics: []
@@ -39,9 +40,7 @@ class App extends Component {
       .then( articles => {
         this.setState({ articles: articles.data, allArticles: articles.data })
       })
-      .catch( err => {
-        console.log(err)
-      })
+      .catch( err => console.log(err))
   }
 
   fetchClickbait = () => {
@@ -49,9 +48,7 @@ class App extends Component {
       .then( articles => {
         this.setState({ articles: articles.data })
       })
-      .catch( err => {
-        console.log(err)
-      })
+      .catch( err => console.log(err))
   }
 
   fetchTrendingTopics = () => {
@@ -62,9 +59,7 @@ class App extends Component {
         })
         this.setState({ trendingTopics });
       })
-      .catch( err => {
-        console.log(err);
-      })
+      .catch( err => console.log(err))
   }
 
   fetchArticlesByTopic = (topic) => {
@@ -115,7 +110,7 @@ class App extends Component {
 
   isLoggedIn = () => {
     const loggedIn = localStorage.getItem('auth-token') ? true : false;
-    console.log("is logged in? ", loggedIn);
+    // const articleOptions = loggedIn ? 'loggedIn' : ''
     if (this.state.loggedIn !== loggedIn) {
       this.setState({ loggedIn });
     }
@@ -123,13 +118,17 @@ class App extends Component {
 
   switchArticles = (articleSet) => {
     let articles;
+    // let articleOptions;
     switch(articleSet) {
       case 'all':
         articles = this.state.allArticles;
+        // articleOptions = this.state.loggedIn ? 'loggedIn' : '';
         this.setState({ articles });
         break;
       case 'saved':
         this.fetchSavedArticles();
+        // articleOptions = 'saved'
+        // this.setState({ articleOptions })
         break;
       case 'clickbait':
         this.fetchClickbait();
