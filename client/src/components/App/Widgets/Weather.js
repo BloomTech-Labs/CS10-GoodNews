@@ -11,8 +11,6 @@ class Weather extends Component {
       current: null,
       forecast: null,
       location: null,
-      lat: null,
-      long: null
     }
   }
 
@@ -21,25 +19,45 @@ class Weather extends Component {
   }
 
   getWeather = () => {
-    const weatherAPI = 'http://api.apixu.com/v1/forecast.json'
-    const key = '61e020a41ccd4b1d945190151182409'
-    const userZip = localStorage.getItem('location')
-    const location =  userZip ? userZip : 'auto:ip'
+    
+    const weatherAPI = 'http://api.apixu.com/v1/forecast.json';
+    const key = '61e020a41ccd4b1d945190151182409';
+    let lat = sessionStorage.getItem('lat');
+    let long = sessionStorage.getItem('long');
 
-    axios.get(`${weatherAPI}?key=${key}&q=${location}&days=5`)
-      .then( weather => {
-        this.setState({ 
-          current: weather.data.current,
-          forecast: weather.data.forecast.forecastday,
-          location: weather.data.location,
+    if (!lat || !long) {
+      navigator.geolocation.getCurrentPosition(success => {
+        lat = success.coords.latitude;
+        long = success.coords.longitude;
+        sessionStorage.setItem('lat', lat);
+        sessionStorage.setItem('long', long);
+  
+        axios.get(`${weatherAPI}?key=${key}&q=${lat},${long}&days=5`)
+          .then( weather => {
+            this.setState({ 
+              current: weather.data.current,
+              forecast: weather.data.forecast.forecastday,
+              location: weather.data.location,
+            });
+          })
+      });
+    } else {
+      console.log('lat and long already stored in Session')
+      axios.get(`${weatherAPI}?key=${key}&q=${lat},${long}&days=5`)
+        .then( weather => {
+          this.setState({ 
+            current: weather.data.current,
+            forecast: weather.data.forecast.forecastday,
+            location: weather.data.location,
+          });
         })
-      })
+    }
   }
 
   getDayOfWeek = (date) => {
-    var dayOfWeek = new Date(date).getDay();    
+    var dayOfWeek = new Date(date).getDay();
     return isNaN(dayOfWeek) ? null : (
-      ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][dayOfWeek]
+      ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'][dayOfWeek]
     );
   }
 
@@ -59,10 +77,13 @@ class Weather extends Component {
             </Grid.Column>
             <Grid.Column verticalAlign='middle' width={11}>
               <Grid.Row style={{ fontSize: '1.4rem' }}>
-                {this.state.current ? this.state.location.name : 'Fetching weather data'}
+                {this.state.current ? this.state.location.name.toUpperCase() : 'Fetching weather data'}
               </Grid.Row>
               <Grid.Row style={{ fontSize: '3em' }}>
                 {this.state.current ? this.state.current.temp_f : '--'}º
+              </Grid.Row>
+              <Grid.Row>
+                {this.state.current ? this.state.current.condition.text : '--'}
               </Grid.Row>
             </Grid.Column>
           </Grid.Row>

@@ -16,7 +16,7 @@ class Register extends Component {
       username: '',
       password: '',
       verifyPassword: '',
-      // location: '',
+      location: '',
       failPassword: false,
       failRegister: false,
     }
