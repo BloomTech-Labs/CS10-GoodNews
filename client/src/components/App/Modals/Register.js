@@ -79,25 +79,31 @@ class Register extends Component {
           {/* Display message when form submission has failed */}
           {this.state.failRegister && <span style={{color:'red'}}>Unable to create account</span>}
           <Form onSubmit={this.handleSubmit} style={{ paddingBottom: '1em' }}>
-            <Form.Field required>
-              <input onChange={this.handleInput} placeholder="First Name" name="firstName" value={this.state.firstName}/>
+            <Form.Field>
+              <label style={{ textAlign: 'left' }}>First Name</label>
+              <input onChange={this.handleInput} placeholder="Jane" name="firstName" value={this.state.firstName}/>
+            </Form.Field>
+            <Form.Field>
+              <label style={{ textAlign: 'left' }}>Last Name</label>
+              <input onChange={this.handleInput} placeholder="Doe" name="lastName" value={this.state.lastName}/>
             </Form.Field>
             <Form.Field required>
-              <input onChange={this.handleInput} placeholder="Last Name" name="lastName" value={this.state.lastName}/>
+              <label style={{ textAlign: 'left' }}>Username</label>
+              <input onChange={this.handleInput} placeholder="jane123" name="username" value={this.state.username}/>
             </Form.Field>
             <Form.Field required>
-              <input onChange={this.handleInput} placeholder="Username" name="username" value={this.state.username}/>
-            </Form.Field>
-            <Form.Field required>
-              <input onChange={this.handleInput} placeholder="Email" type="email" name="email" value={this.state.email}/>
+              <label style={{ textAlign: 'left' }}>Email</label>
+              <input onChange={this.handleInput} placeholder="jane@email.com" type="email" name="email" value={this.state.email}/>
             </Form.Field>
             <Form.Field required>
               {/* Display message when passwords do not match */}
               {this.state.failPassword && <span style={{color:'red'}}>Passwords do not match</span>}
-              <input onChange={this.handleInput} placeholder="Password" type="password" name="password" value={this.state.password}/>
+              <label style={{ textAlign: 'left' }}>Password</label>
+              <input onChange={this.handleInput} type="password" name="password" value={this.state.password}/>
             </Form.Field>
             <Form.Field required>
-              <input onChange={this.handleInput} placeholder="Verify Password" type="password" name="verifyPassword" value={this.state.verifyPassword}/>
+              <label style={{ textAlign: 'left' }}>Verify Password</label>
+              <input onChange={this.handleInput} type="password" name="verifyPassword" value={this.state.verifyPassword}/>
             </Form.Field>
             {/* <Form.Field>
               <input onChange={this.handleInput} placeholder="City, State" name="location" value={this.state.location}/>

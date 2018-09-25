@@ -1,6 +1,5 @@
 import React from 'react';
 import { Dropdown } from 'semantic-ui-react';
-// import axios from 'axios';
 
 const ArticleOptions = (props) => {
   return (
