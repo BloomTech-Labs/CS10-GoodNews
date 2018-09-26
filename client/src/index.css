@@ -80,6 +80,11 @@ p {
   line-height: 1.4;
 }
 
+.App {
+  display: flex;
+  justify-content: center;
+}
+
 .login-register-button:hover {
   text-decoration: underline;
   cursor: pointer;
@@ -87,6 +92,10 @@ p {
 
 a.article-title:hover {
   color: #37bc9b !important;
+}
+
+.articleOptionsButton {
+  background-color: white !important;
 }
 
 .logo {
@@ -128,10 +137,9 @@ a.article-title:hover {
 }
 
 .main-menu {
-  position: absolute;
-  top: 6em !important;
-  background-color: rgb(238, 238, 238) !important;
-  padding: 50px !important;
+  
+  background-color: #eeeeee !important;
+  padding: 120px 50px 50px 50px;
   min-height: 500px;
   min-width: 320px;
 }

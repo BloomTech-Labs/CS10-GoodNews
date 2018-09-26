@@ -1,7 +1,7 @@
 import React from 'react';
 import { Component } from 'react';
 import axios from 'axios';
-import { Modal, Header, Form, Button, Icon } from 'semantic-ui-react';
+import { Modal, Header, Form, Button } from 'semantic-ui-react';
 
 // Production Server URL or localhost for local testing
 const url = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_SERVER : 'http://localhost:5000';
@@ -16,7 +16,6 @@ class Register extends Component {
       username: '',
       password: '',
       verifyPassword: '',
-      // location: '',
       failPassword: false,
       failRegister: false,
     }
@@ -69,39 +68,40 @@ class Register extends Component {
 
   render() { 
     return (
-      <Modal 
-        open={true}
+      <Modal closeIcon open={true}
         onClose={this.close} 
         style={{ minHeight: '350px', padding: '2em', textAlign: 'center' }}>
-        <Icon name="close" onClick={this.close}/>
         <Header size="large">CREATE AN ACCOUNT</Header>
         <Modal.Content>
           {/* Display message when form submission has failed */}
           {this.state.failRegister && <span style={{color:'red'}}>Unable to create account</span>}
           <Form onSubmit={this.handleSubmit} style={{ paddingBottom: '1em' }}>
-            <Form.Field required>
-              <input onChange={this.handleInput} placeholder="First Name" name="firstName" value={this.state.firstName}/>
+            <Form.Field>
+              <label style={{ textAlign: 'left' }}>First Name</label>
+              <input onChange={this.handleInput} placeholder="Jane" name="firstName" value={this.state.firstName}/>
+            </Form.Field>
+            <Form.Field>
+              <label style={{ textAlign: 'left' }}>Last Name</label>
+              <input onChange={this.handleInput} placeholder="Doe" name="lastName" value={this.state.lastName}/>
             </Form.Field>
             <Form.Field required>
-              <input onChange={this.handleInput} placeholder="Last Name" name="lastName" value={this.state.lastName}/>
+              <label style={{ textAlign: 'left' }}>Username</label>
+              <input onChange={this.handleInput} placeholder="jane123" name="username" value={this.state.username}/>
             </Form.Field>
             <Form.Field required>
-              <input onChange={this.handleInput} placeholder="Username" name="username" value={this.state.username}/>
-            </Form.Field>
-            <Form.Field required>
-              <input onChange={this.handleInput} placeholder="Email" type="email" name="email" value={this.state.email}/>
+              <label style={{ textAlign: 'left' }}>Email</label>
+              <input onChange={this.handleInput} placeholder="jane@email.com" type="email" name="email" value={this.state.email}/>
             </Form.Field>
             <Form.Field required>
               {/* Display message when passwords do not match */}
               {this.state.failPassword && <span style={{color:'red'}}>Passwords do not match</span>}
-              <input onChange={this.handleInput} placeholder="Password" type="password" name="password" value={this.state.password}/>
+              <label style={{ textAlign: 'left' }}>Password</label>
+              <input onChange={this.handleInput} type="password" name="password" value={this.state.password}/>
             </Form.Field>
             <Form.Field required>
-              <input onChange={this.handleInput} placeholder="Verify Password" type="password" name="verifyPassword" value={this.state.verifyPassword}/>
+              <label style={{ textAlign: 'left' }}>Verify Password</label>
+              <input onChange={this.handleInput} type="password" name="verifyPassword" value={this.state.verifyPassword}/>
             </Form.Field>
-            {/* <Form.Field>
-              <input onChange={this.handleInput} placeholder="City, State" name="location" value={this.state.location}/>
-            </Form.Field> */}
             <Button type='submit' primary style={{ backgroundColor: '#37bc9b' }}>SIGN UP</Button>
           </Form>
           <span>Already have an account? </span>
