@@ -3,9 +3,9 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const User = require('../User/User');
 
 passport.use(new GoogleStrategy({
-    clientID: '475445850164-qj7pa4i4di60eqv8rd6nudpi8ba04vkp.apps.googleusercontent.com',
-    clientSecret: 'XiVvNnMv8uoJmvuPgFV93oL9',
-    callbackURL: "http://localhost:5000/auth/google/callback"
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: process.env.GOOGLE_CALLBACK_URL
     },
     function(token, tokenSecret, profile, done) {
 		// console.log(profile);
@@ -47,11 +47,6 @@ const getProfileGoogle = (req, res) => {
     })
 }
 
-const logoutGoogle = (req, res) => {
-    req.logout();
-    res.redirect('/');
-}
-
 const authGoogle = (req, res) => {
     // console.log(req.user._id);
     req.session.save(() => {
@@ -64,6 +59,5 @@ const authGoogle = (req, res) => {
 
 module.exports = {
     getProfileGoogle,
-    logoutGoogle,
     authGoogle
 };

@@ -10,18 +10,13 @@ const User = mongoose.Schema({
     },
     username: {
         type: String,
-        required: false,
-        lowercase: true,
-        unique: false
+        lowercase: true
     },
     email: {
-        type: String,
-        required: false,
-        unique: false
+        type: String
     },
     password: {
-        type: String,
-        required: false
+        type: String
     },
     saved_articles: [{
         type: ObjectId,
@@ -39,21 +34,19 @@ const User = mongoose.Schema({
         id: String,
         token: String,
         tokenSecret: String,
-        username: String,
+        twittername: String,
         displayName: String
     },
     facebook: {
         id: String,
         accessToken: String,
         refreshToken: String,
-        username: String,
+        fbname: String,
         displayName: String
     },
     google: {
         id: String,
         token: String,
-        tokenSecret: String,
-        username: String,
         displayName: String
     }
 })

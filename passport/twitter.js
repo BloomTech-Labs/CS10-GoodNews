@@ -3,9 +3,9 @@ const TwitterStrategy = require('passport-twitter').Strategy;
 const User = require('../User/User');
 
 passport.use(new TwitterStrategy({
-    consumerKey: 'GeKCRHI0GC7KdtThqVMxgbYgf',
-    consumerSecret: '40yDP2EytK69DhdMKb7ojVzkCaGTi769FjjJr1SPlzQuZt8z9C',
-    callbackURL: "http://localhost:5000/auth/twitter/callback"
+    consumerKey: process.env.TWITTER_CONSUMER_KEY,
+    consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
+    callbackURL: process.env.TWITTER_CALLBACK_URL
     },
     function(token, tokenSecret, profile, done) {
 		// console.log(profile);
@@ -19,7 +19,7 @@ passport.use(new TwitterStrategy({
                     newUser.twitter.id = profile.id;
 					newUser.twitter.token = token;
 					newUser.twitter.tokenSecret = tokenSecret;
-                    newUser.twitter.username = profile.username;
+                    newUser.twitter.twittername = profile.username;
                     newUser.twitter.displayName = profile.displayName;
                     newUser.save(function(err) {
                         if (err) throw err;
@@ -45,11 +45,6 @@ const getProfileTwitter = (req, res) => {
     })
 }
 
-const logoutTwitter = (req, res) => {
-    req.logout();
-    res.redirect('/');
-}
-
 const authTwitter = (req, res) => {
     // console.log(req.user._id);
     req.session.save(() => {
@@ -62,6 +57,5 @@ const authTwitter = (req, res) => {
 
 module.exports = {
     getProfileTwitter,
-    logoutTwitter,
     authTwitter
 };

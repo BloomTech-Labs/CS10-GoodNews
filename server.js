@@ -26,7 +26,7 @@ server.use(helmet());
 server.use(express.json());
 
 // passport-twitter
-const { getProfileTwitter, logoutTwitter, authTwitter } = require('./passport/twitter');
+const { getProfileTwitter, authTwitter } = require('./passport/twitter');
 const session = require('express-session');
 const passport = require('passport');
 const { isLoggedIn } = require('./controllers/auth');
@@ -40,8 +40,6 @@ server.use(passport.session()); // persistent login sessions
 // server.use(flash()); // use connect-flash for flash messages stored in session
 // route for showing the profile page
 server.get('/twitter/profile', isLoggedIn, getProfileTwitter);
-// route for logging out
-server.get('/twitter/logout', logoutTwitter);
 // Twitter routes
 server.get('/auth/twitter', passport.authenticate('twitter'));
 // handle the callback after twitter has authenticated the user
@@ -50,11 +48,9 @@ server.get('/auth/twitter/callback',
 	authTwitter);
 
 // passport-facebook
-const { getProfileFacebook, logoutFacebook, authFacebook } = require('./passport/facebook');
+const { getProfileFacebook, authFacebook } = require('./passport/facebook');
 // route for showing the profile page
 server.get('/facebook/profile', isLoggedIn, getProfileFacebook);
-// route for logging out
-server.get('/facebook/logout', logoutFacebook);
 // Facebook routes
 server.get('/auth/facebook', passport.authenticate('facebook'));
 // handle the callback after facebook has authenticated the user
@@ -63,17 +59,20 @@ server.get('/auth/facebook/callback',
 	authFacebook);
 
 // passport-google-oauth
-const { getProfileGoogle, logoutGoogle, authGoogle } = require('./passport/google');
+const { getProfileGoogle, authGoogle } = require('./passport/google');
 // route for showing the profile page
 server.get('/google/profile', isLoggedIn, getProfileGoogle);
-// route for logging out
-server.get('/google/logout', logoutGoogle);
 // Google routes
 server.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
 // handle the callback after google has authenticated the user
 server.get('/auth/google/callback',
 	passport.authenticate('google'),
 	authGoogle);
+
+server.get('/logout', function(req, res){
+	req.logout();
+	res.redirect('/api/article/get-articles/0');
+});
 
 // User and Article API Routes
 server.use('/api/article', ArticleRouter);

@@ -3,12 +3,12 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 const User = require('../User/User');
 
 passport.use(new FacebookStrategy({
-    clientID: '1566875683417685',
-    clientSecret: '8c6f1b6eb2f2680aee7ea8d64818ce5c',
-    callbackURL: "http://localhost:5000/auth/facebook/callback"
+    clientID: process.env.FACEBOOK_CLIENT_ID,
+    clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+    callbackURL: process.env.FACEBOOK_CALLBACK_URL
     },
     function(accessToken, refreshToken, profile, done) {
-		console.log(profile);
+		// console.log(profile);
         process.nextTick(function() {
             User.findOne({ 'facebook.id' : profile.id }, function(err, user) {
                 if (err) return done(err);
@@ -19,7 +19,7 @@ passport.use(new FacebookStrategy({
                     newUser.facebook.id = profile.id;
 					newUser.facebook.accessToken = accessToken;
 					newUser.facebook.refreshToken = refreshToken;
-                    newUser.facebook.username = profile.username;
+                    newUser.facebook.fbname = profile.username;
                     newUser.facebook.displayName = profile.displayName;
                     newUser.save(function(err) {
                         if (err) throw err;
@@ -45,11 +45,6 @@ const getProfileFacebook = (req, res) => {
     })
 }
 
-const logoutFacebook = (req, res) => {
-    req.logout();
-    res.redirect('/');
-}
-
 const authFacebook = (req, res) => {
     // console.log(req.user._id);
     req.session.save(() => {
@@ -62,6 +57,5 @@ const authFacebook = (req, res) => {
 
 module.exports = {
     getProfileFacebook,
-    logoutFacebook,
     authFacebook
 };
