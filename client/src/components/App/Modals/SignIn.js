@@ -1,7 +1,7 @@
 import React from 'react';
 import { Component } from 'react';
 import axios from 'axios';
-import { Modal, Grid, Header, Form, Button, Divider, List, Icon } from 'semantic-ui-react';
+import { Modal, Grid, Header, Form, Button, Divider, List } from 'semantic-ui-react';
 
 // Production Server URL or localhost for local testing
 const url = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_SERVER : 'http://localhost:5000';
@@ -36,28 +36,21 @@ class SignIn extends Component {
   loginUser = (user) => {
     axios.post(`${url}/api/user/login`, user)
       .then( user => {
-        console.log(user)
         localStorage.setItem("auth-token", user.data.token);
         localStorage.setItem("userid", user.data.user._id);
         this.props.login();
-        this.close();
+        this.props.toggleModal('');
       })
       .catch( err => {
         this.setState({ failLogin: true })
       })
   }
 
-  close = () => {
-    this.props.toggleModal('');
-  }
-
   render() { 
     return (
-      <Modal 
-        open={true} 
-        onClose={this.close} 
+      <Modal closeIcon open={true} 
+        onClose={() => this.props.toggleModal('')} 
         style={{minHeight: '350px', padding: '2em'}}>
-        <Icon name="close" onClick={this.close}/>
         <Modal.Content> 
           <Grid columns={3} stackable>
             {/* Only display this section on desktop or tablet screens */}

@@ -80,6 +80,11 @@ p {
   line-height: 1.4;
 }
 
+.App {
+  display: flex;
+  justify-content: center;
+}
+
 .login-register-button:hover {
   text-decoration: underline;
   cursor: pointer;
@@ -87,6 +92,10 @@ p {
 
 a.article-title:hover {
   color: #37bc9b !important;
+}
+
+.articleOptionsButton {
+  background-color: white !important;
 }
 
 .logo {

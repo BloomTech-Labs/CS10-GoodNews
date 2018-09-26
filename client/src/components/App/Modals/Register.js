@@ -1,7 +1,7 @@
 import React from 'react';
 import { Component } from 'react';
 import axios from 'axios';
-import { Modal, Header, Form, Button, Icon } from 'semantic-ui-react';
+import { Modal, Header, Form, Button } from 'semantic-ui-react';
 
 // Production Server URL or localhost for local testing
 const url = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_SERVER : 'http://localhost:5000';
@@ -16,7 +16,6 @@ class Register extends Component {
       username: '',
       password: '',
       verifyPassword: '',
-      // location: '',
       failPassword: false,
       failRegister: false,
     }
@@ -69,11 +68,9 @@ class Register extends Component {
 
   render() { 
     return (
-      <Modal 
-        open={true}
+      <Modal closeIcon open={true}
         onClose={this.close} 
         style={{ minHeight: '350px', padding: '2em', textAlign: 'center' }}>
-        <Icon name="close" onClick={this.close}/>
         <Header size="large">CREATE AN ACCOUNT</Header>
         <Modal.Content>
           {/* Display message when form submission has failed */}
@@ -105,9 +102,6 @@ class Register extends Component {
               <label style={{ textAlign: 'left' }}>Verify Password</label>
               <input onChange={this.handleInput} type="password" name="verifyPassword" value={this.state.verifyPassword}/>
             </Form.Field>
-            {/* <Form.Field>
-              <input onChange={this.handleInput} placeholder="City, State" name="location" value={this.state.location}/>
-            </Form.Field> */}
             <Button type='submit' primary style={{ backgroundColor: '#37bc9b' }}>SIGN UP</Button>
           </Form>
           <span>Already have an account? </span>

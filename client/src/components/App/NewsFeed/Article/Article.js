@@ -42,20 +42,24 @@ const Article = (props) => {
     <Card fluid
       style={{ 
         padding: '1em',
-        margin: '1em',
+        marginBottom: '1em',
         display: 'flex',
-        alignItems: 'flex-end'}}>
-      {props.articleOptions && <ArticleOptions save={saveArticle}/>}
+        alignItems: 'flex-end',
+        maxWidth: '700px'}}>
+      {/* {props.articleOptions && <ArticleOptions save={saveArticle}/>} */}
       <Card.Content style={{ borderStyle: 'none' }}>
         <Header href={props.article.url} className='article-title'>
           {props.article.name}
         </Header>
-        <Card.Meta  style={{ marginBottom: '1em' }}>
-          <span>{elapsedTime()}</span>
-        </Card.Meta>
+        <div style={{display: 'flex', justifyContent: 'space-between'}}>
+          <Card.Meta  style={{ marginBottom: '1em' }}>
+            <span>{elapsedTime()}</span>
+          </Card.Meta>
+          {props.articleOptions && <ArticleOptions save={saveArticle}/>}
+        </div>
         <Grid>
           <Grid.Row only='tablet computer' columns={1}>
-            <Grid.Column>
+            <Grid.Column textAlign='justified' style={{ lineHeight: '1.6rem' }}>
               {props.article.description}
             </Grid.Column>
           </Grid.Row>
