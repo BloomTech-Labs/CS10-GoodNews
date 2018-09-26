@@ -1,7 +1,6 @@
 require('dotenv').config();
 const express = require('express');
 const server = require('./server');
-// const server = require('./passport/twitter');
 const path = require('path');
 const port = process.env.PORT || 5000;
 const mongoose = require('mongoose');

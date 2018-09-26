@@ -41,6 +41,13 @@ const User = mongoose.Schema({
         tokenSecret: String,
         username: String,
         displayName: String
+    },
+    facebook: {
+        id: String,
+        accessToken: String,
+        refreshToken: String,
+        username: String,
+        displayName: String
     }
 })
 
