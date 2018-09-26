@@ -7,9 +7,11 @@ const newToken = (user) => {
 };
 
 const isLoggedIn = (req, res, next) => {
-  const token = req.headers.authorization;
-  jwt.verify(token, process.env.SECRET, (err, decoded) => {
-    if (err) {
+  if (req.headers.authorization) {
+    // JWT local auth
+    const token = req.headers.authorization;
+    jwt.verify(token, process.env.SECRET, (err, decoded) => {
+      if (err) {
       // console.log(err);
       res.status(403).json({ error: 'Please log in.', message: err });
       return;
@@ -21,6 +23,13 @@ const isLoggedIn = (req, res, next) => {
       res.status(403).json({ error: 'User ids don\'t match. Please log in again.', message: err });
     }
   });
+  } else {
+    // console.log(req);
+    if (req.isAuthenticated()) return next();
+    // if they aren't redirect them to the home page
+    // res.redirect('/');
+    res.status(404).json('Error');
+  }
 };
 
 module.exports = {

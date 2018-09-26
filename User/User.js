@@ -10,18 +10,13 @@ const User = mongoose.Schema({
     },
     username: {
         type: String,
-        required: true,
-        lowercase: true,
-        unique: true
+        lowercase: true
     },
     email: {
-        type: String,
-        required: true,
-        unique: true
+        type: String
     },
     password: {
-        type: String,
-        required: true
+        type: String
     },
     saved_articles: [{
         type: ObjectId,
@@ -30,17 +25,44 @@ const User = mongoose.Schema({
     account_type: {
         free: Boolean,
         paid: Boolean
+    },
+    updatedAt: {
+        type: Date,
+        default: Date.now()
+    },
+    twitter: {
+        id: String,
+        token: String,
+        tokenSecret: String,
+        twittername: String,
+        displayName: String
+    },
+    facebook: {
+        id: String,
+        accessToken: String,
+        refreshToken: String,
+        fbname: String,
+        displayName: String
+    },
+    google: {
+        id: String,
+        token: String,
+        displayName: String
     }
 })
 
 User.pre('save', function(next) {
     let user = this;
-    bcrypt.hash(user.password, SALT, (err, hashed) => {
-        if(err) throw new Error(err);
-
-        user.password = hashed;
+    if (!user.password) {
         next();
-    })
+    } else {
+        bcrypt.hash(user.password, SALT, (err, hashed) => {
+            if(err) throw new Error(err);
+    
+            user.password = hashed;
+            next();
+        });
+    }
 });
   
 User.methods.checkPassword = (user, potentialPassword) => {

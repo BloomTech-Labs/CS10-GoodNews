@@ -21,5 +21,5 @@ mongoose
     });
 
 // For serving static files to root endpoint
-server.use(express.static(path.join(__dirname, 'client', 'build')));
+// server.use(express.static(path.join(__dirname, 'client', 'build')));
 server.listen(port, () => console.log(`=== API running on port: ${port}! ===`));
