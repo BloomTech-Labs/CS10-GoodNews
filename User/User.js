@@ -48,6 +48,13 @@ const User = mongoose.Schema({
         refreshToken: String,
         username: String,
         displayName: String
+    },
+    google: {
+        id: String,
+        token: String,
+        tokenSecret: String,
+        username: String,
+        displayName: String
     }
 })
 

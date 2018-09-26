@@ -51,27 +51,29 @@ server.get('/auth/twitter/callback',
 
 // passport-facebook
 const { getProfileFacebook, logoutFacebook, authFacebook } = require('./passport/facebook');
-// const session = require('express-session');
-// const passport = require('passport');
-// const { isLoggedIn } = require('./controllers/auth');
-// const cookieParser = require('cookie-parser');
-// server.use(cookieParser()); // read cookies (needed for auth)
-// server.use(bodyParser()); // get information from html forms
-// required for passport
-// server.use(session({ secret: 'SECRET', resave: false, saveUninitialized: false, cookie: { secure: false }})); // session secret
-// server.use(passport.initialize());
-// server.use(passport.session()); // persistent login sessions
-// server.use(flash()); // use connect-flash for flash messages stored in session
 // route for showing the profile page
 server.get('/facebook/profile', isLoggedIn, getProfileFacebook);
 // route for logging out
 server.get('/facebook/logout', logoutFacebook);
-// Twitter routes
+// Facebook routes
 server.get('/auth/facebook', passport.authenticate('facebook'));
-// handle the callback after twitter has authenticated the user
+// handle the callback after facebook has authenticated the user
 server.get('/auth/facebook/callback',
 	passport.authenticate('facebook'),
 	authFacebook);
+
+// passport-google-oauth
+const { getProfileGoogle, logoutGoogle, authGoogle } = require('./passport/google');
+// route for showing the profile page
+server.get('/google/profile', isLoggedIn, getProfileGoogle);
+// route for logging out
+server.get('/google/logout', logoutGoogle);
+// Google routes
+server.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
+// handle the callback after google has authenticated the user
+server.get('/auth/google/callback',
+	passport.authenticate('google'),
+	authGoogle);
 
 // User and Article API Routes
 server.use('/api/article', ArticleRouter);
