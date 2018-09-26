@@ -176,9 +176,6 @@ class App extends Component {
       this.state.visited ? (
         <div className="App">
 
-          {/* passport */}
-          <Passport />
-
           <Nav toggleMenu={this.toggleMenu}>
             {this.switchLoginLogout(this.state.loggedIn)}
           </Nav>
