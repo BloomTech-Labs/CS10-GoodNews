@@ -59,7 +59,7 @@ const Article = (props) => {
         </div>
         <Grid>
           <Grid.Row only='tablet computer' columns={1}>
-            <Grid.Column style={{ lineHeight: '1.6rem' }}>
+            <Grid.Column textAlign='justified' style={{ lineHeight: '1.6rem' }}>
               {props.article.description}
             </Grid.Column>
           </Grid.Row>

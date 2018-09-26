@@ -64,6 +64,7 @@ class Weather extends Component {
   render() { 
     return (
       <div style={{ 
+          borderRadius: '6px',
           backgroundColor: '#eeeeee', 
           width: '100%', 
           minHeight: '100px',
