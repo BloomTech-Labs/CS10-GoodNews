@@ -17,7 +17,8 @@ const Article = mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now()
-    }
+    },
+    imageurl: String
 });
 
 module.exports = mongoose.model('Article', Article);

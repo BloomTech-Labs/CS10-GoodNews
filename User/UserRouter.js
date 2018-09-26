@@ -16,6 +16,7 @@ router
 
 // GET request to get all users
 function getAll(req, res) {
+    // console.log(req);
     User.find()
         .then(expected => {
             res.status(200).json(expected);
@@ -109,12 +110,12 @@ function getById(req, res) {
 // PUT request
 function put(req, res) {
     const userid = req.headers.userid;
-    const { name, username, email, password, saved_articles, account_type } = req.body;
-    console.log(req.body);
+    const user = { name, username, email } = req.body;
+    // console.log(req.body);
     // if (!User.findById(id)) {
     //     res.status(404).json({ message: 'User not found' });
     // }
-    User.findByIdAndUpdate(userid, { name, email, username, password, saved_articles, account_type })
+    User.findByIdAndUpdate(userid, user)
         .then(expected => {
             res.status(201).json(expected);
         })
