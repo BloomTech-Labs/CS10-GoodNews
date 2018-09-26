@@ -71,7 +71,7 @@ server.get('/auth/google/callback',
 
 server.get('/logout', function(req, res){
 	req.logout();
-	res.redirect('/api/article/get-articles/0');
+	// res.redirect('/api/article/get-articles/0');
 });
 
 // User and Article API Routes
