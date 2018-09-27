@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Header, Grid, Input } from 'semantic-ui-react';
+import { Modal, Header, Grid } from 'semantic-ui-react';
 import axios from 'axios';
 import ChangeSettings from './ChangeSettings';
 
@@ -10,9 +10,8 @@ class Settings extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      user: null,
-      firstName: null,
-      lastName: null,
+      first: null,
+      last: null,
       username: null,
       email: null,
       changeName: false,
@@ -42,13 +41,8 @@ class Settings extends Component {
       .then( user => {
         console.log(user.data);
         this.setState({
-          user: {
-            name: user.data.name,
-            username: user.data.username,
-            email: user.data.email
-          },
-          firstName: user.data.name.first,
-          lastName: user.data.name.last,
+          first: user.data.name.first,
+          last: user.data.name.last,
           username: user.data.username,
           email: user.data.email
         })
@@ -64,6 +58,24 @@ class Settings extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
+  handleSubmit = (e, stateProp, stateProp2=null) => {
+    e.preventDefault();
+    console.log('arg 1:', stateProp);
+    console.log('arg 2:', stateProp2);
+    let userInfo = this.state[stateProp];
+    console.log('state property: ', userInfo);
+    let user = {[stateProp]: userInfo};
+    if (stateProp2) {
+      user = {
+        name: {
+          [stateProp]: userInfo,
+          [stateProp2]: this.state[stateProp2]
+        }
+      }
+    }
+    this.saveUser(user);
+  }
+
   saveUser = (user) => {
     console.log('saving user');
     const config = {
@@ -72,11 +84,7 @@ class Settings extends Component {
         'userid': localStorage.getItem("userid")
       }
     }
-    let savedUser = this.state.user;
-    const key = Object.keys(user)[0]
-    savedUser[key] = user[key]
-    console.log(savedUser)
-    axios.put(`${url}/api/user/logged`, savedUser, config)
+    axios.put(`${url}/api/user/logged`, user, config)
       .then( res => {
         console.log(res.data)
         this.getUser()
@@ -92,27 +100,43 @@ class Settings extends Component {
         <Header size="large" textAlign='center'>SETTINGS</Header>
         <Modal.Content>
           <Grid>
-            {this.state.firstName && 
+            {this.state.first && 
               <React.Fragment>
                 <ChangeSettings 
-                  userInfo={['Name', `${this.state.firstName} ${this.state.lastName}`, 'firstName']}
+                  userInfoTitle='Name'
+                  userInfo={`${this.state.first} ${this.state.last}`}
+                  name='first'
+                  value={this.state.first}
                   editing={this.state.changeName}
                   toggleEdit={()=>this.toggleEdit('changeName')}
                   saveUser={this.saveUser}
-                  extraInfo={this.state.lastName}>
+                  handleChange={this.handleChange}
+                  handleSubmit={this.handleSubmit}
+                  name2='last'
+                  value2={this.state.last}>
                 </ChangeSettings>
                 <ChangeSettings 
-                  userInfo={['Username', this.state.username, 'username']}
+                  userInfoTitle='Username'
+                  userInfo={this.state.username}
+                  name='username'
+                  value={this.state.username}
                   editing={this.state.changeUsername}
                   toggleEdit={()=>this.toggleEdit('changeUsername')}
                   saveUser={this.saveUser}
+                  handleChange={this.handleChange}
+                  handleSubmit={this.handleSubmit}
                   >
                 </ChangeSettings>
                 <ChangeSettings 
-                  userInfo={['Email', this.state.email, 'email']}
+                  userInfoTitle='Email'
+                  userInfo={this.state.email}
+                  name='email'
+                  value={this.state.email}
                   editing={this.state.changeEmail}
                   toggleEdit={()=>this.toggleEdit('changeEmail')}
                   saveUser={this.saveUser}
+                  handleChange={this.handleChange}
+                  handleSubmit={this.handleSubmit}
                   type='email'>
                 </ChangeSettings>
               </React.Fragment>

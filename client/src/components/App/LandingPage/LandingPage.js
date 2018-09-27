@@ -35,7 +35,7 @@ const LandingPage = (props) => {
           <Icon name='lab' size='huge' color='grey'/>
         </Grid.Column>
         <Grid.Column className='about-app'>
-          We used artificial intelligence to identify clickbait articles so you don’t have to.
+          We used machine learning to identify clickbait articles so you just get the news.
         </Grid.Column>
         <Grid.Column width={1}>
           <Icon name='group' size='huge' color='grey'/>

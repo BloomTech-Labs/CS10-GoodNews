@@ -96,6 +96,7 @@ a.article-title:hover {
 
 .articleOptionsButton {
   background-color: white !important;
+  color: 'grey';
 }
 
 .logo {
@@ -148,7 +149,17 @@ a.article-title:hover {
   padding: 20px 0px 0px 30px;
 }
 
-@media only screen and (max-width: 770px) {
+.editUserInfo:hover {
+  cursor: pointer;
+  text-decoration: underline;
+  color: #37bc9b;
+}
+
+.socialIcon:hover {
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 768px) {
   .logo {
     font-size: 3.5em;
   }
@@ -163,7 +174,7 @@ a.article-title:hover {
   }
 
   .about-section {
-    margin: 5rem 1rem;
+    max-width: 300px;
   }
 }
 
@@ -180,10 +191,5 @@ a.article-title:hover {
 
   .jumbotron {
     max-height: 40vh;
-  }
-
-  .about-section {
-    max-width: 300px;
-    padding-bottom: 1rem;
   }
 }
