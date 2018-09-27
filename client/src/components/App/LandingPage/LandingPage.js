@@ -3,7 +3,7 @@ import { Grid, Icon, Button } from 'semantic-ui-react';
 
 const LandingPage = (props) => {
   return (
-    <Grid style={{ justifyContent: 'center' }} stackable>
+    <Grid style={{ justifyContent: 'center' }}>
       <Grid.Row
         className='jumbotron' 
         style={{
@@ -23,21 +23,20 @@ const LandingPage = (props) => {
       </Grid.Row>
       <Grid.Row 
         className='about-section'
-        centered
-        columns='equal'>
-        <Grid.Column width={1}>
+        centered columns='equal'>
+        <Grid.Column computer={1} mobile={6}>
           <Icon name='newspaper outline' size='huge' color='grey'/>
         </Grid.Column>
         <Grid.Column className='about-app'>
           You can get news from a variety of sources without having to deal with clickbait.
         </Grid.Column>
-        <Grid.Column width={1}>
+        <Grid.Column computer={1} mobile={6}>
           <Icon name='lab' size='huge' color='grey'/>
         </Grid.Column>
         <Grid.Column className='about-app'>
-          We used artificial intelligence to identify clickbait articles so you don’t have to.
+          We used machine learning to identify clickbait articles so you just get the news.
         </Grid.Column>
-        <Grid.Column width={1}>
+        <Grid.Column computer={1} mobile={6}>
           <Icon name='group' size='huge' color='grey'/>
         </Grid.Column>
         <Grid.Column className='about-app'>

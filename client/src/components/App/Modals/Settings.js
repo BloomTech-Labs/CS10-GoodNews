@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Header, Grid, Input } from 'semantic-ui-react';
+import { Modal, Header, Grid } from 'semantic-ui-react';
 import axios from 'axios';
 import ChangeSettings from './ChangeSettings';
 

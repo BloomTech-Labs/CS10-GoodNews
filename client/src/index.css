@@ -154,7 +154,11 @@ a.article-title:hover {
   color: #37bc9b;
 }
 
-@media only screen and (max-width: 770px) {
+.socialIcon:hover {
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 768px) {
   .logo {
     font-size: 3.5em;
   }
@@ -168,8 +172,12 @@ a.article-title:hover {
     letter-spacing: 0.1rem;
   }
 
-  .about-section {
+  /* .about-section {
     margin: 5rem 1rem;
+  } */
+
+  .about-section {
+    max-width: 300px;
   }
 }
 
@@ -177,6 +185,8 @@ a.article-title:hover {
   .logo {
     font-size: 2.5em;
   }
+
+  
 }
 
 @media only screen and (max-width: 450px) {
@@ -186,10 +196,5 @@ a.article-title:hover {
 
   .jumbotron {
     max-height: 40vh;
-  }
-
-  .about-section {
-    max-width: 300px;
-    padding-bottom: 1rem;
   }
 }
