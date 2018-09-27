@@ -22,7 +22,7 @@ class App extends Component {
       loggedIn: false,
       showModal: '',
       showMenu: false,
-      // articleOptions: '',
+      articleOptions: 'all',
       articles: [],
       allArticles: [],
       trendingTopics: []
@@ -116,26 +116,33 @@ class App extends Component {
     }
   }
 
-  switchArticles = (articleSet) => {
+  switchArticles = (articleSet, topic=null) => {
     let articles;
-    // let articleOptions;
+    let articleOptions;
     switch(articleSet) {
       case 'all':
         articles = this.state.allArticles;
-        // articleOptions = this.state.loggedIn ? 'loggedIn' : '';
-        this.setState({ articles });
+        articleOptions = this.state.loggedIn ? 'all' : ''
+        this.setState({ articles, articleOptions });
         break;
       case 'saved':
         this.fetchSavedArticles();
-        // articleOptions = 'saved'
-        // this.setState({ articleOptions })
+        articleOptions = 'saved'
+        this.setState({ articleOptions })
         break;
       case 'clickbait':
         this.fetchClickbait();
+        articleOptions = 'clickbait'
+        this.setState({ articleOptions })
+        break;
+      case 'trending':
+        this.fetchArticlesByTopic(topic)
+        articleOptions = this.state.loggedIn ? 'all' : ''
+        this.setState({ articleOptions })
         break;
       default:
         articles = this.state.allArticles;
-        this.setState({ articles });
+        this.setState({ articles, articleOptions });
         break;
     }
   }
@@ -192,8 +199,9 @@ class App extends Component {
               return (
                 <Article 
                   key={article._id} 
-                  article={article} 
-                  articleOptions={this.state.loggedIn}
+                  article={article}
+                  loggedIn={this.state.loggedIn}
+                  articleOptions={this.state.articleOptions}
                 />)
             })}
           </NewsFeed>

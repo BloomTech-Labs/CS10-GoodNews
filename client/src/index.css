@@ -96,6 +96,7 @@ a.article-title:hover {
 
 .articleOptionsButton {
   background-color: white !important;
+  color: 'grey';
 }
 
 .logo {
@@ -172,10 +173,6 @@ a.article-title:hover {
     letter-spacing: 0.1rem;
   }
 
-  /* .about-section {
-    margin: 5rem 1rem;
-  } */
-
   .about-section {
     max-width: 300px;
   }
@@ -185,8 +182,6 @@ a.article-title:hover {
   .logo {
     font-size: 2.5em;
   }
-
-  
 }
 
 @media only screen and (max-width: 450px) {
