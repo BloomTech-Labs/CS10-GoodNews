@@ -16,14 +16,21 @@ const ArticleRouter = require('./Article/ArticleRouter');
 // 	next();
 // };
 
+// '*'
 const corsOptions = {
-	origin: '*',
+	origin: ['http://localhost:3000', 'https://labs7goodnews.herokuapp.com/', 'http://localhost:5000'],
 	credentials: true
 };
 
 server.use(cors(corsOptions));
 server.use(helmet());
 server.use(express.json());
+
+// fix
+server.all('/*', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    next();
+});
 
 // passport-twitter
 const { getProfileTwitter, authTwitter } = require('./passport/twitter');
@@ -71,6 +78,7 @@ server.get('/auth/google/callback',
 
 server.get('/logout', function(req, res){
 	req.logout();
+	res.send('User logged out!');
 	// res.redirect('/api/article/get-articles/0');
 });
 
