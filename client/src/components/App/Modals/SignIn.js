@@ -48,7 +48,7 @@ class SignIn extends Component {
 
   loginPassport = (socialMedia) => {
     axios.get(`${url}/auth/${socialMedia}`)
-      .then(expected => {console.log(expected)})
+      .then(res => {console.log(res)})
       .then(url => {
         window.location = url;
       })
