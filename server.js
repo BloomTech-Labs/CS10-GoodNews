@@ -4,10 +4,6 @@ const server = express();
 const helmet = require('helmet');
 const cors = require('cors');
 
-const UserRouter = require('./User/UserRouter');
-const ArticleRouter = require('./Article/ArticleRouter');
-// const ArticleRouterDS = require('./Article/ArticleRouterDS');
-
 // const authMiddleware = (req, res, next) => {
 // 	// TODO: Implement Authentication and Authorization
 // 	// const {token, uid} = req.headers;
@@ -16,21 +12,21 @@ const ArticleRouter = require('./Article/ArticleRouter');
 // 	next();
 // };
 
-// '*'
 const corsOptions = {
-	origin: ['http://localhost:3000', 'https://labs7goodnews.herokuapp.com/', 'http://localhost:5000'],
-	credentials: true
+	origin: '*',
+	methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+	credentials: true,
+	preflightContinue: false,
+	optionsSuccessStatus: 200
 };
 
 server.use(cors(corsOptions));
 server.use(helmet());
 server.use(express.json());
 
-// fix
-server.all('/*', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    next();
-});
+const UserRouter = require('./User/UserRouter');
+const ArticleRouter = require('./Article/ArticleRouter');
+// const ArticleRouterDS = require('./Article/ArticleRouterDS');
 
 // passport-twitter
 const { getProfileTwitter, authTwitter } = require('./passport/twitter');
@@ -48,10 +44,16 @@ server.use(passport.session()); // persistent login sessions
 // route for showing the profile page
 server.get('/twitter/profile', isLoggedIn, getProfileTwitter);
 // Twitter routes
+// Redirect the user to Twitter for authentication.  When complete, Twitter
+// will redirect the user back to the application at /auth/twitter/callback
 server.get('/auth/twitter', passport.authenticate('twitter'));
 // handle the callback after twitter has authenticated the user
 server.get('/auth/twitter/callback',
-	passport.authenticate('twitter'),
+	passport.authenticate('twitter', 
+	{ 
+		successRedirect: '/api/article/get-articles/0',
+		failureRedirect: '/api/user' 
+	}),
 	authTwitter);
 
 // passport-facebook

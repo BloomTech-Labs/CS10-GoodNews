@@ -48,10 +48,10 @@ const getProfileTwitter = (req, res) => {
 const authTwitter = (req, res) => {
     // console.log(req.user._id);
     req.session.save(() => {
-        // res.redirect('/success');
         res.status(200).json({
             user : req.user // get the user out of session and pass to res
         });
+        // res.redirect('/api/article/get-articles/0');
     })
 }
 
