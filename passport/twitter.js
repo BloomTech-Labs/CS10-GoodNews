@@ -51,8 +51,8 @@ const authTwitter = (req, res) => {
         res.status(200).json({
             user : req.user // get the user out of session and pass to res
         });
-        // res.redirect('/api/article/get-articles/0');
-    })
+    });
+    // res.redirect('/api/article/get-articles/0');
 }
 
 module.exports = {
