@@ -59,7 +59,8 @@ function getArticles(req, res) {
     // console.log(`typeof ${flag}`);
     switch (flag) {
         case '0':
-            Article.find({ clickbait: '0' })
+            // fetches articles for the past 7 days
+            Article.find({ clickbait: '0', timestamp: { $gte: new Date(Date.now() - 168 * 60 * 60 * 1000) }})
             .sort({ timestamp: -1 })
             .then(found_articles => res.status(200).json(found_articles))
             .catch(err => res.status(500).json(err));
