@@ -20,7 +20,7 @@ class Weather extends Component {
 
   getWeather = () => {
     
-    const weatherAPI = 'https://api.apixu.com/v1/forecast.json';
+    const weatherAPI = 'http://api.apixu.com/v1/forecast.json';
     const key = '61e020a41ccd4b1d945190151182409';
     let lat = sessionStorage.getItem('lat');
     let long = sessionStorage.getItem('long');
