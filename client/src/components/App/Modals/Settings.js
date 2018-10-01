@@ -17,11 +17,12 @@ class Settings extends Component {
       changeName: false,
       changeUsername: false,
       changeEmail: false,
-      // changePassword: false,
-      // currentPassword: '',
-      // newPassword: '',
-      // verifyNewPassword: '',
-      // failPassword: false
+      changePassword: false,
+      currentPassword: '',
+      password: '',
+      verifyNewPassword: '',
+      failPassword: false,
+      failSave: false
     }
   }
 
@@ -55,17 +56,28 @@ class Settings extends Component {
   }
 
   handleChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({ [e.target.name]: e.target.value, failSave: false });
   }
 
-  handleSubmit = (e, stateProp, stateProp2=null) => {
+  handleSubmit = (e, stateProp, stateProp2=null, stateProp3=null) => {
     e.preventDefault();
     console.log('arg 1:', stateProp);
     console.log('arg 2:', stateProp2);
     let userInfo = this.state[stateProp];
     console.log('state property: ', userInfo);
     let user = {[stateProp]: userInfo};
-    if (stateProp2) {
+    if (stateProp === 'password') {
+      if (this.state.password !== this.state.verifyNewPassword) {
+        this.setState({ failPassword: true })
+      } else {
+        this.setState({ failPassword: false })
+        user = { 
+          [stateProp]: this.state[stateProp], 
+          [stateProp3]: this.state[stateProp3]
+        }
+      }
+    }
+    if (stateProp === 'first') {
       user = {
         name: {
           [stateProp]: userInfo,
@@ -89,7 +101,9 @@ class Settings extends Component {
         console.log(res.data)
         this.getUser()
       })
-      .catch(err => console.log(err.message))
+      .catch( err => {
+        this.setState({ failSave: true })
+      })
   }
 
   render() { 
@@ -106,6 +120,7 @@ class Settings extends Component {
                   userInfoTitle='Name'
                   userInfo={`${this.state.first} ${this.state.last}`}
                   name='first'
+                  label='First Name'
                   value={this.state.first}
                   editing={this.state.changeName}
                   toggleEdit={()=>this.toggleEdit('changeName')}
@@ -113,7 +128,9 @@ class Settings extends Component {
                   handleChange={this.handleChange}
                   handleSubmit={this.handleSubmit}
                   name2='last'
-                  value2={this.state.last}>
+                  label2='Last Name'
+                  value2={this.state.last}
+                  failSave={this.state.failSave}>
                 </ChangeSettings>
                 <ChangeSettings 
                   userInfoTitle='Username'
@@ -125,7 +142,7 @@ class Settings extends Component {
                   saveUser={this.saveUser}
                   handleChange={this.handleChange}
                   handleSubmit={this.handleSubmit}
-                  >
+                  failSave={this.state.failSave}>
                 </ChangeSettings>
                 <ChangeSettings 
                   userInfoTitle='Email'
@@ -137,7 +154,29 @@ class Settings extends Component {
                   saveUser={this.saveUser}
                   handleChange={this.handleChange}
                   handleSubmit={this.handleSubmit}
-                  type='email'>
+                  type='email'
+                  failSave={this.state.failSave}>
+                </ChangeSettings>
+                <ChangeSettings 
+                  userInfoTitle='Password'
+                  userInfo='**********'
+                  name='password'
+                  label='New'
+                  value={this.state.password}
+                  editing={this.state.changePassword}
+                  toggleEdit={()=>this.toggleEdit('changePassword')}
+                  saveUser={this.saveUser}
+                  handleChange={this.handleChange}
+                  handleSubmit={this.handleSubmit}
+                  type='password'
+                  name2='verifyNewPassword'
+                  label2='Re-type New'
+                  value2={this.state.verifyNewPassword}
+                  name3='currentPassword'
+                  label3='Current'
+                  value3={this.state.currentPassword}
+                  failPassword={this.state.failPassword}
+                  failSave={this.state.failSave}>
                 </ChangeSettings>
               </React.Fragment>
             }

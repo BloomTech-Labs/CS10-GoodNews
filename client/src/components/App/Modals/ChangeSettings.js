@@ -10,25 +10,44 @@ const ChangeSettings = (props) => {
     <Grid.Column width={12}>
       {props.editing ? (
         <Grid.Row>
+          {props.failPassword && <span style={{color:'red'}}>Passwords do not match</span>}
+          {props.failSave && <span style={{color:'red'}}>Unable to save changes</span>}
+          {props.name3 &&
+          <React.Fragment>
+            <label>{props.label3}</label>
+            <Input
+              fluid
+              name={props.name3}
+              value={props.value3} 
+              onChange={props.handleChange}
+              type={props.type ? props.type : 'text'}
+              style={{ marginBottom: '10px' }}/>
+          </React.Fragment>}
+          <label>{props.label ? props.label : props.userInfoTitle}</label>
           <Input
             fluid
             name={props.name}
             value={props.value} 
             onChange={props.handleChange}
-            type={props.type ? props.type : 'text'}/>
+            type={props.type ? props.type : 'text'}
+            style={{ marginBottom: '10px' }}/>
           {props.name2 &&
-          <Input
-            fluid
-            style={{ marginTop: '10px' }}
-            name={props.name2}
-            value={props.value2} 
-            onChange={props.handleChange}
-            type={props.type ? props.type : 'text'}/>}
+          <React.Fragment>
+            <label>{props.label2}</label>
+            <Input
+              fluid
+              name={props.name2}
+              value={props.value2} 
+              onChange={props.handleChange}
+              type={props.type ? props.type : 'text'}/>
+          </React.Fragment>}
           <div style={{ display: 'flex', justifyContent: 'center'}}>
             <Button 
               primary style={{ backgroundColor: '#37bc9b', margin: '10px' }}
               onClick={(e)=>{
-                if (props.name2) {
+                if (props.name3) {
+                  props.handleSubmit(e, props.name, props.name2, props.name3)
+                } else if (props.name2) {
                   props.handleSubmit(e, props.name, props.name2)
                 } else {
                   props.handleSubmit(e, props.name)
