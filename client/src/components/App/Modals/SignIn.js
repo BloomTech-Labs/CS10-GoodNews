@@ -1,7 +1,7 @@
 import React from 'react';
 import { Component } from 'react';
 import axios from 'axios';
-import { Modal, Grid, Header, Form, Button, Divider, List, Icon, Input } from 'semantic-ui-react';
+import { Modal, Grid, Header, Form, Button, Divider, List, Input } from 'semantic-ui-react';
 
 // Production Server URL or localhost for local testing
 const url = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_SERVER : 'http://localhost:5000';
@@ -74,7 +74,6 @@ class SignIn extends Component {
               <List bulleted>
                 <List.Item>Save articles for later</List.Item>
                 <List.Item>Help us improve by reporting clickbait</List.Item>
-                <List.Item>Subscribe to weekly email digest</List.Item>
                 <List.Item>Comment on articles</List.Item>
               </List>
               <Divider/>
@@ -95,7 +94,7 @@ class SignIn extends Component {
                 alignItems: 'center'
               }}>
               <Header size="large">SIGN IN</Header>
-              <Grid.Row>
+              {/* <Grid.Row>
                 <Icon size='big' color='blue' name='facebook'
                   className='socialIcon' onClick={() => this.loginPassport('facebook')}/>
                 <Icon size='big' color='red' name='google plus square'
@@ -105,7 +104,7 @@ class SignIn extends Component {
               </Grid.Row>
               <Grid.Row>
                 <Divider horizontal>OR</Divider>
-              </Grid.Row>
+              </Grid.Row> */}
               {/* Display message when form submission has failed */}
               {this.state.failLogin && <span style={{color:'red'}}>Username or Password is incorrect</span>}
               <Form onSubmit={this.handleSubmit} style={{width: '100%', maxWidth: '300px'}}>
