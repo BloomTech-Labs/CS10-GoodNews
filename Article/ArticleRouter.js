@@ -55,23 +55,26 @@ function getKey(req, res) {
 
 // GET request for articles
 function getArticles(req, res) {
-    const flag = req.params.flag;
+    const { flag } = req.params;
     // console.log(`typeof ${flag}`);
     switch (flag) {
         case '0':
-            Article.find({ clickbait: '0' })
+            // fetches articles for the past 7 days
+            Article.find({ clickbait: '0', timestamp: { $gte: new Date(Date.now() - 24 * 60 * 60 * 1000) }})
             .sort({ timestamp: -1 })
             .then(found_articles => res.status(200).json(found_articles))
             .catch(err => res.status(500).json(err));
             break;
         case '1':
-            Article.find({ clickbait: '1' })
+            // fetches articles for the past 7 days
+            Article.find({ clickbait: '1', timestamp: { $gte: new Date(Date.now() - 24 * 60 * 60 * 1000) }})
             .sort({ timestamp: -1 })
             .then(found_articles => res.status(200).json(found_articles))
             .catch(err => res.status(500).json(err));
             break;
         default:
-            Article.find()
+            // fetches articles for the past 7 days
+            Article.find({timestamp: { $gte: new Date(Date.now() - 24 * 60 * 60 * 1000) }})
             .sort({ timestamp: -1 })
             .then(expected => res.status(200).json(expected))
             .catch(err => res.status(500).json(err.message));
