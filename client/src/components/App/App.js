@@ -118,7 +118,6 @@ class App extends Component {
 
   isLoggedIn = () => {
     const loggedIn = localStorage.getItem('auth-token') ? true : false;
-    // const articleOptions = loggedIn ? 'loggedIn' : ''
     if (this.state.loggedIn !== loggedIn) {
       this.setState({ loggedIn });
     }
