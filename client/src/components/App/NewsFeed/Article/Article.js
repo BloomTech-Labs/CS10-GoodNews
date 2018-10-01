@@ -17,7 +17,7 @@ const Article = (props) => {
     case (elapsedMilliseconds > 86400000):
       return `${Math.round(elapsedMilliseconds/(1000*60*60*24))} days ago`;
     default:
-      return `${elapsedMilliseconds} milliseconds ago`;
+      return 'Some time ago...';
   }}
 
   const saveArticle = () => {
@@ -38,6 +38,24 @@ const Article = (props) => {
       })
   }
 
+  const removeArticle = () => {
+    const id = props.article._id
+    const config = {
+      headers: {
+        'authorization': localStorage.getItem('auth-token'),
+        'userid': localStorage.getItem("userid")
+      }
+    }
+    axios.put(`${url}/api/article/${id}/del`, null, config)
+      .then( res => {
+        console.log('removed')
+      })
+      .catch( err => {
+        console.log('failed')
+        console.log(err)
+      })
+  }
+
   return (
     <Card fluid
       style={{ 
@@ -46,7 +64,13 @@ const Article = (props) => {
         display: 'flex',
         alignItems: 'flex-end',
         maxWidth: '700px'}}>
-      {/* {props.articleOptions && <ArticleOptions save={saveArticle}/>} */}
+      {(props.loggedIn && props.articleOptions==='saved') && 
+        <ArticleOptions
+          remove={removeArticle} 
+          articleOptions={props.articleOptions}/>}
+      {(props.loggedIn && props.articleOptions==='clickbait') &&
+        <ArticleOptions
+          articleOptions={props.articleOptions}/>}
       <Card.Content style={{ borderStyle: 'none' }}>
         <Header href={props.article.url} className='article-title'>
           {props.article.name}
@@ -55,7 +79,8 @@ const Article = (props) => {
           <Card.Meta  style={{ marginBottom: '1em' }}>
             <span>{elapsedTime()}</span>
           </Card.Meta>
-          {props.articleOptions && <ArticleOptions save={saveArticle}/>}
+          {(props.loggedIn && props.articleOptions==='all') && 
+            <ArticleOptions articleOptions={props.articleOptions} save={saveArticle}/>}
         </div>
         <Grid>
           <Grid.Row only='tablet computer' columns={1}>

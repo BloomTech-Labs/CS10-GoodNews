@@ -1,7 +1,7 @@
 import React from 'react';
 import { Component } from 'react';
 import axios from 'axios';
-import { Modal, Grid, Header, Form, Button, Divider, List } from 'semantic-ui-react';
+import { Modal, Grid, Header, Form, Button, Divider, List, Icon, Input } from 'semantic-ui-react';
 
 // Production Server URL or localhost for local testing
 const url = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_SERVER : 'http://localhost:5000';
@@ -46,11 +46,22 @@ class SignIn extends Component {
       })
   }
 
+  loginPassport = (socialMedia) => {
+    // `${url}/api/user/login`, { socialMedia }
+    // console.log(`${url}/auth/${socialMedia}`);
+    axios.post(`${url}/auth/${socialMedia}`)
+      .then(res => {console.log(res)})
+      // .then(url => {
+      //   window.location = url;
+      // })
+      .catch(err => console.log(err))
+  }
+
   render() { 
     return (
       <Modal closeIcon open={true} 
         onClose={() => this.props.toggleModal('')} 
-        style={{minHeight: '350px', padding: '2em'}}>
+        style={{ minHeight: '350px', padding: '2em' }}>
         <Modal.Content> 
           <Grid columns={3} stackable>
             {/* Only display this section on desktop or tablet screens */}
@@ -67,7 +78,8 @@ class SignIn extends Component {
               <List bulleted>
                 <List.Item>Save articles for later</List.Item>
                 <List.Item>Help us improve by reporting clickbait</List.Item>
-                <List.Item>Get the weather in location (coming soon)</List.Item>
+                <List.Item>Subscribe to weekly email digest</List.Item>
+                <List.Item>Comment on articles</List.Item>
               </List>
               <Divider/>
               <Button primary style={{ backgroundColor: '#37bc9b' }} onClick={() => this.props.toggleModal('register')}>
@@ -87,16 +99,27 @@ class SignIn extends Component {
                 alignItems: 'center'
               }}>
               <Header size="large">SIGN IN</Header>
+              <Grid.Row>
+                <Icon size='big' color='blue' name='facebook'
+                  className='socialIcon' onClick={() => this.loginPassport('facebook')}/>
+                <Icon size='big' color='red' name='google plus square'
+                  className='socialIcon' onClick={() => this.loginPassport('google')}/>
+                <Icon size='big' style={{color: '#1da1f2'}} name='twitter square'
+                  className='socialIcon' onClick={() => this.loginPassport('twitter')}/>
+              </Grid.Row>
+              <Grid.Row>
+                <Divider horizontal>OR</Divider>
+              </Grid.Row>
               {/* Display message when form submission has failed */}
               {this.state.failLogin && <span style={{color:'red'}}>Username or Password is incorrect</span>}
-              <Form onSubmit={this.handleSubmit}>
-                <Form.Field required>
+              <Form onSubmit={this.handleSubmit} style={{width: '100%', maxWidth: '300px'}}>
+                <Form.Field>
                   <label style={{ textAlign: 'left' }}>Username</label>
-                  <input onChange={this.handleInput} name="username" value={this.state.username}/>
+                  <Input fluid onChange={this.handleInput} name="username" value={this.state.username}/>
                 </Form.Field>
-                <Form.Field required>
+                <Form.Field>
                   <label style={{ textAlign: 'left' }}>Password</label>
-                  <input onChange={this.handleInput} type="password" name="password" value={this.state.password}/>
+                  <Input fluid onChange={this.handleInput} type="password" name="password" value={this.state.password}/>
                 </Form.Field>
                 <Divider/>
                 <Button type='submit'>SIGN IN</Button>

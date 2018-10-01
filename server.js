@@ -3,10 +3,7 @@ const express = require('express');
 const server = express();
 const helmet = require('helmet');
 const cors = require('cors');
-
-const UserRouter = require('./User/UserRouter');
-const ArticleRouter = require('./Article/ArticleRouter');
-// const ArticleRouterDS = require('./Article/ArticleRouterDS');
+const User = require('./User/User');
 
 // const authMiddleware = (req, res, next) => {
 // 	// TODO: Implement Authentication and Authorization
@@ -18,34 +15,78 @@ const ArticleRouter = require('./Article/ArticleRouter');
 
 const corsOptions = {
 	origin: '*',
-	credentials: true
+	methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+	credentials: true,
+	preflightContinue: false,
+	optionsSuccessStatus: 200
 };
 
 server.use(cors(corsOptions));
 server.use(helmet());
 server.use(express.json());
 
-// passport-twitter
-const { getProfileTwitter, authTwitter } = require('./passport/twitter');
+const UserRouter = require('./User/UserRouter');
+const ArticleRouter = require('./Article/ArticleRouter');
+const ArticleRouterDS = require('./Article/ArticleRouterDS');
+
+// passport
+// const { getProfileTwitter, authTwitter } = require('./passport/twitter');
 const session = require('express-session');
 const passport = require('passport');
 const { isLoggedIn } = require('./controllers/auth');
 const cookieParser = require('cookie-parser');
 server.use(cookieParser()); // read cookies (needed for auth)
 // server.use(bodyParser()); // get information from html forms
+const twitter = require('./passport/twitter');
+const facebook = require('./passport/facebook');
+const google = require('./passport/google');
+
 // required for passport
-server.use(session({ secret: 'SECRET', resave: false, saveUninitialized: false, cookie: { secure: false }})); // session secret
+server.use(session({ 
+	secret: 'SECRET', 
+	resave: false, 
+	saveUninitialized: false, 
+	cookie: { secure: false }})); // session secret
 server.use(passport.initialize());
 server.use(passport.session()); // persistent login sessions
 // server.use(flash()); // use connect-flash for flash messages stored in session
+
+
+passport.serializeUser(function(user, done) {
+    done(null, user.id);
+});
+passport.deserializeUser(function(id, done) {
+    User.findById({ _id: id}, function(err, user) {
+        done(err, user);
+    });
+});
+
+// passport-twitter
 // route for showing the profile page
-server.get('/twitter/profile', isLoggedIn, getProfileTwitter);
-// Twitter routes
+// server.get('/twitter/profile', isLoggedIn, getProfileTwitter);
+// Redirect the user to Twitter for authentication.  When complete, Twitter
+// will redirect the user back to the application at /auth/twitter/callback
 server.get('/auth/twitter', passport.authenticate('twitter'));
 // handle the callback after twitter has authenticated the user
-server.get('/auth/twitter/callback',
-	passport.authenticate('twitter'),
-	authTwitter);
+server.get('/auth/twitter/callback', (req, res, next) => {
+	passport.authenticate('twitter', 
+	// { successRedirect: 'http://127.0.0.1:3000',
+	// failureRedirect: 'Authentication Failed!' }
+	)(req, res, next)
+},
+	(req, res, next) => {
+		console.log('Session: ', req.session);
+		console.log('res object: ', res);
+		console.log('next function: ', next);
+		// res.json(req.user);
+		req.session.save((err) => {
+			if (err) res.status(500).json(err);
+			res.status(200).json({
+				user : req.session.passport.user // get the user out of session and pass to res
+			});
+		});
+	}
+);
 
 // passport-facebook
 const { getProfileFacebook, authFacebook } = require('./passport/facebook');
@@ -69,9 +110,19 @@ server.get('/auth/google/callback',
 	passport.authenticate('google'),
 	authGoogle);
 
-server.get('/logout', function(req, res){
-	req.logout();
-	// res.redirect('/api/article/get-articles/0');
+// login route
+server.get('/login', (req, res) => {
+	res.send('Go back and register!');
+});
+
+server.get('/logout', (req, res) => {
+	// console.log(req);
+	// req.logout();
+	req.session.destroy(err => {
+		if (err) res.status(500).json(err);
+		res.redirect('http://127.0.0.1:3000');
+	});
+	// res.send('User logged out!');
 });
 
 // User and Article API Routes

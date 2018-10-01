@@ -4,13 +4,13 @@ import { Menu, Icon } from 'semantic-ui-react';
 const MainMenu = (props) => {
   const handleTopicClick = (e) => {
     const topic = e.target.innerHTML;
-    props.fetchArticlesByTopic(topic);
+    props.switchArticles('trending', topic);
   }
 
   return (
     <Menu className='main-menu' borderless secondary vertical fixed='top'>
-      {/* <Search size='large' results={props.articles}/> */}
-      <Menu.Item onClick={()=>props.switchArticles('all')}>
+      {props.searchBar}  
+      <Menu.Item onClick={()=>props.switchArticles('all')} style={{ marginTop: '10px' }}>
         <Icon name='newspaper' size='large' color='grey'/>
         All articles
       </Menu.Item>

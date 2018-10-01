@@ -1,8 +1,32 @@
 import React from 'react';
-import { Dropdown, Icon, Button, Popup } from 'semantic-ui-react';
+import { Button, Popup } from 'semantic-ui-react';
 
 const ArticleOptions = (props) => {
   return (
+    <React.Fragment>
+      {props.articleOptions === 'all' &&(
+        <div style={{ display: 'flex' }}>
+          <Popup 
+            trigger={<Button icon='bookmark outline' className='articleOptionsButton' onClick={props.save}/>}
+            content='Add to reading list'/>
+          <Popup 
+            trigger={<Button icon='ban' className='articleOptionsButton'/>}
+            content='Report as clickbait' />
+        </div>
+      )}
+      {props.articleOptions === 'saved' &&(
+        <div>
+          <Popup 
+            trigger={<Button icon='close' className='articleOptionsButton' onClick={props.remove}/>}
+            content='Remove from reading list'/>
+        </div>
+      )}
+      {props.articleOptions === 'clickbait' &&(
+        <div>Is this clickbait?</div>
+      )}
+    </React.Fragment>
+  )
+  // return (
     // <Dropdown icon='ellipsis horizontal' pointing='top right'>
     //   <Dropdown.Menu>
     //     <Dropdown.Item 
@@ -12,13 +36,9 @@ const ArticleOptions = (props) => {
     //       onClick={()=>console.log("reporting clickbait")}/>
     //   </Dropdown.Menu>
     // </Dropdown>
-    <React.Fragment>
-      <Popup 
-        trigger={<Button icon='bookmark outline' className='articleOptionsButton'/>}
-        content='Add to reading list' />
-      {/* <Icon name='bookmark outline' color='grey' onClick={props.save}/> */}
-    </React.Fragment>
-  );
+
+    
+  // );
 }
  
 export default ArticleOptions;

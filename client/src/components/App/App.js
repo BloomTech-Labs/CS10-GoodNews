@@ -10,6 +10,8 @@ import NewsFeed from './NewsFeed/NewsFeed';
 import Article from './NewsFeed/Article/Article';
 import LandingPage from './LandingPage/LandingPage';
 import MainMenu from './Menu/MainMenu';
+import { Search } from 'semantic-ui-react';
+import _ from 'lodash';
 
 // Production Server URL or localhost for local testing
 const url = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_SERVER : 'http://localhost:5000';
@@ -22,8 +24,10 @@ class App extends Component {
       loggedIn: false,
       showModal: '',
       showMenu: false,
-      // articleOptions: '',
+      articleOptions: 'all',
       articles: [],
+      searchOptions: [],
+      searchValue: '',
       allArticles: [],
       trendingTopics: []
     }
@@ -38,7 +42,11 @@ class App extends Component {
   fetchArticles = () => {
     axios.get(`${url}/api/article/get-articles/0`)
       .then( articles => {
-        this.setState({ articles: articles.data, allArticles: articles.data })
+        this.setState({ 
+          articles: articles.data, 
+          allArticles: articles.data,
+          searchOptions: articles.data
+        })
       })
       .catch( err => console.log(err))
   }
@@ -46,7 +54,7 @@ class App extends Component {
   fetchClickbait = () => {
     axios.get(`${url}/api/article/get-articles/1`)
       .then( articles => {
-        this.setState({ articles: articles.data })
+        this.setState({ articles: articles.data, searchOptions: articles.data })
       })
       .catch( err => console.log(err))
   }
@@ -65,7 +73,7 @@ class App extends Component {
   fetchArticlesByTopic = (topic) => {
     axios.get(`${url}/api/article/${topic}`)
       .then( articles => {
-        this.setState({ articles: articles.data });
+        this.setState({ articles: articles.data, searchOptions: articles.data });
       })
       .catch( err => console.log(err))
   }
@@ -81,7 +89,7 @@ class App extends Component {
       axios.get(`${url}/api/article/user-saved`, config)
         .then( user => {
           const savedArticles = user.data.saved_articles;
-          this.setState({ articles: savedArticles });
+          this.setState({ articles: savedArticles, searchOptions: savedArticles });
           window.scrollTo(0,0);
         })
         .catch( err => console.log(err))
@@ -116,26 +124,38 @@ class App extends Component {
     }
   }
 
-  switchArticles = (articleSet) => {
+  switchArticles = (articleSet, topic=null) => {
     let articles;
-    // let articleOptions;
+    let articleOptions;
     switch(articleSet) {
       case 'all':
+        this.resetSearch()
         articles = this.state.allArticles;
-        // articleOptions = this.state.loggedIn ? 'loggedIn' : '';
-        this.setState({ articles });
+        articleOptions = 'all';
+        this.setState({ articles, articleOptions, searchOptions: articles });
         break;
       case 'saved':
+        this.resetSearch()
         this.fetchSavedArticles();
-        // articleOptions = 'saved'
-        // this.setState({ articleOptions })
+        articleOptions = 'saved';
+        this.setState({ articleOptions })
         break;
       case 'clickbait':
+        this.resetSearch()
         this.fetchClickbait();
+        articleOptions = 'clickbait';
+        this.setState({ articleOptions })
+        break;
+      case 'trending':
+        this.resetSearch()
+        this.fetchArticlesByTopic(topic)
+        articleOptions = 'all';
+        this.setState({ articleOptions })
         break;
       default:
+        this.resetSearch()
         articles = this.state.allArticles;
-        this.setState({ articles });
+        this.setState({ articles, articleOptions });
         break;
     }
   }
@@ -170,21 +190,53 @@ class App extends Component {
     }
   }
 
+  resetSearch = () => {
+    this.setState({
+      searchValue: '',
+      articles: this.state.searchOptions,
+      isLoading: false
+    })
+  }
+
+  handleResultSelect = (e, {result}) => this.setState({ searchValue: result.name })
+
+  handleSearchChange = (e, {value}) => {
+    this.setState({ isLoading: true, searchValue: value })
+    if (this.state.searchValue.length < 1) {
+      return this.resetSearch()
+    } else {
+      const re = new RegExp(_.escapeRegExp(this.state.searchValue), 'i');
+      const isMatch = result => re.test(result.name);
+
+      this.setState({
+        isLoading: false,
+        articles: _.filter(this.state.searchOptions, isMatch)
+      })
+    }
+  }
+
   render() {
+
     return (
+
       this.state.visited ? (
         <div className="App">
-
           <Nav toggleMenu={this.toggleMenu}>
             {this.switchLoginLogout(this.state.loggedIn)}
           </Nav>
           {this.state.showMenu && 
-            <MainMenu 
+            <MainMenu
+              searchBar={<Search
+                loading={this.state.isLoading}
+                onResultSelect={this.handleResultSelect}
+                onSearchChange={_.debounce(this.handleSearchChange, { leading: true })}
+                results={this.state.articles}
+                value={this.state.searchValue}
+                {...this.props}/>} 
               loggedIn={this.state.loggedIn} 
               trendingTopics={this.state.trendingTopics}
               toggleLandingPage={this.toggleLandingPage}
               switchArticles={this.switchArticles}
-              articles={this.state.articles}
               fetchArticlesByTopic={this.fetchArticlesByTopic}
             />}
           <NewsFeed>
@@ -192,8 +244,9 @@ class App extends Component {
               return (
                 <Article 
                   key={article._id} 
-                  article={article} 
-                  articleOptions={this.state.loggedIn}
+                  article={article}
+                  loggedIn={this.state.loggedIn}
+                  articleOptions={this.state.articleOptions}
                 />)
             })}
           </NewsFeed>

@@ -110,18 +110,26 @@ function getById(req, res) {
 // PUT request
 function put(req, res) {
     const userid = req.headers.userid;
-    const user = { name, username, email } = req.body;
+    const user = { name, username, email, currentPassword, password } = req.body;
     // console.log(req.body);
     // if (!User.findById(id)) {
     //     res.status(404).json({ message: 'User not found' });
     // }
-    User.findByIdAndUpdate(userid, user)
-        .then(expected => {
-            res.status(201).json(expected);
+    User.findById(userid)
+        .then(foundUser => {
+            foundUser.checkPassword(foundUser.password, currentPassword)
+            .then(isMatch => {
+                User.findByIdAndUpdate(userid, user)
+                    .then(expected => {
+                        res.status(201).json(expected);
+                    })
+                    .catch(err => {
+                        res.status(500).json(err.message);
+                    });
+            })
+            .catch(err => res.status(500).json(err.message))
         })
-        .catch(err => {
-            res.status(500).json(err.message);
-        });
+        .catch(err => res.status(404).json(err.message));
 }
 
 // DELETE request
