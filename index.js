@@ -1,9 +1,9 @@
 require('dotenv').config();
+const mongoose = require('mongoose');
 const express = require('express');
 const server = require('./server');
 const path = require('path');
 const port = process.env.PORT || 5000;
-const mongoose = require('mongoose');
 
 //process.env if it exists OR local version for testing offline.
 const mongoURL = process.env.NODE_ENV === 'production' ? process.env.PROD_MONGODB : process.env.MONGODB_LOCAL;

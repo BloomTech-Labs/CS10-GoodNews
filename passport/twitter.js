@@ -8,54 +8,59 @@ passport.use(new TwitterStrategy({
     callbackURL: process.env.TWITTER_CALLBACK_URL
     },
     function(token, tokenSecret, profile, done) {
-		// console.log(profile);
+        // console.log(profile);
         process.nextTick(function() {
             User.findOne({ 'twitter.id' : profile.id }, function(err, user) {
                 if (err) return done(err);
                 if (user) {
-                    return done(null, user); // user found, return that user
+                    return done(err, user); // user found, return that user
                 } else {
                     const newUser = new User();
                     newUser.twitter.id = profile.id;
-					newUser.twitter.token = token;
-					newUser.twitter.tokenSecret = tokenSecret;
+                    newUser.twitter.token = token;
+                    newUser.twitter.tokenSecret = tokenSecret;
                     newUser.twitter.twittername = profile.username;
                     newUser.twitter.displayName = profile.displayName;
+                    newUser.email = profile.emails[0].value,
                     newUser.save(function(err) {
                         if (err) throw err;
-                        return done(null, newUser);
+                        return done(err, newUser);
                     });
                 }
             });
         }
 )}));
-passport.serializeUser(function(user, done) {
-    done(null, user.id);
-});
-passport.deserializeUser(function(id, done) {
-    User.findById({ _id: id}, function(err, user) {
-        done(err, user);
-    });
-});
 
-const getProfileTwitter = (req, res) => {
-	// console.log(req);
-    res.status(200).json({
-        user : req.user // get the user out of session and pass to template
-    })
-}
+// passport.serializeUser(function(user, done) {
+//     done(null, user.id);
+// });
+// passport.deserializeUser(function(id, done) {
+//     User.findById({ _id: id}, function(err, user) {
+//         done(err, user);
+//     });
+// });
 
-const authTwitter = (req, res) => {
-    // console.log(req.user._id);
-    req.session.save(() => {
-        res.status(200).json({
-            user : req.user // get the user out of session and pass to res
-        });
-    });
-    // res.redirect('/api/article/get-articles/0');
-}
+// const getProfileTwitter = (req, res) => {
+// 	// console.log(req);
+//     res.status(200).json({
+//         user : req.user // get the user out of session and pass to template
+//     })
+// }
 
-module.exports = {
-    getProfileTwitter,
-    authTwitter
-};
+// const authTwitter = (req, res) => {
+//     console.log(req.user);
+//     req.session.save(() => {
+//         res.status(200).json({
+//             user : req.user, // get the user out of session and pass to res
+//             token: req.user.token
+//         });
+//         // const token = req.user.token;
+//         // res.redirect('http://127.0.0.1:3000'+token);
+//     });
+// }
+
+// res.redirect('/api/article/get-articles/0'));
+
+// module.exports = {
+//     getProfileTwitter
+// };

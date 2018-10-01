@@ -216,10 +216,11 @@ class App extends Component {
   }
 
   render() {
+
     return (
+
       this.state.visited ? (
         <div className="App">
-
           <Nav toggleMenu={this.toggleMenu}>
             {this.switchLoginLogout(this.state.loggedIn)}
           </Nav>
