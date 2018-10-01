@@ -29,14 +29,14 @@ passport.use(new FacebookStrategy({
             });
         }
 )}));
-passport.serializeUser(function(user, done) {
-    done(null, user.id);
-});
-passport.deserializeUser(function(id, done) {
-    User.findById({ _id: id}, function(err, user) {
-        done(err, user);
-    });
-});
+// passport.serializeUser(function(user, done) {
+//     done(null, user.id);
+// });
+// passport.deserializeUser(function(id, done) {
+//     User.findById({ _id: id}, function(err, user) {
+//         done(err, user);
+//     });
+// });
 
 const getProfileFacebook = (req, res) => {
 	// console.log(req);
