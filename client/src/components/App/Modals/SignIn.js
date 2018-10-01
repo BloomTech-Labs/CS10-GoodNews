@@ -47,7 +47,8 @@ class SignIn extends Component {
   }
 
   loginPassport = (socialMedia) => {
-    axios.get(`${url}/auth/${socialMedia}`)
+    console.log("logging in with google")
+    axios.get(`${url}/auth/${socialMedia}`, {withCredentials: true, crossDomain: true})
       .then(res => console.log(res))
       .catch(err => console.log(err))
   }

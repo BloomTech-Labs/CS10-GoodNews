@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Popup } from 'semantic-ui-react';
+import { Button, Popup, Icon } from 'semantic-ui-react';
 
 const ArticleOptions = (props) => {
   return (
@@ -17,7 +17,7 @@ const ArticleOptions = (props) => {
       {props.articleOptions === 'saved' &&(
         <div>
           <Popup 
-            trigger={<Button icon='close' className='articleOptionsButton' onClick={props.remove}/>}
+            trigger={<Icon name='close' color='grey' onClick={props.remove}/>}
             content='Remove from reading list'/>
         </div>
       )}

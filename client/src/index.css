@@ -159,6 +159,15 @@ a.article-title:hover {
   cursor: pointer;
 }
 
+.weatherWidget {
+  border-radius: 6px;
+  background-color: #eeeeee; 
+  max-width: 100%; 
+  min-height: 100px;
+  padding: 30px;
+  color: #3d3d3d;
+}
+
 @media only screen and (max-width: 768px) {
   .logo {
     font-size: 3.5em;
@@ -175,6 +184,10 @@ a.article-title:hover {
 
   .about-section {
     max-width: 300px;
+  }
+
+  .weatherWidget {
+    margin: 0px 15px;
   }
 }
 
