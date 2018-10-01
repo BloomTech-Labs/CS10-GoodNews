@@ -6,7 +6,7 @@ const { isLoggedIn } = require('../controllers/auth');
 // POST to /api/article/ endpoint
 router.route('/post-article').post(isLoggedIn, post);
 // GET Articles with either 1 or 0 flag for clickbait
-router.route('/get-articles/:flag').get(getArticles);
+router.route('/get-articles/:flag/:gteTime/:lteTime').get(getArticles);
 // GET Article by its _id
 router.route('/get/:articleid').get(getArticleId);
 // GET User's saved articles. 
@@ -55,12 +55,21 @@ function getKey(req, res) {
 
 // GET request for articles
 function getArticles(req, res) {
-    const { flag } = req.params;
+    const { flag, gteTime, lteTime } = req.params;
     // console.log(`typeof ${flag}`);
+    const gteNum = parseInt(gteTime, 10);
+    const lteNum = parseInt(lteTime, 10);
+    const gte = new Date(gteNum);
+    const lte = new Date(lteNum);
+    console.log(gte);
+    console.log(lte)
     switch (flag) {
         case '0':
-            // fetches articles for the past 7 days
-            Article.find({ clickbait: '0', timestamp: { $gte: new Date(Date.now() - 24 * 60 * 60 * 1000) }})
+            // fetches articles for the past 7 days timestamp: { $gte: new Date(Date.now() - 24 * 60 * 60 * 1000)}
+            Article.find({ clickbait: '0', 
+                            timestamp: { $gte: gte, 
+                                        $lte:  lte
+                                    }})
             .sort({ timestamp: -1 })
             .then(found_articles => res.status(200).json(found_articles))
             .catch(err => res.status(500).json(err));
