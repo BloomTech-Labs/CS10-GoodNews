@@ -252,9 +252,8 @@ class App extends Component {
                 loading={this.state.isLoading}
                 onResultSelect={this.handleResultSelect}
                 onSearchChange={_.debounce(this.handleSearchChange, { leading: true })}
-                results={this.state.articles}
                 value={this.state.searchValue}
-                {...this.props}/>} 
+                showNoResults={false}/>} 
               loggedIn={this.state.loggedIn} 
               trendingTopics={this.state.trendingTopics}
               toggleLandingPage={this.toggleLandingPage}
