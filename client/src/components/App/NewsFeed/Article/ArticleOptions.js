@@ -70,7 +70,7 @@ const ArticleOptions = (props) => {
                 </Form>
                 <Button primary type='submit' 
                   style={{ backgroundColor: '#37bc9b', marginTop: '30px' }}
-                  onClick={() => props.report(true)}>
+                  onClick={() => props.report(false)}>
                   This is not clickbait
                 </Button>
               </Modal.Content>
