@@ -6,7 +6,7 @@ const { isLoggedIn } = require('../controllers/auth');
 // POST to /api/article/ endpoint
 router.route('/post-article').post(isLoggedIn, post);
 // GET Articles with either 1 or 0 flag for clickbait
-router.route('/get-articles/:flag').get(getArticles);
+router.route('/get-articles/:flag/:gte/:lte').get(getArticles);
 // GET Article by its _id
 router.route('/get/:articleid').get(getArticleId);
 // GET User's saved articles. 
@@ -21,9 +21,16 @@ router.route('/:articleid/:type').put(isLoggedIn, putSavedArticle);
 // GET generate top keywords for Trending Topics
 function getTopFive(req, res) {
     // { $match: {timestamp: {"$gt": new Date(Date.now() - 24*60*60 * 1000)}}},
+    const now = Date.now();
     Article
     .aggregate([
-        { $match: { 'clickbait': '0' }},
+        { $match: { 
+          'clickbait': '0', 
+          'timestamp': {
+            $lte: new Date(now), 
+            $gte: new Date(now - 24*60*60*1000)
+          }
+        }},
         { $project: { keywords: 1 }},
         { $unwind: '$keywords' },
         { $group: {
@@ -55,19 +62,24 @@ function getKey(req, res) {
 
 // GET request for articles
 function getArticles(req, res) {
-    const { flag } = req.params;
+    let { flag, gte, lte } = req.params;
     // console.log(`typeof ${flag}`);
     switch (flag) {
         case '0':
             // fetches articles for the past 7 days
-            Article.find({ clickbait: '0', timestamp: { $gte: new Date(Date.now() - 24 * 60 * 60 * 1000) }})
+            Article.find({ clickbait: '0', timestamp: { 
+              $gte: new Date(Number(gte)), 
+              $lte: new Date(Number(lte))
+            }})
             .sort({ timestamp: -1 })
-            .then(found_articles => res.status(200).json(found_articles))
+            .then(found_articles => {
+              res.status(200).json(found_articles)
+            })
             .catch(err => res.status(500).json(err));
             break;
         case '1':
             // fetches articles for the past 7 days
-            Article.find({ clickbait: '1', timestamp: { $gte: new Date(Date.now() - 24 * 60 * 60 * 1000) }})
+            Article.find({ clickbait: '1', timestamp: { $gte: new Date(gte), $lte: new Date(lte) }})
             .sort({ timestamp: -1 })
             .then(found_articles => res.status(200).json(found_articles))
             .catch(err => res.status(500).json(err));

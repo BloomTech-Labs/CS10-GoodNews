@@ -10,7 +10,7 @@ import NewsFeed from './NewsFeed/NewsFeed';
 import Article from './NewsFeed/Article/Article';
 import LandingPage from './LandingPage/LandingPage';
 import MainMenu from './Menu/MainMenu';
-import { Search } from 'semantic-ui-react';
+import { Search, Pagination } from 'semantic-ui-react';
 import _ from 'lodash';
 
 // Production Server URL or localhost for local testing
@@ -29,18 +29,31 @@ class App extends Component {
       searchOptions: [],
       searchValue: '',
       allArticles: [],
-      trendingTopics: []
+      trendingTopics: [],
+      activePage: 1
     }
   }
 
-  componentDidMount() {
+  componentDidMount() {  
     this.isLoggedIn();
     this.fetchArticles();
     this.fetchTrendingTopics();
   }
 
+  paginationChange = (e, { activePage }) => {
+    window.scrollTo(0,0)
+    this.setState({ activePage })
+    localStorage.setItem('active-page', activePage)
+    this.fetchArticles();
+    console.log(this.state)
+  }
+
   fetchArticles = () => {
-    axios.get(`${url}/api/article/get-articles/0`)
+    const now = Date.now();
+    const activePage = localStorage.getItem('active-page')
+    const gte = now - (activePage*24*60*60*1000);
+    const lte = now - ((activePage-1)*24*60*60*1000);
+    axios.get(`${url}/api/article/get-articles/0/${gte}/${lte}`)
       .then( articles => {
         this.setState({ 
           articles: articles.data, 
@@ -52,7 +65,11 @@ class App extends Component {
   }
 
   fetchClickbait = () => {
-    axios.get(`${url}/api/article/get-articles/1`)
+    const now = Date.now();
+    const activePage = localStorage.getItem('active-page')
+    const gte = now - (activePage*24*60*60*1000);
+    const lte = now - ((activePage-1)*24*60*60*1000);
+    axios.get(`${url}/api/article/get-articles/1/${gte}/${lte}`)
       .then( articles => {
         this.setState({ articles: articles.data, searchOptions: articles.data })
       })
@@ -118,8 +135,10 @@ class App extends Component {
 
   isLoggedIn = () => {
     const loggedIn = localStorage.getItem('auth-token') ? true : false;
+    let activePage = localStorage.getItem('active-page');
+    activePage = activePage ? activePage : 1;
     if (this.state.loggedIn !== loggedIn) {
-      this.setState({ loggedIn });
+      this.setState({ loggedIn, activePage });
     }
   }
 
@@ -248,6 +267,10 @@ class App extends Component {
                   articleOptions={this.state.articleOptions}
                 />)
             })}
+            <Pagination 
+              activePage={this.state.activePage}
+              onPageChange={this.paginationChange}
+              totalPages={30}/>
           </NewsFeed>
           {this.switchModals(this.state.showModal)}
         </div>

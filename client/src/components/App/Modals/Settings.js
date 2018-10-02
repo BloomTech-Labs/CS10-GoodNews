@@ -111,8 +111,8 @@ class Settings extends Component {
       <Modal closeIcon open={true} centered={false}
         onClose={() => this.props.toggleModal('')}
         style={{ minHeight: '350px', padding: '2em' }}>
-        <Header size="large" textAlign='center'>SETTINGS</Header>
         <Modal.Content>
+          <Header size="large" textAlign='center'>SETTINGS</Header>
           <Grid>
             {this.state.first && 
               <React.Fragment>

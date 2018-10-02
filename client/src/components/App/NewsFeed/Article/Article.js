@@ -5,6 +5,7 @@ import ArticleOptions from './ArticleOptions';
 
 // Production Server URL or localhost for local testing
 const url = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_SERVER : 'http://localhost:5000';
+const urlDs = 'https://lab7goodnews-ds.herokuapp.com/stories'
 
 const Article = (props) => {
   const elapsedMilliseconds = Date.now() - Date.parse(props.article.timestamp);
@@ -12,10 +13,18 @@ const Article = (props) => {
   const elapsedTime = () => {switch(true) {
     case (elapsedMilliseconds < 1800000):
       return 'Less than an hour ago';
-    case (elapsedMilliseconds >= 1800000 && elapsedMilliseconds <= 86400000):
+    case (elapsedMilliseconds >= 1800000 && elapsedMilliseconds <= 2700000):
+      return '1 hour ago';
+    case (elapsedMilliseconds > 2700000 && elapsedMilliseconds <= 86400000):
       return `${Math.round(elapsedMilliseconds/(1000*60*60))} hours ago`;
-    case (elapsedMilliseconds > 86400000):
+    case (elapsedMilliseconds > 86400000 && elapsedMilliseconds <= 172800000):
+      return '1 day ago';
+    case (elapsedMilliseconds > 172800000 && elapsedMilliseconds <= 604800000):
       return `${Math.round(elapsedMilliseconds/(1000*60*60*24))} days ago`;
+    case (elapsedMilliseconds > 604800000 && elapsedMilliseconds <= 1814400000):
+      return '1 week ago';
+    case (elapsedMilliseconds > 1814400000):
+      return `${Math.round(elapsedMilliseconds/(1000*60*60*24*7))} weeks ago`;
     default:
       return 'Some time ago...';
   }}
@@ -56,6 +65,12 @@ const Article = (props) => {
       })
   }
 
+  const reportArticle = (clickbait) => {
+    const user_id = localStorage.getItem('userid')
+    const report = { user_id, clickbait }
+    axios.post(`${urlDs}/${props.article.id}`, report)
+  }
+
   return (
     <Card fluid
       style={{ 
@@ -68,9 +83,6 @@ const Article = (props) => {
         <ArticleOptions
           remove={removeArticle} 
           articleOptions={props.articleOptions}/>}
-      {(props.loggedIn && props.articleOptions==='clickbait') &&
-        <ArticleOptions
-          articleOptions={props.articleOptions}/>}
       <Card.Content style={{ borderStyle: 'none' }}>
         <Header href={props.article.url} className='article-title'>
           {props.article.name}
@@ -80,7 +92,10 @@ const Article = (props) => {
             <span>{elapsedTime()}</span>
           </Card.Meta>
           {(props.loggedIn && props.articleOptions==='all') && 
-            <ArticleOptions articleOptions={props.articleOptions} save={saveArticle}/>}
+            <ArticleOptions 
+              articleOptions={props.articleOptions} 
+              save={saveArticle}
+              report={reportArticle}/>}
         </div>
         <Grid>
           <Grid.Row only='tablet computer' columns={1}>
@@ -88,6 +103,10 @@ const Article = (props) => {
               {props.article.description}
             </Grid.Column>
           </Grid.Row>
+          {(props.loggedIn && props.articleOptions==='clickbait') &&
+          <ArticleOptions
+            articleOptions={props.articleOptions}
+            report={reportArticle}/>}
         </Grid>
       </Card.Content>
     </Card>

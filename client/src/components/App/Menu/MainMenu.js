@@ -20,7 +20,7 @@ const MainMenu = (props) => {
           Reading list
         </Menu.Item>}
       <Menu.Item>
-        <Icon name='tags' size='large' color='grey'/>
+        <Icon name='thermometer three quarters' size='large' color='grey'/>
         Trending topics:
         <Menu secondary vertical 
           items={props.trendingTopics}
