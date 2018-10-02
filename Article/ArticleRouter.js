@@ -79,7 +79,10 @@ function getArticles(req, res) {
             break;
         case '1':
             // fetches articles for the past 7 days
-            Article.find({ clickbait: '1', timestamp: { $gte: new Date(gte), $lte: new Date(lte) }})
+            Article.find({ clickbait: '1', timestamp: { 
+              $gte: new Date(Number(gte)), 
+              $lte: new Date(Number(lte))
+            }})
             .sort({ timestamp: -1 })
             .then(found_articles => res.status(200).json(found_articles))
             .catch(err => res.status(500).json(err));

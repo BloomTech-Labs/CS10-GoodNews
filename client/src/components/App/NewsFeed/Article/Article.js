@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Header, Grid } from 'semantic-ui-react';
+import { Card, Header, Grid, Image } from 'semantic-ui-react';
 import axios from 'axios';
 import ArticleOptions from './ArticleOptions';
 
@@ -83,10 +83,14 @@ const Article = (props) => {
         <ArticleOptions
           remove={removeArticle} 
           articleOptions={props.articleOptions}/>}
-      <Card.Content style={{ borderStyle: 'none' }}>
-        <Header href={props.article.url} className='article-title'>
-          {props.article.name}
-        </Header>
+      <Card.Content>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+          <Header href={props.article.url} className='article-title'>
+            {props.article.name}
+          </Header>
+          {props.article.imageurl &&
+            <Image fluid verticalAlign='middle' floated='right' size='small' src={props.article.imageurl}/>}
+        </div>
         <div style={{display: 'flex', justifyContent: 'space-between'}}>
           <Card.Meta  style={{ marginBottom: '1em' }}>
             <span>{elapsedTime()}</span>
