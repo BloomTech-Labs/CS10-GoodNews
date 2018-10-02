@@ -135,7 +135,7 @@ function putSavedArticle(req, res) {
                         foundUser.saved_articles.push(found_article);
                         User.findByIdAndUpdate(userid, { saved_articles: foundUser.saved_articles })
                             .then(() => {
-                                User.find({_id: userid})
+                                User.findById(userid)
                                 .then(updatedUser => res.status(200).json(updatedUser))
                                 .catch(err => res.status(500).json(err))
                             })
@@ -147,7 +147,8 @@ function putSavedArticle(req, res) {
                         foundUser.saved_articles.pull(found_article);
                         User.findByIdAndUpdate(userid, { saved_articles: foundUser.saved_articles })
                             .then(() => {
-                                User.find({_id: userid})
+                                User.findById(userid)
+                                .populate('saved_articles')
                                 .then(deletedUser => res.status(200).json(deletedUser))
                                 .catch(err => res.status(500).json(err))
                             })
