@@ -64,12 +64,6 @@ function getKey(req, res) {
 function getArticles(req, res) {
     let { flag, gte, lte } = req.params;
     // console.log(`typeof ${flag}`);
-    const gteNum = parseInt(gteTime, 10);
-    const lteNum = parseInt(lteTime, 10);
-    const gte = new Date(gteNum);
-    const lte = new Date(lteNum);
-    console.log(gte);
-    console.log(lte)
     switch (flag) {
         case '0':
             // fetches articles for the past 7 days
