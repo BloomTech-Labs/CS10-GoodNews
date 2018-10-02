@@ -1,7 +1,7 @@
 import React from 'react';
 import { Component } from 'react';
 import axios from 'axios';
-import { Modal, Header, Form, Button, Icon, Divider } from 'semantic-ui-react';
+import { Modal, Header, Form, Button } from 'semantic-ui-react';
 
 // Production Server URL or localhost for local testing
 const url = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_SERVER : 'http://localhost:5000';
@@ -77,15 +77,15 @@ class Register extends Component {
       <Modal closeIcon open={true}
         onClose={this.close} 
         style={{ minHeight: '350px', padding: '2em', textAlign: 'center' }}>
-        <Header size="large" dividing={false}>CREATE AN ACCOUNT</Header>
         <Modal.Content>
-          <Icon size='big' color='blue' name='facebook'
+          <Header size="large" dividing={false}>CREATE AN ACCOUNT</Header>
+          {/* <Icon size='big' color='blue' name='facebook'
             className='socialIcon' onClick={() => this.registerPassport('facebook')}/>
           <Icon size='big' color='red' name='google plus square'
             className='socialIcon' onClick={() => this.registerPassport('google')}/>
           <Icon size='big' style={{color: '#1da1f2'}} name='twitter square'
             className='socialIcon' onClick={() => this.registerPassport('twitter')}/>
-          <Divider horizontal>OR</Divider>
+          <Divider horizontal>OR</Divider> */}
           {/* Display message when form submission has failed */}
           {this.state.failRegister && <span style={{color:'red'}}>Unable to create account</span>}
           <Form onSubmit={this.handleSubmit} style={{ paddingBottom: '1em' }}>

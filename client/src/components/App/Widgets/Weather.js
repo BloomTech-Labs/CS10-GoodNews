@@ -20,7 +20,7 @@ class Weather extends Component {
 
   getWeather = () => {
     
-    const weatherAPI = 'http://api.apixu.com/v1/forecast.json';
+    const weatherAPI = 'https://api.apixu.com/v1/forecast.json';
     const key = '61e020a41ccd4b1d945190151182409';
     let lat = sessionStorage.getItem('lat');
     let long = sessionStorage.getItem('long');
@@ -63,13 +63,7 @@ class Weather extends Component {
 
   render() { 
     return (
-      <div style={{ 
-          borderRadius: '6px',
-          backgroundColor: '#eeeeee', 
-          width: '100%', 
-          minHeight: '100px',
-          padding: '30px',
-          color: '#3d3d3d' }}>
+      <div className='weatherWidget'>
         <Grid centered>
           <Grid.Row stretched columns={2}>
             <Grid.Column textAlign='right' width={5} verticalAlign='middle'>
@@ -88,7 +82,7 @@ class Weather extends Component {
               </Grid.Row>
             </Grid.Column>
           </Grid.Row>
-          {this.state.forecast && <Grid.Row columns='equal'>
+          {this.state.forecast && <Grid.Row columns='equal' only='computer tablet'>
             {this.state.forecast.map(day => {
               return (
                 <Grid.Column verticalAlign='middle' key={day.date}>
