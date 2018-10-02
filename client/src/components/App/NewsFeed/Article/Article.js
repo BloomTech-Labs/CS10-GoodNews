@@ -90,7 +90,7 @@ const Article = (props) => {
             {props.article.name}
           </Header>
           {props.article.imageurl &&
-            <Image fluid verticalAlign='middle' floated='right' size='small' src={props.article.imageurl}/>}
+            <Image style={{ maxHeight: '90px', width: 'auto' }} verticalAlign='middle' floated='right' size='small' src={props.article.imageurl}/>}
         </div>
         <div style={{display: 'flex', justifyContent: 'space-between'}}>
           <Card.Meta  style={{ marginBottom: '1em' }}>
