@@ -51,4 +51,4 @@ setInterval(() => {
     }).on('error', (e) => {
     console.error(`Got error: ${e.message}`);
 })
-}, 36000000);
+}, 1800000);
