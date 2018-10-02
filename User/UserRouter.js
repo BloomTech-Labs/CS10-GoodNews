@@ -115,21 +115,31 @@ function put(req, res) {
     // if (!User.findById(id)) {
     //     res.status(404).json({ message: 'User not found' });
     // }
-    User.findById(userid)
-        .then(foundUser => {
-            foundUser.checkPassword(foundUser.password, currentPassword)
-            .then(isMatch => {
-                User.findByIdAndUpdate(userid, user)
-                    .then(expected => {
-                        res.status(201).json(expected);
-                    })
-                    .catch(err => {
-                        res.status(500).json(err.message);
-                    });
+    if (user.password) {
+      User.findById(userid)
+          .then(foundUser => {
+              foundUser.checkPassword(foundUser, currentPassword)
+              .then(isMatch => {
+                  if (isMatch) {
+                      foundUser.password = user.password;
+                      foundUser.save();
+                      User.findById(userid)
+                          .then(updatedUser => res.status(201).json(updatedUser))
+                  } else {
+                      res.status(401).json({ message: 'Unable to change password'});
+                  }
+              })
+              .catch(err => res.status(500).json(err.message))
+          })
+          .catch(err => res.status(404).json(err.message));
+    } else {
+        User.findByIdAndUpdate(userid, user)
+            .then(expected => {
+                User.findById(userid)
+                    .then(updatedUser => res.status(201).json(updatedUser))
             })
-            .catch(err => res.status(500).json(err.message))
-        })
-        .catch(err => res.status(404).json(err.message));
+            .catch( err => res.status(500).json(err.message))
+    }
 }
 
 // DELETE request

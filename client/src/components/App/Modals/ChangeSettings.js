@@ -10,8 +10,8 @@ const ChangeSettings = (props) => {
     <Grid.Column width={12}>
       {props.editing ? (
         <Grid.Row>
-          {props.failPassword && <span style={{color:'red'}}>Passwords do not match</span>}
-          {props.failSave && <span style={{color:'red'}}>Unable to save changes</span>}
+          {props.failPassword && <div style={{color:'red'}}>Passwords do not match</div>}
+          {props.failSave && <div style={{color:'red'}}>Unable to save changes</div>}
           {props.name3 &&
           <React.Fragment>
             <label>{props.label3}</label>
@@ -46,13 +46,12 @@ const ChangeSettings = (props) => {
               primary style={{ backgroundColor: '#37bc9b', margin: '10px' }}
               onClick={(e)=>{
                 if (props.name3) {
-                  props.handleSubmit(e, props.name, props.name2, props.name3)
+                  props.handleSubmit(e, props.name, props.toggleEdit, props.name2, props.name3)
                 } else if (props.name2) {
-                  props.handleSubmit(e, props.name, props.name2)
+                  props.handleSubmit(e, props.name, props.toggleEdit, props.name2)
                 } else {
-                  props.handleSubmit(e, props.name)
+                  props.handleSubmit(e, props.name, props.toggleEdit)
                 }
-                props.toggleEdit()
                 }}>
               Save Changes
             </Button>

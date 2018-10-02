@@ -28,7 +28,6 @@ class Settings extends Component {
 
   componentDidMount() {
     this.getUser();
-    console.log(this.state)
   }
 
   getUser = () => {
@@ -40,7 +39,6 @@ class Settings extends Component {
     }
     axios.get(`${url}/api/user/logged`, config)
       .then( user => {
-        console.log(user.data);
         this.setState({
           first: user.data.name.first,
           last: user.data.name.last,
@@ -51,6 +49,15 @@ class Settings extends Component {
       .catch( err => console.log(err))
   }
 
+  updateUser = (updatedUser) => {
+    this.setState({
+      first: updatedUser.data.name.first,
+      last: updatedUser.data.name.last,
+      username: updatedUser.data.username,
+      email: updatedUser.data.email
+    })
+  }
+
   toggleEdit = (field) => {
     this.setState(prevState => ({ [field]: !prevState[field]}))
   }
@@ -59,16 +66,14 @@ class Settings extends Component {
     this.setState({ [e.target.name]: e.target.value, failSave: false });
   }
 
-  handleSubmit = (e, stateProp, stateProp2=null, stateProp3=null) => {
+  handleSubmit = (e, stateProp, successEvent, stateProp2=null, stateProp3=null) => {
     e.preventDefault();
-    console.log('arg 1:', stateProp);
-    console.log('arg 2:', stateProp2);
     let userInfo = this.state[stateProp];
-    console.log('state property: ', userInfo);
     let user = {[stateProp]: userInfo};
     if (stateProp === 'password') {
       if (this.state.password !== this.state.verifyNewPassword) {
         this.setState({ failPassword: true })
+        return;
       } else {
         this.setState({ failPassword: false })
         user = { 
@@ -85,11 +90,10 @@ class Settings extends Component {
         }
       }
     }
-    this.saveUser(user);
+    this.saveUser(user, successEvent);
   }
 
-  saveUser = (user) => {
-    console.log('saving user');
+  saveUser = (user, successEvent) => {
     const config = {
       headers: {
         'authorization': localStorage.getItem('auth-token'),
@@ -98,8 +102,8 @@ class Settings extends Component {
     }
     axios.put(`${url}/api/user/logged`, user, config)
       .then( res => {
-        console.log(res.data)
-        this.getUser()
+        successEvent()
+        this.updateUser(res)
       })
       .catch( err => {
         this.setState({ failSave: true })
