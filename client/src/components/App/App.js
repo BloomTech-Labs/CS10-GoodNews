@@ -113,6 +113,10 @@ class App extends Component {
     }
   }
 
+  refreshSavedArticles = (saved_articles) => {
+    this.setState({ articles: saved_articles })
+  }
+
   toggleLandingPage = () => {
     let visited = localStorage.getItem('visited');
     if (visited === 'false' || visited === false || visited === null) {
@@ -265,6 +269,7 @@ class App extends Component {
                   article={article}
                   loggedIn={this.state.loggedIn}
                   articleOptions={this.state.articleOptions}
+                  refreshSavedArticles={this.refreshSavedArticles}
                 />)
             })}
             <Pagination 

@@ -57,7 +57,8 @@ const Article = (props) => {
     }
     axios.put(`${url}/api/article/${id}/del`, null, config)
       .then( res => {
-        console.log('removed')
+        props.refreshSavedArticles(res.data.saved_articles)
+        console.log(res)
       })
       .catch( err => {
         console.log('failed')
