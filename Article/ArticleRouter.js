@@ -64,13 +64,27 @@ function getKey(req, res) {
 function getArticles(req, res) {
     let { flag, gte, lte } = req.params;
     // console.log(`typeof ${flag}`);
+    // const now = Date.now();
+    // const gte = now - (activePage*24*60*60*1000);
+    // const lte = now - ((activePage-1)*24*60*60*1000);
+    // console.log(new Date(Number(gte)));
+    // console.log(new Date(Number(lte)));
+    console.log('gte1: ', gte);
+    gte = new Date(Number(gte));
+    console.log(gte.getTimezoneOffset());
+    gte = gte - gte.getTimezoneOffset()*60*1000;
+    console.log('gte: ', new Date(gte));
+    lte = new Date(Number(lte)); 
+    lte = lte - lte.getTimezoneOffset()*60*1000;
+    console.log('lte: ', new Date(lte));
+    // $lte: new Date(Number(lte))
     switch (flag) {
         case '0':
             // fetches articles for the past 7 days
             Article.find({ clickbait: '0', timestamp: { 
-              $gte: new Date(Number(gte)), 
-              $lte: new Date(Number(lte))
-            }})
+                $gte: new Date(gte),
+                $lte: new Date(lte)
+              }})
             .sort({ timestamp: -1 })
             .then(found_articles => {
               res.status(200).json(found_articles)

@@ -27,7 +27,7 @@ server.use(express.json());
 
 const UserRouter = require('./User/UserRouter');
 const ArticleRouter = require('./Article/ArticleRouter');
-const ArticleRouterDS = require('./Article/ArticleRouterDS');
+// const ArticleRouterDS = require('./Article/ArticleRouterDS');
 
 // passport
 // const { getProfileTwitter, authTwitter } = require('./passport/twitter');

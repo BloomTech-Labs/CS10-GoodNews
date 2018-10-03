@@ -51,11 +51,15 @@ class App extends Component {
   fetchArticles = () => {
     const now = Date.now();
     const activePage = localStorage.getItem('active-page')
+    let activePage = localStorage.getItem('active-page')
+    activePage = activePage ? activePage : 1;
     const gte = now - (activePage*24*60*60*1000);
     const lte = now - ((activePage-1)*24*60*60*1000);
+    // const gte = 1538498393076;
+    // const lte = 1538584793076;
     axios.get(`${url}/api/article/get-articles/0/${gte}/${lte}`)
       .then( articles => {
-        this.setState({ 
+        this.setState({
           articles: articles.data, 
           allArticles: articles.data,
           searchOptions: articles.data
@@ -67,8 +71,8 @@ class App extends Component {
   fetchClickbait = () => {
     const now = Date.now();
     const activePage = localStorage.getItem('active-page')
-    const gte = now - (activePage*24*60*60*1000);
-    const lte = now - ((activePage-1)*24*60*60*1000);
+    const gte = now - (activePage*24*60*60*1000) - (12*60*60*1000);
+    const lte = now - ((activePage-1)*24*60*60*1000) - (12*60*60*1000);
     axios.get(`${url}/api/article/get-articles/1/${gte}/${lte}`)
       .then( articles => {
         this.setState({ articles: articles.data, searchOptions: articles.data })
