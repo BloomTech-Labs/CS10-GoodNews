@@ -6,7 +6,7 @@ const { isLoggedIn } = require('../controllers/auth');
 // POST to /api/article/ endpoint
 router.route('/post-article').post(isLoggedIn, post);
 // GET Articles with either 1 or 0 flag for clickbait
-router.route('/get-articles/:flag/:gte/:lte').get(getArticles);
+router.route('/get-articles/:flag/:activePage').get(getArticles);
 // GET Article by its _id
 router.route('/get/:articleid').get(getArticleId);
 // GET User's saved articles. 
@@ -62,29 +62,21 @@ function getKey(req, res) {
 
 // GET request for articles
 function getArticles(req, res) {
-    let { flag, gte, lte } = req.params;
-    // console.log(`typeof ${flag}`);
-    // const now = Date.now();
-    // const gte = now - (activePage*24*60*60*1000);
-    // const lte = now - ((activePage-1)*24*60*60*1000);
-    // console.log(new Date(Number(gte)));
-    // console.log(new Date(Number(lte)));
-    console.log('gte1: ', gte);
-    gte = new Date(Number(gte));
-    console.log(gte.getTimezoneOffset());
-    gte = gte - gte.getTimezoneOffset()*60*1000;
-    console.log('gte: ', new Date(gte));
-    lte = new Date(Number(lte)); 
-    lte = lte - lte.getTimezoneOffset()*60*1000;
-    console.log('lte: ', new Date(lte));
-    // $lte: new Date(Number(lte))
+    let { flag, activePage } = req.params;
+    const now = Date.now()
+    let gte = now - (activePage*24*60*60*1000)
+    let lte = now - ((activePage-1)*24*60*60*1000)
+    let gteDate = new Date(gte);
+    let lteDate = new Date(lte);
+    offsetGte = gteDate.getTimezoneOffset() *60*1000
+    offsetLte = lteDate.getTimezoneOffset() *60*1000
     switch (flag) {
         case '0':
             // fetches articles for the past 7 days
             Article.find({ clickbait: '0', timestamp: { 
-                $gte: new Date(gte),
-                $lte: new Date(lte)
-              }})
+              $gte: new Date(gte+offsetGte), 
+              $lte: new Date(lte+offsetLte)
+            }})
             .sort({ timestamp: -1 })
             .then(found_articles => {
               res.status(200).json(found_articles)
@@ -94,8 +86,8 @@ function getArticles(req, res) {
         case '1':
             // fetches articles for the past 7 days
             Article.find({ clickbait: '1', timestamp: { 
-              $gte: new Date(Number(gte)), 
-              $lte: new Date(Number(lte))
+              $gte: new Date(gte+offsetGte), 
+              $lte: new Date(lte+offsetLte)
             }})
             .sort({ timestamp: -1 })
             .then(found_articles => res.status(200).json(found_articles))

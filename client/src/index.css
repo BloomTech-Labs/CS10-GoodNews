@@ -137,8 +137,7 @@ a.article-title:hover {
   line-height: 1.5rem;
 }
 
-.main-menu {
-  
+.main-menu { 
   background-color: #eeeeee !important;
   padding: 120px 50px 50px 50px;
   min-height: 500px;
@@ -166,6 +165,15 @@ a.article-title:hover {
   min-height: 100px;
   padding: 30px;
   color: #3d3d3d;
+}
+
+@media only screen and (max-width: 1250px) {
+  .main-menu { 
+    box-shadow: 
+      4px 4px 5px 0 rgba(0,0,0,0.14), 
+      1px 1px 10px 0 rgba(0,0,0,0.12), 
+      2px 2px 4px -1px rgba(0,0,0,0.2) !important;
+  }
 }
 
 @media only screen and (max-width: 768px) {
