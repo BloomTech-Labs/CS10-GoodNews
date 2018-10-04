@@ -64,8 +64,8 @@ function getKey(req, res) {
 function getArticles(req, res) {
     let { flag, activePage } = req.params;
     const now = Date.now()
-    let gte = now - (activePage*12*60*60*1000)
-    let lte = now - ((activePage-1)*12*60*60*1000)
+    let gte = now - (activePage*24*60*60*1000)
+    let lte = now - ((activePage-1)*24*60*60*1000)
     let gteDate = new Date(gte);
     let lteDate = new Date(lte);
     offsetGte = gteDate.getTimezoneOffset() *60*1000
