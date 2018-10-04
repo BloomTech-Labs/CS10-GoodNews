@@ -20,9 +20,9 @@ class Article extends Component {
 
   elapsedTime = () => {
     let elapsedMilliseconds = Date.now() - Date.parse(this.props.article.timestamp);
-    const currentDate = new Date(elapsedMilliseconds);
-    const offset = currentDate.getTimezoneOffset() *60*1000
-    elapsedMilliseconds = elapsedMilliseconds+offset
+    // const currentDate = new Date(elapsedMilliseconds);
+    // const offset = currentDate.getTimezoneOffset() *60*1000
+    // elapsedMilliseconds = elapsedMilliseconds+offset
     switch(true) {
       case (elapsedMilliseconds < 1800000):
         return 'Less than an hour ago';
