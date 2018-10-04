@@ -27,7 +27,7 @@ server.use(express.json());
 
 const UserRouter = require('./User/UserRouter');
 const ArticleRouter = require('./Article/ArticleRouter');
-// const ArticleRouterDS = require('./Article/ArticleRouterDS');
+const ArticleRouterDS = require('./Article/ArticleRouterDS');
 
 // passport
 // const { getProfileTwitter, authTwitter } = require('./passport/twitter');
@@ -51,7 +51,6 @@ server.use(passport.initialize());
 server.use(passport.session()); // persistent login sessions
 // server.use(flash()); // use connect-flash for flash messages stored in session
 
-
 passport.serializeUser(function(user, done) {
     done(null, user.id);
 });
@@ -69,22 +68,23 @@ passport.deserializeUser(function(id, done) {
 server.get('/auth/twitter', passport.authenticate('twitter'));
 // handle the callback after twitter has authenticated the user
 server.get('/auth/twitter/callback', (req, res, next) => {
-	passport.authenticate('twitter', 
+	passport.authenticate('twitter' 
 	// { successRedirect: 'http://127.0.0.1:3000',
 	// failureRedirect: 'Authentication Failed!' }
 	)(req, res, next)
 },
 	(req, res, next) => {
-		console.log('Session: ', req.session);
-		console.log('res object: ', res);
-		console.log('next function: ', next);
+		// console.log('Session: ', req.session.passport.user);
+		// console.log('res object: ', res);
+		// console.log('next function: ', next);
+		res.redirect(`http://127.0.0.1:3000/${req.session.passport.user}`);
 		// res.json(req.user);
-		req.session.save((err) => {
-			if (err) res.status(500).json(err);
-			res.status(200).json({
-				user : req.session.passport.user // get the user out of session and pass to res
-			});
-		});
+		// req.session.save((err) => {
+		// 	if (err) res.status(500).json(err);
+		// 	res.status(200).json({
+		// 		user : req.session.passport.user // get the user out of session and pass to res
+		// 	});
+		// });
 	}
 );
 
