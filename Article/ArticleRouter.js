@@ -94,7 +94,7 @@ function getArticles(req, res) {
             .catch(err => res.status(500).json(err));
             break;
         default:
-            // fetches articles for the past 7 days
+            // fetches articles for the past 24 hours
             Article.find({timestamp: { $gte: new Date(Date.now() - 24 * 60 * 60 * 1000) }})
             .sort({ timestamp: -1 })
             .then(expected => res.status(200).json(expected))

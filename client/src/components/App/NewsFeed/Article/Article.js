@@ -18,11 +18,20 @@ class Article extends Component {
     }
   }
 
+  shouldComponentUpdate(nextProps) {
+    const loggedIn = this.props.loggedIn !== nextProps.loggedIn;
+    const saved = this.state.saved !== nextProps.saved;
+    const reported = this.state.reported !== nextProps.reported;
+    return loggedIn || saved || reported;
+  }
+
   elapsedTime = () => {
-    let elapsedMilliseconds = Date.now() - Date.parse(this.props.article.timestamp);
-    // const currentDate = new Date(elapsedMilliseconds);
-    // const offset = currentDate.getTimezoneOffset() *60*1000
-    // elapsedMilliseconds = elapsedMilliseconds+offset
+    let elapsedMilliseconds;
+    if (this.props.article.timestamp) {
+      elapsedMilliseconds = Date.now() - Date.parse(this.props.article.timestamp);
+    } else {
+      elapsedMilliseconds = Date.now() - Date.parse(this.props.article.createdAt)
+    }
     switch(true) {
       case (elapsedMilliseconds < 1800000):
         return 'Less than an hour ago';
@@ -39,7 +48,7 @@ class Article extends Component {
       case (elapsedMilliseconds > 1814400000):
         return `${Math.round(elapsedMilliseconds/(1000*60*60*24*7))} weeks ago`;
       default:
-        return `${elapsedMilliseconds} milliseconds ago`;
+        return 'Some time ago...';
     }
   }
 
@@ -102,26 +111,30 @@ class Article extends Component {
           padding: '1em',
           marginBottom: '1em',
           display: 'flex',
-          alignItems: 'flex-end',
+          alignItems: 'flex-start',
           maxWidth: '700px'}}>
-        {(this.props.loggedIn && this.props.articleOptions==='saved') && 
-          <ArticleOptions
-            remove={this.removeArticle} 
-            articleOptions={this.props.articleOptions}/>}
         <Card.Content>
+          {(this.props.loggedIn && this.props.articleOptions==='saved') && 
+            <div style={{ display: 'flex', justifyContent:'flex-end', margin: '-20px -25px 0px 0px' }}>
+              <ArticleOptions
+                textAlign='right'
+                remove={this.removeArticle} 
+                articleOptions={this.props.articleOptions}/>
+            </div>}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
             <Header href={this.props.article.url} className='article-title'>
               {this.props.article.name}
             </Header>
             {this.props.article.imageurl &&
-              <Image 
-                style={{ maxHeight: '90px', width: 'auto' }} 
-                verticalAlign='middle' 
-                floated='right' 
-                size='small' 
-                src={this.props.article.imageurl}/>}
+            <Image
+              className='article-image'
+              verticalAlign='middle'
+              floated='right'
+              size='small' 
+              style={{ width: 'auto', height: '100px' }}
+              src={this.props.article.imageurl}/>}
           </div>
-          <div style={{display: 'flex', justifyContent: 'space-between'}}>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <Card.Meta  style={{ marginBottom: '1em' }}>
               <span>{this.elapsedTime()}</span>
             </Card.Meta>
@@ -138,7 +151,7 @@ class Article extends Component {
           </div>
           <Grid>
             <Grid.Row only='tablet computer' columns={1}>
-              <Grid.Column textAlign='justified' style={{ lineHeight: '1.6rem' }}>
+              <Grid.Column textAlign='justified' className='article-description'>
                 {this.props.article.description}
               </Grid.Column>
             </Grid.Row>

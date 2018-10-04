@@ -4,17 +4,20 @@ import ReportClickbait from '../../Modals/ReportClickbait';
 
 const ArticleOptions = (props) => {
   return (
+    props.articleOptions ? (
     <React.Fragment>
-      <ReportClickbait 
-        open={props.clickbaitModal}
-        closeModal={props.closeModal}
-        clickbait={true}
-        report={() => props.report(true)}/>
-      <ReportClickbait 
-        open={props.nonClickbaitModal}
-        closeModal={props.closeModal} 
-        notClickbait={true} 
-        report={() => props.report(false)}/>
+      {props.clickbaitModal && 
+        <ReportClickbait 
+          open={props.clickbaitModal}
+          closeModal={props.closeModal}
+          clickbait={true}
+          report={() => props.report(true)}/>}
+      {props.nonClickbaitModal &&
+        <ReportClickbait 
+          open={props.nonClickbaitModal}
+          closeModal={props.closeModal} 
+          notClickbait={true} 
+          report={() => props.report(false)}/>}
       {props.articleOptions === 'all' &&(
         <div style={{ display: 'flex' }}>
           <Popup 
@@ -23,7 +26,7 @@ const ArticleOptions = (props) => {
             ) : (
               <Button icon='bookmark outline' 
               className='articleOptionsButton' onClick={props.save}/>)}
-            content='Add to reading list'/>
+            content={props.saved ? 'In reading list' : 'Add to reading list'}/>
           <Popup 
             trigger={props.reported ? (
               <Button icon='check' className='articleOptionsButton'/>
@@ -31,7 +34,7 @@ const ArticleOptions = (props) => {
               <Button icon='ban' 
                 className='articleOptionsButton'
                 onClick={()=>props.openModal('clickbaitModal')}/>)}
-            content='Report as clickbait'/>
+            content={props.reported ? 'Reported' : 'Report as clickbait'}/>
         </div>
       )}
       {props.articleOptions === 'saved' &&(
@@ -57,7 +60,7 @@ const ArticleOptions = (props) => {
           </Button.Group>
         </div>
       )}
-    </React.Fragment>
+    </React.Fragment>) : (null)
   )
 }
  
