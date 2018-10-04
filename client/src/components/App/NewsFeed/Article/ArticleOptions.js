@@ -26,7 +26,7 @@ const ArticleOptions = (props) => {
             ) : (
               <Button icon='bookmark outline' 
               className='articleOptionsButton' onClick={props.save}/>)}
-            content='Add to reading list'/>
+            content={props.saved ? 'In reading list' : 'Add to reading list'}/>
           <Popup 
             trigger={props.reported ? (
               <Button icon='check' className='articleOptionsButton'/>
@@ -34,7 +34,7 @@ const ArticleOptions = (props) => {
               <Button icon='ban' 
                 className='articleOptionsButton'
                 onClick={()=>props.openModal('clickbaitModal')}/>)}
-            content='Report as clickbait'/>
+            content={props.reported ? 'Reported' : 'Report as clickbait'}/>
         </div>
       )}
       {props.articleOptions === 'saved' &&(

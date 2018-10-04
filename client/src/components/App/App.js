@@ -30,7 +30,8 @@ class App extends Component {
       searchValue: '',
       allArticles: [],
       trendingTopics: [],
-      activePage: 1
+      activePage: 1,
+      pagination: true
     }
   }
 
@@ -41,6 +42,11 @@ class App extends Component {
     this.isLoggedIn();
     this.fetchArticles();
     this.fetchTrendingTopics();
+  }
+
+  shouldComponentUpdate(nextProps) {
+    const articles = this.state.articles !== nextProps.articles
+    return articles
   }
 
   paginationChange = (e, { activePage }) => {
@@ -68,7 +74,11 @@ class App extends Component {
     let activePage = sessionStorage.getItem('active-page')
     axios.get(`${url}/api/article/get-articles/1/${activePage}`)
       .then( articles => {
-        this.setState({ articles: articles.data, searchOptions: articles.data })
+        this.setState({ 
+          articles: articles.data, 
+          searchOptions: articles.data,
+          pagination: true
+        })
       })
       .catch( err => console.log(err))
   }
@@ -87,7 +97,11 @@ class App extends Component {
   fetchArticlesByTopic = (topic) => {
     axios.get(`${url}/api/article/${topic}`)
       .then( articles => {
-        this.setState({ articles: articles.data, searchOptions: articles.data });
+        this.setState({ 
+          articles: articles.data, 
+          searchOptions: articles.data,
+          pagination: true
+        });
       })
       .catch( err => console.log(err))
   }
@@ -103,7 +117,11 @@ class App extends Component {
       axios.get(`${url}/api/article/user-saved`, config)
         .then( user => {
           const savedArticles = user.data.saved_articles;
-          this.setState({ articles: savedArticles, searchOptions: savedArticles });
+          this.setState({ 
+            articles: savedArticles, 
+            searchOptions: savedArticles,
+            pagination: false
+          });
           window.scrollTo(0,0);
         })
         .catch( err => console.log(err))
@@ -151,7 +169,8 @@ class App extends Component {
         this.resetSearch()
         articles = this.state.allArticles;
         articleOptions = 'all';
-        this.setState({ articles, articleOptions, searchOptions: articles });
+        this.setState({ articles, articleOptions, 
+          searchOptions: articles, pagination: true });
         break;
       case 'saved':
         this.resetSearch()
@@ -268,10 +287,11 @@ class App extends Component {
                   refreshSavedArticles={this.refreshSavedArticles}
                 />)
             })}
+            {this.state.pagination && 
             <Pagination 
               activePage={this.state.activePage}
               onPageChange={this.paginationChange}
-              totalPages={30}/>
+              totalPages={30}/>}
           </NewsFeed>
           {this.switchModals(this.state.showModal)}
         </div>
