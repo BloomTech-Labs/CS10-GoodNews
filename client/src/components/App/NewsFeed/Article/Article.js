@@ -19,11 +19,10 @@ class Article extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    const article = this.props.article !== nextProps.article;
     const loggedIn = this.props.loggedIn !== nextProps.loggedIn;
     const saved = this.state.saved !== nextProps.saved;
     const reported = this.state.reported !== nextProps.reported;
-    return article || loggedIn || saved || reported;
+    return loggedIn || saved || reported;
   }
 
   elapsedTime = () => {
