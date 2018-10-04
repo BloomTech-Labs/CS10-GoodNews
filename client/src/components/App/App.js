@@ -59,6 +59,7 @@ class App extends Component {
 
   fetchArticles = () => {
     let activePage = sessionStorage.getItem('active-page')
+    activePage = activePage ? activePage : 1;
     axios.get(`${url}/api/article/get-articles/0/${activePage}`)
       .then( articles => {
         this.setState({
