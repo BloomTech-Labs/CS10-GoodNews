@@ -53,7 +53,7 @@ class App extends Component {
     activePage = activePage ? activePage : 1
     axios.get(`${url}/api/article/get-articles/0/${activePage}`)
       .then( articles => {
-        this.setState({ 
+        this.setState({
           articles: articles.data, 
           allArticles: articles.data,
           searchOptions: articles.data

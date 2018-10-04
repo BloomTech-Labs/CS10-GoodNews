@@ -110,7 +110,7 @@ function getById(req, res) {
 // PUT request
 function put(req, res) {
     const userid = req.headers.userid;
-    const user = { name, username, email, currentPassword, password } = req.body;
+    let user = { name, username, email, currentPassword, password } = req.body;
     // console.log(req.body);
     // if (!User.findById(id)) {
     //     res.status(404).json({ message: 'User not found' });
