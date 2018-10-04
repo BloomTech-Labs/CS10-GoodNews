@@ -18,6 +18,14 @@ class Article extends Component {
     }
   }
 
+  shouldComponentUpdate(nextProps) {
+    const article = this.props.article !== nextProps.article;
+    const loggedIn = this.props.loggedIn !== nextProps.loggedIn;
+    const saved = this.state.saved !== nextProps.saved;
+    const reported = this.state.reported !== nextProps.reported;
+    return article || loggedIn || saved || reported;
+  }
+
   elapsedTime = () => {
     let elapsedMilliseconds;
     if (this.props.article.timestamp) {
@@ -107,13 +115,16 @@ class Article extends Component {
           padding: '1em',
           marginBottom: '1em',
           display: 'flex',
-          alignItems: 'flex-end',
+          alignItems: 'flex-start',
           maxWidth: '700px'}}>
-        {(this.props.loggedIn && this.props.articleOptions==='saved') && 
-          <ArticleOptions
-            remove={this.removeArticle} 
-            articleOptions={this.props.articleOptions}/>}
         <Card.Content>
+          {(this.props.loggedIn && this.props.articleOptions==='saved') && 
+            <div style={{ display: 'flex', justifyContent:'flex-end', margin: '-20px -25px 0px 0px' }}>
+              <ArticleOptions
+                textAlign='right'
+                remove={this.removeArticle} 
+                articleOptions={this.props.articleOptions}/>
+            </div>}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
             <Header href={this.props.article.url} className='article-title'>
               {this.props.article.name}

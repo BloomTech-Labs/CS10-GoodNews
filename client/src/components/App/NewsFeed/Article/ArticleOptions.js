@@ -4,17 +4,20 @@ import ReportClickbait from '../../Modals/ReportClickbait';
 
 const ArticleOptions = (props) => {
   return (
+    props.articleOptions ? (
     <React.Fragment>
-      <ReportClickbait 
-        open={props.clickbaitModal}
-        closeModal={props.closeModal}
-        clickbait={true}
-        report={() => props.report(true)}/>
-      <ReportClickbait 
-        open={props.nonClickbaitModal}
-        closeModal={props.closeModal} 
-        notClickbait={true} 
-        report={() => props.report(false)}/>
+      {props.clickbaitModal && 
+        <ReportClickbait 
+          open={props.clickbaitModal}
+          closeModal={props.closeModal}
+          clickbait={true}
+          report={() => props.report(true)}/>}
+      {props.nonClickbaitModal &&
+        <ReportClickbait 
+          open={props.nonClickbaitModal}
+          closeModal={props.closeModal} 
+          notClickbait={true} 
+          report={() => props.report(false)}/>}
       {props.articleOptions === 'all' &&(
         <div style={{ display: 'flex' }}>
           <Popup 
@@ -57,7 +60,7 @@ const ArticleOptions = (props) => {
           </Button.Group>
         </div>
       )}
-    </React.Fragment>
+    </React.Fragment>) : (null)
   )
 }
  
