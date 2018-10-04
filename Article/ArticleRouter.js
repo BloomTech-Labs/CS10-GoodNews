@@ -64,8 +64,8 @@ function getKey(req, res) {
 function getArticles(req, res) {
     let { flag, activePage } = req.params;
     const now = Date.now()
-    let gte = now - (activePage*24*60*60*1000)
-    let lte = now - ((activePage-1)*24*60*60*1000)
+    let gte = now - (activePage*12*60*60*1000)
+    let lte = now - ((activePage-1)*12*60*60*1000)
     let gteDate = new Date(gte);
     let lteDate = new Date(lte);
     offsetGte = gteDate.getTimezoneOffset() *60*1000
@@ -94,7 +94,7 @@ function getArticles(req, res) {
             .catch(err => res.status(500).json(err));
             break;
         default:
-            // fetches articles for the past 7 days
+            // fetches articles for the past 24 hours
             Article.find({timestamp: { $gte: new Date(Date.now() - 24 * 60 * 60 * 1000) }})
             .sort({ timestamp: -1 })
             .then(expected => res.status(200).json(expected))
