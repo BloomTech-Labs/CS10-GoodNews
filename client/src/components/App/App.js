@@ -30,27 +30,35 @@ class App extends Component {
       searchValue: '',
       allArticles: [],
       trendingTopics: [],
-      activePage: 1
+      activePage: 1,
+      pagination: true
     }
   }
 
-  componentDidMount() {  
+  componentDidMount() {
+    let activePage = sessionStorage.getItem('active-page');
+    activePage = activePage ? activePage : 1;
+    this.setState({ activePage });
     this.isLoggedIn();
     this.fetchArticles();
     this.fetchTrendingTopics();
   }
 
+  shouldComponentUpdate(nextProps) {
+    const articles = this.state.articles !== nextProps.articles
+    return articles
+  }
+
   paginationChange = (e, { activePage }) => {
     window.scrollTo(0,0)
     this.setState({ activePage })
-    localStorage.setItem('active-page', activePage)
+    sessionStorage.setItem('active-page', activePage)
     this.fetchArticles();
     console.log(this.state)
   }
 
   fetchArticles = () => {
-    let activePage = localStorage.getItem('active-page')
-    activePage = activePage ? activePage : 1
+    let activePage = sessionStorage.getItem('active-page')
     axios.get(`${url}/api/article/get-articles/0/${activePage}`)
       .then( articles => {
         this.setState({
@@ -63,11 +71,14 @@ class App extends Component {
   }
 
   fetchClickbait = () => {
-    let activePage = localStorage.getItem('active-page')
-    activePage = activePage ? activePage : 1
+    let activePage = sessionStorage.getItem('active-page')
     axios.get(`${url}/api/article/get-articles/1/${activePage}`)
       .then( articles => {
-        this.setState({ articles: articles.data, searchOptions: articles.data })
+        this.setState({ 
+          articles: articles.data, 
+          searchOptions: articles.data,
+          pagination: true
+        })
       })
       .catch( err => console.log(err))
   }
@@ -86,7 +97,11 @@ class App extends Component {
   fetchArticlesByTopic = (topic) => {
     axios.get(`${url}/api/article/${topic}`)
       .then( articles => {
-        this.setState({ articles: articles.data, searchOptions: articles.data });
+        this.setState({ 
+          articles: articles.data, 
+          searchOptions: articles.data,
+          pagination: true
+        });
       })
       .catch( err => console.log(err))
   }
@@ -102,7 +117,11 @@ class App extends Component {
       axios.get(`${url}/api/article/user-saved`, config)
         .then( user => {
           const savedArticles = user.data.saved_articles;
-          this.setState({ articles: savedArticles, searchOptions: savedArticles });
+          this.setState({ 
+            articles: savedArticles, 
+            searchOptions: savedArticles,
+            pagination: false
+          });
           window.scrollTo(0,0);
         })
         .catch( err => console.log(err))
@@ -150,7 +169,8 @@ class App extends Component {
         this.resetSearch()
         articles = this.state.allArticles;
         articleOptions = 'all';
-        this.setState({ articles, articleOptions, searchOptions: articles });
+        this.setState({ articles, articleOptions, 
+          searchOptions: articles, pagination: true });
         break;
       case 'saved':
         this.resetSearch()
@@ -267,10 +287,11 @@ class App extends Component {
                   refreshSavedArticles={this.refreshSavedArticles}
                 />)
             })}
+            {this.state.pagination && 
             <Pagination 
               activePage={this.state.activePage}
               onPageChange={this.paginationChange}
-              totalPages={30}/>
+              totalPages={30}/>}
           </NewsFeed>
           {this.switchModals(this.state.showModal)}
         </div>

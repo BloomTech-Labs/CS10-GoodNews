@@ -5,6 +5,7 @@ const ReportClickbait = (props) => {
   const modal = props.clickbait ? 'clickbaitModal' : 'nonClickbaitModal';
   return (
     <Modal closeIcon
+      onClose={()=>props.closeModal(modal)}
       open={props.open}
       style={{ padding: '2em' }}>
       <Modal.Content

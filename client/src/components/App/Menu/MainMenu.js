@@ -23,9 +23,15 @@ const MainMenu = (props) => {
         <Icon name='thermometer three quarters' size='large' color='grey'/>
         Trending topics:
         <Menu secondary vertical 
-          items={props.trendingTopics}
-          className='trending-topics'
-          onItemClick={handleTopicClick}/>
+          className='trending-topics'>
+          {props.trendingTopics.map(topic => {
+            return (<Menu.Item 
+              key={topic}
+              onClick={handleTopicClick}>
+              {topic}
+            </Menu.Item>)
+          })}
+        </Menu>
       </Menu.Item>
       <Menu.Item onClick={props.toggleLandingPage}>
         <Icon name='info circle' size='large' color='grey'/>
