@@ -256,7 +256,6 @@ class App extends Component {
   render() {
 
     return (
-
       this.state.visited ? (
         <div className="App">
           <Nav toggleMenu={this.toggleMenu}>
