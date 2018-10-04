@@ -34,7 +34,10 @@ class App extends Component {
     }
   }
 
-  componentDidMount() {  
+  componentDidMount() {
+    let activePage = sessionStorage.getItem('active-page');
+    activePage = activePage ? activePage : 1;
+    this.setState({ activePage });
     this.isLoggedIn();
     this.fetchArticles();
     this.fetchTrendingTopics();
@@ -43,14 +46,13 @@ class App extends Component {
   paginationChange = (e, { activePage }) => {
     window.scrollTo(0,0)
     this.setState({ activePage })
-    localStorage.setItem('active-page', activePage)
+    sessionStorage.setItem('active-page', activePage)
     this.fetchArticles();
     console.log(this.state)
   }
 
   fetchArticles = () => {
-    let activePage = localStorage.getItem('active-page')
-    activePage = activePage ? activePage : 1
+    let activePage = sessionStorage.getItem('active-page')
     axios.get(`${url}/api/article/get-articles/0/${activePage}`)
       .then( articles => {
         this.setState({ 
@@ -63,8 +65,7 @@ class App extends Component {
   }
 
   fetchClickbait = () => {
-    let activePage = localStorage.getItem('active-page')
-    activePage = activePage ? activePage : 1
+    let activePage = sessionStorage.getItem('active-page')
     axios.get(`${url}/api/article/get-articles/1/${activePage}`)
       .then( articles => {
         this.setState({ articles: articles.data, searchOptions: articles.data })

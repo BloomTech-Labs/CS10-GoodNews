@@ -67,7 +67,7 @@ html {
 html, body {
   height: 100%;
   font-family: 'Roboto', sans-serif;
-  font-size: 1em;
+  font-size: 1rem;
 }
 
 h1, h2, h3, h4, h5 {
@@ -92,6 +92,24 @@ p {
 
 a.article-title:hover {
   color: #37bc9b !important;
+}
+
+.article-description {
+  line-height: 1.4;
+  font-size: 1rem;
+}
+
+.article-image {
+  opacity: 0.8;
+  filter: alpha(opacity=80);
+  -webkit-filter: grayscale(50%);
+  filter: grayscale(50%);
+  border-radius: 5px;
+}
+
+.article-image:hover {
+  opacity: 1.0;
+  filter: alpha(opacity=100);
 }
 
 .articleOptionsButton {

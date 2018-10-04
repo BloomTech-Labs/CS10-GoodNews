@@ -19,7 +19,12 @@ class Article extends Component {
   }
 
   elapsedTime = () => {
-    let elapsedMilliseconds = Date.now() - Date.parse(this.props.article.timestamp);
+    let elapsedMilliseconds;
+    if (this.props.article.timestamp) {
+      elapsedMilliseconds = Date.now() - Date.parse(this.props.article.timestamp);
+    } else {
+      elapsedMilliseconds = Date.now() - Date.parse(this.props.article.createdAt)
+    }
     const currentDate = new Date(elapsedMilliseconds);
     const offset = currentDate.getTimezoneOffset() *60*1000
     elapsedMilliseconds = elapsedMilliseconds+offset
@@ -39,7 +44,7 @@ class Article extends Component {
       case (elapsedMilliseconds > 1814400000):
         return `${Math.round(elapsedMilliseconds/(1000*60*60*24*7))} weeks ago`;
       default:
-        return `${elapsedMilliseconds} milliseconds ago`;
+        return 'Some time ago...';
     }
   }
 
@@ -114,14 +119,15 @@ class Article extends Component {
               {this.props.article.name}
             </Header>
             {this.props.article.imageurl &&
-              <Image 
-                style={{ maxHeight: '90px', width: 'auto' }} 
-                verticalAlign='middle' 
-                floated='right' 
-                size='small' 
-                src={this.props.article.imageurl}/>}
+            <Image
+              className='article-image'
+              verticalAlign='middle'
+              floated='right'
+              size='small' 
+              style={{ width: 'auto', height: '100px' }}
+              src={this.props.article.imageurl}/>}
           </div>
-          <div style={{display: 'flex', justifyContent: 'space-between'}}>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <Card.Meta  style={{ marginBottom: '1em' }}>
               <span>{this.elapsedTime()}</span>
             </Card.Meta>
@@ -138,7 +144,7 @@ class Article extends Component {
           </div>
           <Grid>
             <Grid.Row only='tablet computer' columns={1}>
-              <Grid.Column textAlign='justified' style={{ lineHeight: '1.6rem' }}>
+              <Grid.Column textAlign='justified' className='article-description'>
                 {this.props.article.description}
               </Grid.Column>
             </Grid.Row>
