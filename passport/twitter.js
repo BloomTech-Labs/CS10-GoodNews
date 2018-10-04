@@ -21,7 +21,7 @@ passport.use(new TwitterStrategy({
                     newUser.twitter.tokenSecret = tokenSecret;
                     newUser.twitter.twittername = profile.username;
                     newUser.twitter.displayName = profile.displayName;
-                    newUser.email = profile.emails[0].value,
+                    // newUser.email = profile.emails[0].value;
                     newUser.save(function(err) {
                         if (err) throw err;
                         return done(err, newUser);
