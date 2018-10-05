@@ -41,7 +41,6 @@ setInterval(() => {
             Article
             .insertMany(parsedData, (err, data) => {
                 if (err) console.log('insertMany error: ', err);
-                console.log(data);
             });
 
         } catch (e) {

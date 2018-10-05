@@ -11,7 +11,10 @@ import Article from './NewsFeed/Article/Article';
 import LandingPage from './LandingPage/LandingPage';
 import MainMenu from './Menu/MainMenu';
 import { Search, Pagination } from 'semantic-ui-react';
-import _ from 'lodash';
+import debounce from 'lodash.debounce';
+import filter from 'lodash.filter';
+import escapeRegExp from 'lodash.escaperegexp'
+
 
 // Production Server URL or localhost for local testing
 const url = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_SERVER : 'http://localhost:5000';
@@ -30,15 +33,18 @@ class App extends Component {
       searchValue: '',
       allArticles: [],
       trendingTopics: [],
-      activePage: 1,
+      activePage: sessionStorage.getItem('active-page'),
       pagination: true
     }
   }
 
   componentDidMount() {
     let activePage = sessionStorage.getItem('active-page');
-    activePage = activePage ? activePage : 1;
-    this.setState({ activePage });
+    if (!activePage) {
+      sessionStorage.setItem('active-page', 1)
+      activePage = 1;
+    }
+    this.setState({ activePage })
     this.isLoggedIn();
     this.fetchArticles();
     this.fetchTrendingTopics();
@@ -51,14 +57,14 @@ class App extends Component {
 
   paginationChange = (e, { activePage }) => {
     window.scrollTo(0,0)
-    this.setState({ activePage })
     sessionStorage.setItem('active-page', activePage)
+    this.setState({ activePage })
     this.fetchArticles();
     console.log(this.state)
   }
 
   fetchArticles = () => {
-    let activePage = sessionStorage.getItem('active-page')
+    let activePage = sessionStorage.getItem('active-page');
     axios.get(`${url}/api/article/get-articles/0/${activePage}`)
       .then( articles => {
         this.setState({
@@ -71,7 +77,7 @@ class App extends Component {
   }
 
   fetchClickbait = () => {
-    let activePage = sessionStorage.getItem('active-page')
+    let activePage = sessionStorage.getItem('active-page');
     axios.get(`${url}/api/article/get-articles/1/${activePage}`)
       .then( articles => {
         this.setState({ 
@@ -154,10 +160,8 @@ class App extends Component {
 
   isLoggedIn = () => {
     const loggedIn = localStorage.getItem('auth-token') ? true : false;
-    let activePage = localStorage.getItem('active-page');
-    activePage = activePage ? activePage : 1;
     if (this.state.loggedIn !== loggedIn) {
-      this.setState({ loggedIn, activePage });
+      this.setState({ loggedIn });
     }
   }
 
@@ -243,12 +247,12 @@ class App extends Component {
     if (this.state.searchValue.length < 1) {
       return this.resetSearch()
     } else {
-      const re = new RegExp(_.escapeRegExp(this.state.searchValue), 'i');
+      const re = new RegExp(escapeRegExp(this.state.searchValue), 'i');
       const isMatch = result => re.test(result.name);
 
       this.setState({
         isLoading: false,
-        articles: _.filter(this.state.searchOptions, isMatch)
+        articles: filter(this.state.searchOptions, isMatch)
       })
     }
   }
@@ -256,7 +260,6 @@ class App extends Component {
   render() {
 
     return (
-
       this.state.visited ? (
         <div className="App">
           <Nav toggleMenu={this.toggleMenu}>
@@ -267,7 +270,7 @@ class App extends Component {
               searchBar={<Search
                 loading={this.state.isLoading}
                 onResultSelect={this.handleResultSelect}
-                onSearchChange={_.debounce(this.handleSearchChange, { leading: true })}
+                onSearchChange={debounce(this.handleSearchChange, { leading: true })}
                 value={this.state.searchValue}
                 showNoResults={false}/>} 
               loggedIn={this.state.loggedIn} 
@@ -288,7 +291,7 @@ class App extends Component {
                 />)
             })}
             {this.state.pagination && 
-            <Pagination 
+            <Pagination
               activePage={this.state.activePage}
               onPageChange={this.paginationChange}
               totalPages={30}/>}

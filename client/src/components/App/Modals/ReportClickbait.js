@@ -33,14 +33,16 @@ const ReportClickbait = (props) => {
             <Form.Checkbox label="The headline creates accurate expectations for the reader and does not exaggerate"/>
           </Form>
         </React.Fragment>)}
-        <Button primary 
-          style={{ backgroundColor: '#37bc9b', marginTop: '30px' }}
-          onClick={props.report}>
-          SEND REPORT
-        </Button>
-        <Button onClick={()=>props.closeModal(modal)}>
-          CANCEL
-        </Button>
+        <div style={{ display: 'flex', justifyContent: 'center'}}>
+          <Button primary 
+            style={{ backgroundColor: '#37bc9b', margin: '10px' }}
+            onClick={props.report}>
+            SEND REPORT
+          </Button>
+          <Button style={{ margin: '10px' }} onClick={()=>props.closeModal(modal)}>
+            CANCEL
+          </Button>
+        </div>
       </Modal.Content>
     </Modal>
   );

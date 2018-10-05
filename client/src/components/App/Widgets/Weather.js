@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import WeatherIcon from 'react-icons-weather'
-import { Grid } from 'semantic-ui-react';
+import { Grid, Loader } from 'semantic-ui-react';
 import axios from 'axios';
 import * as weatherIcons from './weatherIcons.json'
 
@@ -11,6 +11,8 @@ class Weather extends Component {
       current: null,
       forecast: null,
       location: null,
+      geolocation: false,
+      loading: true
     }
   }
 
@@ -18,39 +20,41 @@ class Weather extends Component {
     this.getWeather();
   }
 
-  getWeather = () => {  
+  getGeolocation = () => {
+    navigator.geolocation.getCurrentPosition(success => {
+      this.setState({ loading: true })
+      const lat = success.coords.latitude;
+      const long = success.coords.longitude;
+      sessionStorage.setItem('lat', lat);
+      sessionStorage.setItem('long', long);
+      this.getWeather()
+    })
+  }
+
+  getWeather = (zip=null) => {  
     const weatherAPI = 'https://api.apixu.com/v1/forecast.json';
     const key = '61e020a41ccd4b1d945190151182409';
+
+    // if user's location is stored in session, use it to get weather
     let lat = sessionStorage.getItem('lat');
     let long = sessionStorage.getItem('long');
 
-    if (!lat || !long) {
-      navigator.geolocation.getCurrentPosition(success => {
-        lat = success.coords.latitude;
-        long = success.coords.longitude;
-        sessionStorage.setItem('lat', lat);
-        sessionStorage.setItem('long', long);
-  
-        axios.get(`${weatherAPI}?key=${key}&q=${lat},${long}&days=5`)
-          .then( weather => {
-            this.setState({ 
-              current: weather.data.current,
-              forecast: weather.data.forecast.forecastday,
-              location: weather.data.location,
-            });
-          })
-      });
-    } else {
-      console.log('lat and long already stored in Session')
-      axios.get(`${weatherAPI}?key=${key}&q=${lat},${long}&days=5`)
-        .then( weather => {
-          this.setState({ 
-            current: weather.data.current,
-            forecast: weather.data.forecast.forecastday,
-            location: weather.data.location,
-          });
-        })
+    // if user doesn't provide a location and has not allowed access to geolocation,
+    // use zip code from Washington DC for weather data
+    let location = zip ? zip : 20500;
+    if (lat && long) {
+      this.setState({ geolocation: true })
+      location = `${lat},${long}`
     }
+    axios.get(`${weatherAPI}?key=${key}&q=${location}&days=5`)
+      .then( weather => {
+        this.setState({ 
+          current: weather.data.current,
+          forecast: weather.data.forecast.forecastday,
+          location: weather.data.location,
+          loading: false
+        });
+      })
   }
 
   getDayOfWeek = (date) => {
@@ -66,22 +70,23 @@ class Weather extends Component {
         <Grid centered>
           <Grid.Row stretched columns={2}>
             <Grid.Column textAlign='right' width={5} verticalAlign='middle'>
-              {this.state.current && <WeatherIcon name='owm' style={{ fontSize: '4rem' }}
+              <Loader active={this.state.loading}/>
+              {this.state.loading === false && <WeatherIcon name='owm' style={{ fontSize: '4rem' }}
                 iconId={weatherIcons[this.state.current.condition.code]}/>}
             </Grid.Column>
             <Grid.Column verticalAlign='middle' width={11}>
               <Grid.Row style={{ fontSize: '1.4rem' }}>
-                {this.state.current ? this.state.location.name.toUpperCase() : 'Fetching weather data'}
+                {this.state.loading ? 'Fetching weather data' : this.state.location.name.toUpperCase() }
               </Grid.Row>
               <Grid.Row style={{ fontSize: '3em' }}>
-                {this.state.current ? this.state.current.temp_f : '--'}º
+                {this.state.loading ? '--' : this.state.current.temp_f}º
               </Grid.Row>
               <Grid.Row>
-                {this.state.current ? this.state.current.condition.text : '--'}
+                {this.state.loading ? '--' : this.state.current.condition.text }
               </Grid.Row>
             </Grid.Column>
           </Grid.Row>
-          {this.state.forecast && <Grid.Row columns='equal' only='computer tablet'>
+          {this.state.loading === false && <Grid.Row columns='equal' only='computer tablet'>
             {this.state.forecast.map(day => {
               return (
                 <Grid.Column verticalAlign='middle' key={day.date}>
@@ -95,6 +100,10 @@ class Weather extends Component {
                 </Grid.Column>
               );
             })}
+          </Grid.Row>}
+          {(this.state.geolocation === false && this.state.current) && 
+          <Grid.Row textAlign='center'>
+            <span className='geolocation' onClick={this.getGeolocation}>Use my location</span>
           </Grid.Row>}
         </Grid>
       </div>
