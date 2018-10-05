@@ -33,7 +33,7 @@ class App extends Component {
       searchValue: '',
       allArticles: [],
       trendingTopics: [],
-      activePage: 1,
+      activePage: sessionStorage.getItem('active-page'),
       pagination: true
     }
   }
@@ -45,6 +45,7 @@ class App extends Component {
       activePage = 1;
     }
     this.setState({ activePage })
+    console.log(this.state)
     this.isLoggedIn();
     this.fetchArticles();
     this.fetchTrendingTopics();
@@ -57,8 +58,8 @@ class App extends Component {
 
   paginationChange = (e, { activePage }) => {
     window.scrollTo(0,0)
-    this.setState({ activePage })
     sessionStorage.setItem('active-page', activePage)
+    this.setState({ activePage })
     this.fetchArticles();
     console.log(this.state)
   }
@@ -160,10 +161,8 @@ class App extends Component {
 
   isLoggedIn = () => {
     const loggedIn = localStorage.getItem('auth-token') ? true : false;
-    let activePage = localStorage.getItem('active-page');
-    activePage = activePage ? activePage : 1;
     if (this.state.loggedIn !== loggedIn) {
-      this.setState({ loggedIn, activePage });
+      this.setState({ loggedIn });
     }
   }
 
