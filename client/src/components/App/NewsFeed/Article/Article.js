@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Header, Grid } from 'semantic-ui-react';
+import { Card, Header, Grid, Responsive } from 'semantic-ui-react';
 import axios from 'axios';
 import ArticleOptions from './ArticleOptions';
 
@@ -115,52 +115,60 @@ class Article extends Component {
           display: 'flex',
           alignItems: 'flex-start',
           maxWidth: '700px'}}>
-        <Card.Content>
-          {(this.props.loggedIn && this.props.articleOptions==='saved') && 
-            <div style={{ display: 'flex', justifyContent:'flex-end', margin: '-20px -25px 0px 0px' }}>
-              <ArticleOptions
-                textAlign='right'
-                remove={this.removeArticle} 
-                articleOptions={this.props.articleOptions}/>
-            </div>}
-          <Header href={this.props.article.url} rel='noopener noreferrer' target='blank' className='article-title'>
-            {this.props.article.name}
-          </Header>
-          <div style={{ 
-            display: 'flex', 
-            justifyContent: 'space-between', 
-            alignItems: 'center', 
-            marginBottom: '1em',
-            maxWidth: '250px' }}>
-            <Card.Meta>
-              <span>{this.elapsedTime()}</span>
-            </Card.Meta>
-            {(this.props.loggedIn && this.props.articleOptions==='all') && 
+        <Card.Content style={{ display: 'flex', alignItems: 'center' }}>
+          {this.props.article.imageurl && (
+          <Responsive minWidth={'1350'}>
+            <a className='image-container' 
+              href={this.props.article.url}
+              rel='noopener noreferrer' 
+              target='blank'>
+              <img src={this.props.article.imageurl} 
+                className='article-image' 
+                alt={this.props.article.name}/>
+            </a>
+          </Responsive>)}
+          <div>
+            {(this.props.loggedIn && this.props.articleOptions==='saved') && 
+              <div style={{ display: 'flex', justifyContent:'flex-end', margin: '-20px -25px 0px 0px' }}>
+                <ArticleOptions
+                  textAlign='right'
+                  remove={this.removeArticle} 
+                  articleOptions={this.props.articleOptions}/>
+              </div>}
+            <Header href={this.props.article.url} rel='noopener noreferrer' target='blank' className='article-title'>
+              {this.props.article.name}
+            </Header>
+            <div className='meta'>
+              <Card.Meta style={{ padding: '10px 0' }}>
+                <span>{this.elapsedTime()}</span>
+              </Card.Meta>
+              {(this.props.loggedIn && this.props.articleOptions==='all') && 
+                <ArticleOptions
+                  clickbaitModal={this.state.clickbaitModal}
+                  saved={this.state.saved}
+                  reported={this.state.reported} 
+                  articleOptions={this.props.articleOptions} 
+                  save={this.saveArticle}
+                  report={this.reportArticle}
+                  openModal={this.openModal}
+                  closeModal={this.closeModal}/>}
+            </div>
+            <Grid>
+              <Grid.Row only='tablet computer' columns={1}>
+                <Grid.Column textAlign='justified' className='article-description'>
+                  {this.props.article.description}
+                </Grid.Column>
+              </Grid.Row>
+              {(this.props.loggedIn && this.props.articleOptions==='clickbait') &&
               <ArticleOptions
                 clickbaitModal={this.state.clickbaitModal}
-                saved={this.state.saved}
-                reported={this.state.reported} 
-                articleOptions={this.props.articleOptions} 
-                save={this.saveArticle}
-                report={this.reportArticle}
+                nonClickbaitModal={this.state.nonClickbaitModal}
+                closeModal={this.closeModal}
                 openModal={this.openModal}
-                closeModal={this.closeModal}/>}
+                articleOptions={this.props.articleOptions}
+                report={this.reportArticle}/>}
+            </Grid>
           </div>
-          <Grid>
-            <Grid.Row only='tablet computer' columns={1}>
-              <Grid.Column textAlign='justified' className='article-description'>
-                {this.props.article.description}
-              </Grid.Column>
-            </Grid.Row>
-            {(this.props.loggedIn && this.props.articleOptions==='clickbait') &&
-            <ArticleOptions
-              clickbaitModal={this.state.clickbaitModal}
-              nonClickbaitModal={this.state.nonClickbaitModal}
-              closeModal={this.closeModal}
-              openModal={this.openModal}
-              articleOptions={this.props.articleOptions}
-              report={this.reportArticle}/>}
-          </Grid>
         </Card.Content>
       </Card>
     );
