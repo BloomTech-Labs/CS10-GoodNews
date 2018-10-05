@@ -45,7 +45,6 @@ class App extends Component {
       activePage = 1;
     }
     this.setState({ activePage })
-    console.log(this.state)
     this.isLoggedIn();
     this.fetchArticles();
     this.fetchTrendingTopics();

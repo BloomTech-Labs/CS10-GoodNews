@@ -123,7 +123,7 @@ class Article extends Component {
                 remove={this.removeArticle} 
                 articleOptions={this.props.articleOptions}/>
             </div>}
-          <Header href={this.props.article.url} className='article-title'>
+          <Header href={this.props.article.url} rel='noopener noreferrer' target='blank' className='article-title'>
             {this.props.article.name}
           </Header>
           <div style={{ 
