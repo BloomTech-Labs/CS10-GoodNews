@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Header, Grid, Image } from 'semantic-ui-react';
+import { Card, Header, Grid } from 'semantic-ui-react';
 import axios from 'axios';
 import ArticleOptions from './ArticleOptions';
 
@@ -33,9 +33,11 @@ class Article extends Component {
       elapsedMilliseconds = Date.now() - Date.parse(this.props.article.createdAt)
     }
     switch(true) {
-      case (elapsedMilliseconds < 1800000):
-        return 'Less than an hour ago';
-      case (elapsedMilliseconds >= 1800000 && elapsedMilliseconds <= 2700000):
+      case (elapsedMilliseconds < 120000):
+        return 'Just now';
+      case (elapsedMilliseconds >= 120000 && elapsedMilliseconds < (1000*60*50)):
+        return `${Math.round(elapsedMilliseconds/(1000*60))} minutes ago`;
+      case (elapsedMilliseconds >= (1000*60*50) && elapsedMilliseconds <= 2700000):
         return '1 hour ago';
       case (elapsedMilliseconds > 2700000 && elapsedMilliseconds <= 86400000):
         return `${Math.round(elapsedMilliseconds/(1000*60*60))} hours ago`;
@@ -121,21 +123,16 @@ class Article extends Component {
                 remove={this.removeArticle} 
                 articleOptions={this.props.articleOptions}/>
             </div>}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-            <Header href={this.props.article.url} className='article-title'>
-              {this.props.article.name}
-            </Header>
-            {this.props.article.imageurl &&
-            <Image
-              className='article-image'
-              verticalAlign='middle'
-              floated='right'
-              size='small' 
-              style={{ width: 'auto', height: '100px' }}
-              src={this.props.article.imageurl}/>}
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Card.Meta  style={{ marginBottom: '1em' }}>
+          <Header href={this.props.article.url} className='article-title'>
+            {this.props.article.name}
+          </Header>
+          <div style={{ 
+            display: 'flex', 
+            justifyContent: 'space-between', 
+            alignItems: 'center', 
+            marginBottom: '1em',
+            maxWidth: '250px' }}>
+            <Card.Meta>
               <span>{this.elapsedTime()}</span>
             </Card.Meta>
             {(this.props.loggedIn && this.props.articleOptions==='all') && 

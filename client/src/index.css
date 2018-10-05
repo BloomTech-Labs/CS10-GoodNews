@@ -96,7 +96,6 @@ a.article-title:hover {
 
 .article-description {
   line-height: 1.4;
-  font-size: 1rem;
 }
 
 .article-image {
@@ -214,6 +213,14 @@ a.article-title:hover {
 
   .weatherWidget {
     margin: 0px 15px;
+  }
+
+  .article-title {
+    font-size: 1.3rem;
+  }
+
+  .article-description {
+    font-size: 1rem;
   }
 }
 
