@@ -98,12 +98,25 @@ a.article-title:hover {
   line-height: 1.4;
 }
 
+.image-container {
+  border-radius: 5px;
+  min-width: 200px;
+  max-width: 200px;
+  height: 200px;
+  overflow: hidden;
+  margin-right: 20px;
+  display: flex;
+  justify-content: center;
+  background-color: #37bc9b9b
+}
+
 .article-image {
   opacity: 0.8;
   filter: alpha(opacity=80);
   -webkit-filter: grayscale(50%);
   filter: grayscale(50%);
-  border-radius: 5px;
+  max-height: 100%;
+  object-fit: cover;
 }
 
 .article-image:hover {
@@ -114,6 +127,12 @@ a.article-title:hover {
 .articleOptionsButton {
   background-color: white !important;
   color: 'grey';
+}
+
+.meta {
+  display: flex; 
+  justify-content: space-between;
+  align-items: center;
 }
 
 .logo {
@@ -222,6 +241,10 @@ a.article-title:hover {
 
   .article-title {
     font-size: 1.3rem;
+  }
+
+  .meta {
+    margin-bottom: 0.7em;
   }
 
   .article-description {
