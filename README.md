@@ -13,7 +13,25 @@ TODO
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
  
 ## Screenshots
+### Soft Landing Page
+![LandingPage](ScreenShots/LandingPage.png)
 
+### Sign In and Register
+![SignIn](ScreenShots/SignIn.png)
+![Register](ScreenShots/Register.png)
+
+### Reading List
+![ReadingListView](ScreenShots/ReadingListView.png)
+
+### News Sorted by Trending Topic
+![TrendingTopicView](ScreenShots/TrendingTopicView.png)
+
+### Evaluate Clickbait View
+![EvaluateView](ScreenShots/EvaluateView.png)
+
+### Modals for Reporting
+![ReportClickbait](ScreenShots/ReportClickbait.png)
+![ReportNonClickbait](ScreenShots/ReportNonClickbait.png)
 
 ## Tech Used
 <b>Built with</b>
