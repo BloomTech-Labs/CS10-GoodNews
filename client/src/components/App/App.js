@@ -13,7 +13,7 @@ import MainMenu from './Menu/MainMenu';
 import { Search, Pagination } from 'semantic-ui-react';
 import debounce from 'lodash.debounce';
 import filter from 'lodash.filter';
-import escapeRegExp from 'lodash.escaperegexp'
+import escapeRegExp from 'lodash.escaperegexp';
 
 
 // Production Server URL or localhost for local testing
