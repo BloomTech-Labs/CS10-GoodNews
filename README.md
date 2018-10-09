@@ -1,11 +1,8 @@
-# CS10-GoodNews
-A clickbait-free news aggregator
+# Good News
+[Good News](https://labs7goodnews.herokuapp.com/): A clickbait-free news aggregator
 
 ## Motivation
 This project exists to bring news from a variety of sources to readers, while filtering out clickbait articles. Users can browse through a list of article titles (with a brief description) that link to the original source.
-
-## Build status
-TODO
 
 ## Code style
 TODO
@@ -47,28 +44,7 @@ TODO
 - [Express](http://expressjs.com/)
 - [MongoDB](https://www.mongodb.com/)
 
-## Why MERN?
-Since this project had a short deadline with only two web engineers, we didn't want to optimize too early. At this stage, we were more concerned with getting an MVP quickly than scalability, with the plan to optimize later on. With this in mind, we chose the MERN stack.
-
-<b>MongoDB</b>
-
-MongoDB was selected because it is fast for prototyping, yet can easily be migrated to a SQL database in the future. During these early stages of development, it was useful to have the ability to quickly add fields to our application without having to worry about database migrations. 
-
-<b>Node.js and Express.js</b>
-
-Node has the advantage of a huge module ecosystem (npm). For most common problems, we can simply download a package instead of writing our own solution. Additionally, the modularity of the Node library lets us use only what we need, so it's more lightweight than a large framework.
-
-The Express framework is also lightweight and flexible. Writing a RESTful API with Express is quick and easy.
-
-<b>React.js</b>
-
-React was selected for building the front end of the application in part for performance reasons. With React, we simply define the various views of the application, and are not concerned with manually managing changes in the DOM. Instead, React will update the "virtual DOM" automatically when state changes and the actual DOM will be updated more efficiently.
-
-Since React has a large user base, it is well maintained with a large toolkit and thorough documentation.
-
-We also chose React because components can be reused throughout the application, making it easy to maintain and grow.
-
-Additionally, React has cross-platform support. We can reuse the architecture and logic in a React Native application for mobile devices in the future. 
+Here is an [explanation](https://github.com/Lambda-School-Labs/CS10-GoodNews/explanation.md) of why whe chose this stack.
 
 ## Features
 - Browse news articles, without the distraction of clickbait
@@ -109,28 +85,34 @@ This project was built in collaboration with Data Scientists. The repo for that 
 
 ## Tests
 ### Back end tests:
-in root directory
 ```
 npm test
 ```
 
 ### Front end tests:
-in client directory
 ```
-npm test
+cd client && npm test
 ``` 
 
 ## How to use?
-TODO
-If people like your project they’ll want to learn how they can use it. To do so include step by step guide to use your project.
+First, visit [Good News](https://labs7goodnews.herokuapp.com/). Here you can browse the news. You can filter by topic, or search by keyword. 
+
+If you'd like, you can create an account by clicking "Sign in" on the top right corner. With an account, you can save articles by adding them to your reading list and report clickbait if you encounter it. 
+
+You can also help us improve our model by reviewing clickbait in the "Evaluate clickbait" view. All articles in the Evaluate section have been labeled as clickbait by our classifier. If you come across an article that has been wrongly labeled, you can send a report. We will use this data to retrain our model.
 
 ## Contribute
-TODO
-Let people know how they can contribute into your project. A [contributing guideline](https://github.com/zulip/zulip-electron/blob/master/CONTRIBUTING.md) will be a big plus.
+See our [contributing guideline](https://github.com/Lambda-School-Labs/CS10-GoodNews/contributing.md) and [code of conduct](https://github.com/Lambda-School-Labs/CS10-GoodNews/codeOfConduct.md)
 
 ## Credits
-TODO
-Give proper credits. This could be a link to any repo which inspired you to build this project, any blogposts or links to people who contrbuted in this project.
+<b>Web Contributors</b>
+[Cassandra Lamendola](https://github.com/CassLamendola)
+[Sergey Nam](https://github.com/sharp0111)
+
+<b>Data Science Contributors</b>
+[Jason Fleischer](https://github.com/JasonRJFleischer)
+[Leo Lam](https://github.com/leocpp)
+[Maryna Longnickel](https://github.com/MarynaLongnickel)
 
 ## License
 TODO
