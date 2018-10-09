@@ -96,6 +96,12 @@ a.article-title:hover {
 
 .article-description {
   line-height: 1.4;
+  font-size: 1rem;
+}
+
+.evaluate-card {
+  line-height: 2;
+  font-size: 1.2rem;
 }
 
 .image-container {
@@ -181,7 +187,7 @@ a.article-title:hover {
 }
 
 .trending-topics {
-  padding: 20px 0px 0px 30px;
+  padding: 10px 0px 0px 65px;
 }
 
 .editUserInfo:hover {
@@ -255,6 +261,10 @@ a.article-title:hover {
 @media only screen and (max-width: 600px) {
   .logo {
     font-size: 2.5em;
+  }
+  .main-menu { 
+    height: 100vh;
+    min-width: 100vw;
   }
 }
 

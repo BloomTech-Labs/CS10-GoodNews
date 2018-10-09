@@ -46,18 +46,9 @@ const ArticleOptions = (props) => {
       )}
       {props.articleOptions === 'clickbait' && (
         <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-          <Button.Group>
-            <Button 
-              primary 
-              style={{ backgroundColor: '#37bc9b', width: '150px' }}
-              onClick={()=>props.openModal('clickbaitModal')}>
-              Clickbait
-            </Button>
-            <Button.Or />
-            <Button onClick={()=>props.openModal('nonClickbaitModal')}>
-              Not Clickbait
-            </Button>
-          </Button.Group>
+          <Button onClick={()=>props.openModal('nonClickbaitModal')}>
+            Not Clickbait
+          </Button>
         </div>
       )}
     </React.Fragment>) : (null)
