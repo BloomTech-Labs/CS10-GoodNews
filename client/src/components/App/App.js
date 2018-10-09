@@ -7,6 +7,7 @@ import SignIn from './Modals/SignIn';
 import Register from './Modals/Register';
 import Settings from './Modals/Settings'
 import NewsFeed from './NewsFeed/NewsFeed';
+import EvaluateDescription from './NewsFeed/EvaluateDescription';
 import Article from './NewsFeed/Article/Article';
 import LandingPage from './LandingPage/LandingPage';
 import MainMenu from './Menu/MainMenu';
@@ -34,7 +35,8 @@ class App extends Component {
       allArticles: [],
       trendingTopics: [],
       activePage: sessionStorage.getItem('active-page'),
-      pagination: true
+      pagination: true,
+      evaluate: false
     }
   }
 
@@ -174,30 +176,30 @@ class App extends Component {
         articles = this.state.allArticles;
         articleOptions = 'all';
         this.setState({ articles, articleOptions, 
-          searchOptions: articles, pagination: true });
+          searchOptions: articles, pagination: true, evaluate: false });
         break;
       case 'saved':
         this.resetSearch()
         this.fetchSavedArticles();
         articleOptions = 'saved';
-        this.setState({ articleOptions })
+        this.setState({ articleOptions, evaluate: false })
         break;
       case 'clickbait':
         this.resetSearch()
         this.fetchClickbait();
         articleOptions = 'clickbait';
-        this.setState({ articleOptions })
+        this.setState({ articleOptions, evaluate: true })
         break;
       case 'trending':
         this.resetSearch()
         this.fetchArticlesByTopic(topic)
         articleOptions = 'all';
-        this.setState({ articleOptions })
+        this.setState({ articleOptions, evaluate: false })
         break;
       default:
         this.resetSearch()
         articles = this.state.allArticles;
-        this.setState({ articles, articleOptions });
+        this.setState({ articles, articleOptions, evaluate: false });
         break;
     }
   }
@@ -213,7 +215,9 @@ class App extends Component {
           toggleModal={this.toggleModal} 
           login={this.isLoggedIn}/>
       case 'settings':
-        return <Settings toggleModal={this.toggleModal}/>
+        return <Settings 
+          toggleModal={this.toggleModal}
+          toggleLogout={this.isLoggedIn.bind(this)}/>
       default:
         return null;
     }
@@ -280,6 +284,7 @@ class App extends Component {
               fetchArticlesByTopic={this.fetchArticlesByTopic}
             />}
           <NewsFeed>
+            {this.state.evaluate && <EvaluateDescription/>}
             {this.state.articles.map( article => {
               return (
                 <Article 
