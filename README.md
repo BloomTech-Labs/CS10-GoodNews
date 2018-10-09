@@ -20,6 +20,9 @@ TODO
 ![SignIn](ScreenShots/SignIn.png)
 ![Register](ScreenShots/Register.png)
 
+### All Articles
+![AllArticles](ScreenShots/AllArticles.png)
+
 ### Reading List
 ![ReadingListView](ScreenShots/ReadingListView.png)
 
@@ -32,6 +35,10 @@ TODO
 ### Modals for Reporting
 ![ReportClickbait](ScreenShots/ReportClickbait.png)
 ![ReportNonClickbait](ScreenShots/ReportNonClickbait.png)
+
+### Other devices
+![TabletView](ScreenShots/TabletView.png)
+![MobileView](ScreenShots/MobileView.png)
 
 ## Tech Used
 <b>Built with</b>
