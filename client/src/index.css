@@ -99,6 +99,11 @@ a.article-title:hover {
   font-size: 1rem;
 }
 
+.evaluate-card {
+  line-height: 2;
+  font-size: 1.2rem;
+}
+
 .image-container {
   border-radius: 5px;
   min-width: 200px;
