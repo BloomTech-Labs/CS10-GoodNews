@@ -56,12 +56,52 @@ Here is an [explanation](https://github.com/Lambda-School-Labs/CS10-GoodNews/blo
 
 ## API Endpoints
 ### User
-1. `/api/user/` \
-GET to get all users - protected route
-2. `/api/user/register/`\
-POST to register a new user. Returns userObj={token, user}
-3. `/api/user/login/` \
+1. POST `/api/user/register/`\
+Registers a new user in the database. Returns userObj={token, user}
+Request body should look like this:
+
+```
+{
+  "name": "First Server",
+  "pass": "password",
+  "role": {
+    "manager": "true"
+  }
+}
+```
+2. `/api/user/login/` \
 POST to login existing user
+3. GET `/api/user/` \
+**Requires:** Authorization
+Retrieves a list of users from the database. Admins can see all users.
+Response:
+```
+{
+  "users": [
+    {
+      "_id": "5bb7d8e50f5a084e70e84bd4",
+      "name": "server 1",
+      "saved_articles": [
+        {
+          "id": ObjectId
+        }
+      ]
+    },
+    "token": 
+    {
+      "_id": "5bb7d3ceb2786a2c785eee1c",
+      "name": "employee name",
+      "images": null,
+      "parties": [
+        {
+          "tables": [],
+          "food": []
+        }
+      ]
+    }
+  ]
+}
+```
 4. `/api/user/login/logged` \
 GET to get an existing user - protected route. \
 PUT to update an existing user - protected route. Returns the updated user. \
