@@ -215,7 +215,9 @@ class App extends Component {
           toggleModal={this.toggleModal} 
           login={this.isLoggedIn}/>
       case 'settings':
-        return <Settings toggleModal={this.toggleModal}/>
+        return <Settings 
+          toggleModal={this.toggleModal}
+          toggleLogout={this.isLoggedIn.bind(this)}/>
       default:
         return null;
     }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Header, Grid } from 'semantic-ui-react';
+import { Modal, Header, Grid, Divider, Button, Confirm } from 'semantic-ui-react';
 import axios from 'axios';
 import ChangeSettings from './ChangeSettings';
 
@@ -22,7 +22,8 @@ class Settings extends Component {
       password: '',
       verifyNewPassword: '',
       failPassword: false,
-      failSave: false
+      failSave: false,
+      delete: false
     }
   }
 
@@ -110,6 +111,28 @@ class Settings extends Component {
       })
   }
 
+  openDelete = () => this.setState({ delete: true })
+
+  closeDelete = () => this.setState({ delete: false })
+
+  deleteUser = () => {
+    const config = {
+      headers: {
+        'authorization': localStorage.getItem('auth-token'),
+        'userid': localStorage.getItem("userid")
+      }
+    }
+    axios.delete(`${url}/api/user/logged`, config)
+      .then( res => {
+        localStorage.removeItem('auth-token');
+        localStorage.removeItem('userid');
+        this.props.toggleLogout();
+        this.closeDelete()
+        this.props.toggleModal('')
+      })
+      .catch( err => console.log(err))
+  }
+
   render() { 
     return (
       <Modal closeIcon open={true} centered={false}
@@ -184,6 +207,16 @@ class Settings extends Component {
                 </ChangeSettings>
               </React.Fragment>
             }
+            <Divider/>
+            <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+              <Button onClick={this.openDelete}>Delete Account</Button>
+              <Confirm 
+                content='Are you sure you want to delete your account?'
+                confirmButton='Delete'
+                open={this.state.delete} 
+                onCancel={this.closeDelete} 
+                onConfirm={this.deleteUser} />
+            </div>
           </Grid>
         </Modal.Content>
       </Modal>

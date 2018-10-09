@@ -262,6 +262,10 @@ a.article-title:hover {
   .logo {
     font-size: 2.5em;
   }
+  .main-menu { 
+    height: 100vh;
+    min-width: 100vw;
+  }
 }
 
 @media only screen and (max-width: 450px) {
