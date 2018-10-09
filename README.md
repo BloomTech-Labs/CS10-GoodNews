@@ -44,7 +44,7 @@ TODO
 - [Express](http://expressjs.com/)
 - [MongoDB](https://www.mongodb.com/)
 
-Here is an [explanation](https://github.com/Lambda-School-Labs/CS10-GoodNews/explanation.md) of why whe chose this stack.
+Here is an [explanation](https://github.com/Lambda-School-Labs/CS10-GoodNews/blob/master/explanation.md) of why whe chose this stack.
 
 ## Features
 - Browse news articles, without the distraction of clickbait
@@ -84,17 +84,11 @@ PUT to add || del an existing article _id to an existing user. Returns the user.
 This project was built in collaboration with Data Scientists. The repo for that side of this project is located [here](https://github.com/Lambda-School-Labs/DS-GoodNews)
 
 ## Tests
-### Back end tests:
 ```
 npm test
-```
-
-### Front end tests:
-```
-cd client && npm test
 ``` 
 
-## How to use?
+## Usage
 First, visit [Good News](https://labs7goodnews.herokuapp.com/). Here you can browse the news. You can filter by topic, or search by keyword. 
 
 If you'd like, you can create an account by clicking "Sign in" on the top right corner. With an account, you can save articles by adding them to your reading list and report clickbait if you encounter it. 
@@ -102,7 +96,7 @@ If you'd like, you can create an account by clicking "Sign in" on the top right 
 You can also help us improve our model by reviewing clickbait in the "Evaluate clickbait" view. All articles in the Evaluate section have been labeled as clickbait by our classifier. If you come across an article that has been wrongly labeled, you can send a report. We will use this data to retrain our model.
 
 ## Contribute
-See our [contributing guideline](https://github.com/Lambda-School-Labs/CS10-GoodNews/contributing.md) and [code of conduct](https://github.com/Lambda-School-Labs/CS10-GoodNews/codeOfConduct.md)
+See our [Contribution Guideline](https://github.com/Lambda-School-Labs/CS10-GoodNews/blob/master/contributing.md) and [Code of Conduct](https://github.com/Lambda-School-Labs/CS10-GoodNews/blob/master/codeOfConduct.md)
 
 ## Credits
 <b>Web Contributors</b>
@@ -113,7 +107,3 @@ See our [contributing guideline](https://github.com/Lambda-School-Labs/CS10-Good
 [Jason Fleischer](https://github.com/JasonRJFleischer)
 [Leo Lam](https://github.com/leocpp)
 [Maryna Longnickel](https://github.com/MarynaLongnickel)
-
-## License
-TODO
-A short snippet describing the license (MIT, Apache etc)
