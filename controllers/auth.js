@@ -4,8 +4,6 @@ const newToken = (user) => {
   return jwt.sign(user, process.env.SECRET);
 };
 
-// { expiresIn: '3h', // in 3 hours }
-
 const isLoggedIn = (req, res, next) => {
   if (req.headers.authorization) {
     // JWT local auth

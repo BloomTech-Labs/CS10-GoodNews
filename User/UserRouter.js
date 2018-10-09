@@ -66,8 +66,8 @@ function postLoginUser(req, res) {
     const { username, password } = req.body;
     if (!username || !password) {
         res.status(422).json({ error: 'Username and Password required' });
-    }
-    User.findOne({ username }).select('username _id password')
+    } else {
+      User.findOne({ username }).select('username _id password')
         .then((user) => {
         if (user) {
             // console.log(user);
@@ -91,6 +91,7 @@ function postLoginUser(req, res) {
         .catch((err) => {
         res.status(500).json({ error: err });
         });
+      }
 }
 
 // GET specific user by its id

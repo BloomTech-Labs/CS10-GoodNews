@@ -1,11 +1,8 @@
-# CS10-GoodNews
-A clickbait-free news aggregator
+# Good News
+[Good News](https://labs7goodnews.herokuapp.com/): A clickbait-free news aggregator
 
 ## Motivation
 This project exists to bring news from a variety of sources to readers, while filtering out clickbait articles. Users can browse through a list of article titles (with a brief description) that link to the original source.
-
-## Build status
-TODO
 
 ## Code style
 TODO
@@ -20,6 +17,9 @@ TODO
 ![SignIn](ScreenShots/SignIn.png)
 ![Register](ScreenShots/Register.png)
 
+### All Articles
+![AllArticles](ScreenShots/AllArticles.png)
+
 ### Reading List
 ![ReadingListView](ScreenShots/ReadingListView.png)
 
@@ -33,14 +33,18 @@ TODO
 ![ReportClickbait](ScreenShots/ReportClickbait.png)
 ![ReportNonClickbait](ScreenShots/ReportNonClickbait.png)
 
+### Other devices
+![TabletView](ScreenShots/TabletView.png)
+![MobileView](ScreenShots/MobileView.png)
+
 ## Tech Used
 <b>Built with</b>
 - [React](https://reactjs.org/)
 - [Node](https://nodejs.org/en/)
 - [Express](http://expressjs.com/)
 - [MongoDB](https://www.mongodb.com/)
-- [Mongoose](https://mongoosejs.com/)
-- [Semantic-UI](https://semantic-ui.com/)
+
+Here is an [explanation](https://github.com/Lambda-School-Labs/CS10-GoodNews/blob/master/explanation.md) of why whe chose this stack.
 
 ## Features
 - Browse news articles, without the distraction of clickbait
@@ -80,30 +84,26 @@ PUT to add || del an existing article _id to an existing user. Returns the user.
 This project was built in collaboration with Data Scientists. The repo for that side of this project is located [here](https://github.com/Lambda-School-Labs/DS-GoodNews)
 
 ## Tests
-### Back end tests:
-in root directory
-```
-npm test
-```
-
-### Front end tests:
-in client directory
 ```
 npm test
 ``` 
 
-## How to use?
-TODO
-If people like your project they’ll want to learn how they can use it. To do so include step by step guide to use your project.
+## Usage
+First, visit [Good News](https://labs7goodnews.herokuapp.com/). Here you can browse the news. You can filter by topic, or search by keyword. 
+
+If you'd like, you can create an account by clicking "Sign in" on the top right corner. With an account, you can save articles by adding them to your reading list and report clickbait if you encounter it. 
+
+You can also help us improve our model by reviewing clickbait in the "Evaluate clickbait" view. All articles in the Evaluate section have been labeled as clickbait by our classifier. If you come across an article that has been wrongly labeled, you can send a report. We will use this data to retrain our model.
 
 ## Contribute
-TODO
-Let people know how they can contribute into your project. A [contributing guideline](https://github.com/zulip/zulip-electron/blob/master/CONTRIBUTING.md) will be a big plus.
+See our [Contribution Guideline](https://github.com/Lambda-School-Labs/CS10-GoodNews/blob/master/contributing.md) and [Code of Conduct](https://github.com/Lambda-School-Labs/CS10-GoodNews/blob/master/codeOfConduct.md)
 
 ## Credits
-TODO
-Give proper credits. This could be a link to any repo which inspired you to build this project, any blogposts or links to people who contrbuted in this project.
+<b>Web Contributors</b>
+[Cassandra Lamendola](https://github.com/CassLamendola)
+[Sergey Nam](https://github.com/sharp0111)
 
-## License
-TODO
-A short snippet describing the license (MIT, Apache etc)
+<b>Data Science Contributors</b>
+[Jason Fleischer](https://github.com/JasonRJFleischer)
+[Leo Lam](https://github.com/leocpp)
+[Maryna Longnickel](https://github.com/MarynaLongnickel)
