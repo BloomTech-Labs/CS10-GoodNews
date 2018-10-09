@@ -111,7 +111,7 @@ function getArticleId(req, res) {
         res.status(200).json(found_article);
     })
     .catch(err => {
-        res.status(500).json(err.message);
+        res.status(404).json(err.message);
     });
 }
 
