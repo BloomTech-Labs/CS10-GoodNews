@@ -10,36 +10,46 @@ const MainMenu = (props) => {
     <Menu className='main-menu' borderless secondary vertical fixed='top'>
       {props.searchBar}  
       <Menu.Item onClick={()=>props.switchArticles('all')} style={{ marginTop: '10px' }}>
-        <Icon name='newspaper' size='large' color='grey'/>
-        All articles
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent:'flex-start' }}>
+          <Icon name='newspaper' size='large' color='grey' style={{ width: '50px' }}/>
+          All articles
+        </div>
       </Menu.Item>
       {props.loggedIn &&
         <Menu.Item onClick={()=>props.switchArticles('saved')}>
-          <Icon name='list ul' size='large' color='grey'/>
-          Reading list
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent:'flex-start' }}>
+            <Icon name='list ul' size='large' color='grey' style={{ width: '50px' }}/>
+            Reading list
+          </div>
         </Menu.Item>}
       <Menu.Item>
-        <Icon name='thermometer three quarters' size='large' color='grey'/>
-        Trending topics:
-        <Menu secondary vertical 
-          className='trending-topics'>
-          {props.trendingTopics.map(topic => {
-            return (<Menu.Item 
-              key={topic}
-              onClick={handleTopicClick}>
-              {topic}
-            </Menu.Item>)
-          })}
-        </Menu>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent:'flex-start' }}>
+          <Icon name='thermometer three quarters' size='large' color='grey' style={{ width: '50px' }}/>
+          Trending topics:
+        </div>
+          <Menu secondary vertical
+            className='trending-topics'>
+            {props.trendingTopics.map(topic => {
+              return (<Menu.Item 
+                key={topic}
+                onClick={handleTopicClick}>
+                {topic}
+              </Menu.Item>)
+            })}
+          </Menu>
       </Menu.Item>
       <Menu.Item onClick={props.toggleLandingPage}>
-        <Icon name='info circle' size='large' color='grey'/>
-        About Good News
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent:'flex-start' }}>
+          <Icon name='info circle' size='large' color='grey' style={{ width: '50px' }}/>
+          About Good News
+        </div>
       </Menu.Item>
       {props.loggedIn &&
         <Menu.Item onClick={()=>props.switchArticles('clickbait')}>
-          <Icon name='edit' size='large' color='grey'/>
-          Evaluate clickbait
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent:'flex-start' }}>
+            <Icon name='edit' size='large' color='grey' style={{ width: '50px' }}/>
+            Evaluate clickbait
+          </div>
         </Menu.Item>}
     </Menu>
   );
