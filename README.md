@@ -56,17 +56,41 @@ Here is an [explanation](https://github.com/Lambda-School-Labs/CS10-GoodNews/blo
 
 ## API Endpoints
 ### User
-1. POST `/api/user/register/`\
-Registers a new user in the database. Returns userObj={token, user}
-Request body should look like this:
+POST `/api/user/register/`\
+Registers a new user in the database.
+
+Request body:
 
 ```
 {
-  "name": "First Server",
-  "pass": "password",
-  "role": {
-    "manager": "true"
-  }
+	"name": {
+		"first": "User's First Name",
+		"last": "User's Last Name"
+	},
+	"username": "username",
+	"password": "password",
+    "email": "user@email.com
+}
+```
+
+`name`: Object
+- `first`: String
+- `last`: String
+
+`username`: String
+
+`password`: String
+
+`email`: String
+
+Response:
+```
+{
+    "token": "Bearer (token)",
+    "user": {
+        "_id": "_id",
+        "username": "username"
+    }
 }
 ```
 2. `/api/user/login/` \
