@@ -14,10 +14,10 @@ const EvaluateDescription = () => {
         <Header style={{ textAlign: 'center', paddingBottom: '15px' }}>
           Help us out!
         </Header>
-        You can help us improve our model by reviewing articles in this section. 
+        You can help us improve by reviewing articles in this section. 
         All articles in the this section have been labeled as clickbait by our machine learning classifier. 
         If you come across an article that has been wrongly labeled, you can send a report. 
-        We will use this data to better classify clickbait.
+        We will use this data to better classify clickbait in the future.
       </Card.Content>
     </Card>
   );
