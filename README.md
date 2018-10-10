@@ -201,6 +201,7 @@ Response:
 DELETE `/api/user/logged` \
 *Requires:** Authorization and userid\
 Deletes a user from the database.\
+Response includes a success message.
 
 ### Article
 1. `/api/article/` \
