@@ -37,14 +37,14 @@ TODO
 ![TabletView](ScreenShots/TabletView.png)
 ![MobileView](ScreenShots/MobileView.png)
 
-## Tech Used
+## Tech Stack Used
 <b>Built with</b>
 - [React](https://reactjs.org/)
 - [Node](https://nodejs.org/en/)
 - [Express](http://expressjs.com/)
 - [MongoDB](https://www.mongodb.com/)
 
-Here is an [explanation](https://github.com/Lambda-School-Labs/CS10-GoodNews/blob/master/explanation.md) of why whe chose this stack.
+Here is an [explanation](https://github.com/Lambda-School-Labs/CS10-GoodNews/blob/master/explanation.md) of why whe chose this stack and all of its back-end and front-end dependencies.
 
 ## Features
 - Browse news articles, without the distraction of clickbait
