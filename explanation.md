@@ -1,9 +1,10 @@
 # Why MERN?
-Since this project had a short deadline with only two web engineers, we didn't want to optimize too early. At this stage, we were more concerned with getting an MVP quickly than scalability, with the plan to optimize later on. With this in mind, we chose the MERN stack.
+The main reason for choosing MERN stack was that it provided us with all the tools we needed to build a viable and effective MVP. Also, since this project had a short deadline with only two web engineers, the engineers' better knowledge of the stack played a significant role in the decision-making process.
 
 ## MongoDB
 
-MongoDB was selected because it is fast for prototyping, yet can easily be migrated to a SQL database in the future. During these early stages of development, it was useful to have the ability to quickly add fields to our application without having to worry about database migrations. 
+MongoDB was selected because it is fast for prototyping. 
+We also did the comparison of the strengths and weaknesses of MongoDB vs SQL databases, and came to the conclusion that MongoDB was the best choice for this project. MongoDB was chosen due to its dynamic schema, horizontal scalability, manageability and flexibility. During these early stages of development, it was useful to have the ability to quickly add fields to our application without having to worry about database migrations. SQL database, due to its predefined structure and set schemas which requires significant up-front preparation, seemed like overkill.
 
 ## Node.js and Express.js
 
