@@ -56,23 +56,22 @@ Here is an [explanation](https://github.com/Lambda-School-Labs/CS10-GoodNews/blo
 
 ## API Endpoints
 ### User
+#### Register User
 POST `/api/user/register/`\
-Registers a new user in the database.
-
+Registers a new user in the database.\
 Request body:
 
 ```
 {
 	"name": {
-		"first": "User's First Name",
-		"last": "User's Last Name"
+		"first": "First Name",
+		"last": "Last Name"
 	},
 	"username": "username",
 	"password": "password",
     "email": "user@email.com
 }
 ```
-
 `name`: Object
 - `first`: String
 - `last`: String
@@ -93,43 +92,115 @@ Response:
     }
 }
 ```
-2. `/api/user/login/` \
-POST to login existing user
-3. GET `/api/user/` \
-**Requires:** Authorization
-Retrieves a list of users from the database. Admins can see all users.
+#### Login User
+POST `/api/user/login/`\
+Logs in an existing user
+Request body:
+
+```
+{
+	"username": "username",
+	"password": "password"
+}
+```
+
+`username`: String\
+`password`: String
+
 Response:
 ```
 {
-  "users": [
-    {
-      "_id": "5bb7d8e50f5a084e70e84bd4",
-      "name": "server 1",
-      "saved_articles": [
-        {
-          "id": ObjectId
-        }
-      ]
-    },
-    "token": 
-    {
-      "_id": "5bb7d3ceb2786a2c785eee1c",
-      "name": "employee name",
-      "images": null,
-      "parties": [
-        {
-          "tables": [],
-          "food": []
-        }
-      ]
+    "token": "Bearer (token)",
+    "user": {
+        "_id": "_id",
+        "username": "username",
+        "password": "hashed_password"
     }
-  ]
 }
 ```
-4. `/api/user/login/logged` \
-GET to get an existing user - protected route. \
-PUT to update an existing user - protected route. Returns the updated user. \
-DELETE to delete an existing user - protected route. Returns the deleted user.
+#### Get All Users
+GET `/api/user/`\
+**Requires:** Authorization and userid\
+Retrieves a list of users from the database\ 
+Admins can see all users\
+Response:
+```
+[
+    {
+        "name": {
+            "first": "First Name",
+            "last": "Last Name"
+        },
+        "saved_articles": [],
+        "updatedAt": "Date",
+        "_id": "_id",
+        "username": "username",
+        "email": "user@email.com",
+        "password": "password"
+    }
+]
+```
+#### Get User by _id
+GET `/api/user/logged`\
+**Requires:** Authorization and userid\
+Retrieves an existing user by _id.\
+Response:
+```
+{
+    "name": {
+        "first": "First Name",
+        "last": "Last Name"
+    },
+    "saved_articles": [],
+    "updatedAt": "Date",
+    "_id": "_id_",
+    "username": "username",
+    "email": "user@email.com",
+    "password": "password"
+}
+```
+#### Update User
+PUT `/api/user/logged`\
+**Requires:** Authorization and userid\
+Updates name, username, password and email for the user.\ 
+Request body:
+```
+{
+	"name": {
+		"first": "New First Name",
+		"last": "New Last Name"
+	},
+	"username": "new_username",
+    "currentPassword": "currentPassword",
+	"password": "password",
+    "email": "new_user@email.com"
+}
+```
+`name`: Object, optional
+`username`: String
+`currentPassword`: String, required. This should be the current password!
+`password`: String, optional
+`email`: String, optional
+
+Response:
+```
+{
+    "name": {
+        "first": "New First Name",
+        "last": "New Last Name"
+    },
+    "saved_articles": [],
+    "updatedAt": "Date",
+    "_id": "_id_",
+    "username": "new_username",
+    "email": "new_user@email.com",
+    "password": "new_password"
+}
+```
+#### Delete User
+DELETE `/api/user/logged` \
+*Requires:** Authorization and userid\
+Deletes a user from the database.\
 
 ### Article
 1. `/api/article/` \
