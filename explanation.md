@@ -27,7 +27,7 @@ We also did the comparison of the strengths and weaknesses of MongoDB vs SQL dat
 ### JSON Web Token
 [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) npm library is an implementation of [JSON Web Tokens](https://tools.ietf.org/html/rfc7519).
 
-## Back-End Dependencies `(Development)`
+## Back-End Dependencies `(devDependencies)`
 ### Nodemon
 Restarts development server automaticaly making the development process more efficient.
 
@@ -57,6 +57,6 @@ Additionally, React has cross-platform support. We can reuse the architecture an
 ### Dotenv
 [Dotenv](https://www.npmjs.com/package/dotenv) is a zero-dependency module that loads environment variables from a .env file into process.env.
 
-## Front-End Dependencies `(Development)`
+## Front-End Dependencies `(devDependencies)`
 ### Enzyme
 [Enzyme](https://github.com/airbnb/enzyme) is a JavaScript Testing utility for React that makes it easier to assert, manipulate, and traverse your React Components' output.
