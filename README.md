@@ -76,12 +76,9 @@ Request body:
 - `first`: String
 - `last`: String
 
-`username`: String
-
-`password`: String
-
-`email`: String
-
+`username`: String\
+`password`: String\
+`email`: String\
 Response:
 ```
 {
@@ -94,7 +91,7 @@ Response:
 ```
 #### Login User
 POST `/api/user/login/`\
-Logs in an existing user
+Logs in an existing user\
 Request body:
 
 ```
@@ -105,8 +102,7 @@ Request body:
 ```
 
 `username`: String\
-`password`: String
-
+`password`: String\
 Response:
 ```
 {
@@ -114,15 +110,14 @@ Response:
     "user": {
         "_id": "_id",
         "username": "username",
-        "password": "hashed_password"
+        "password": "password"
     }
 }
 ```
 #### Get All Users
 GET `/api/user/`\
 **Requires:** Authorization and userid\
-Retrieves a list of users from the database\ 
-Admins can see all users\
+Retrieves a list of users from the database\
 Response:
 ```
 [
@@ -143,7 +138,7 @@ Response:
 #### Get User by _id
 GET `/api/user/logged`\
 **Requires:** Authorization and userid\
-Retrieves an existing user by _id.\
+Retrieves an existing user by `_id`.\
 Response:
 ```
 {
@@ -162,7 +157,7 @@ Response:
 #### Update User
 PUT `/api/user/logged`\
 **Requires:** Authorization and userid\
-Updates name, username, password and email for the user.\ 
+Updates name, username, password and email for the user.\
 Request body:
 ```
 {
@@ -176,12 +171,11 @@ Request body:
     "email": "new_user@email.com"
 }
 ```
-`name`: Object, optional
-`username`: String
-`currentPassword`: String, required. This should be the current password!
-`password`: String, optional
-`email`: String, optional
-
+`name`: Object, optional\
+`username`: String\
+`currentPassword`: String, required. This should be the current password!\
+`password`: String, optional\
+`email`: String, optional\
 Response:
 ```
 {
@@ -198,21 +192,194 @@ Response:
 }
 ```
 #### Delete User
-DELETE `/api/user/logged` \
-*Requires:** Authorization and userid\
+DELETE `/api/user/logged`\
+**Requires:** Authorization and userid\
 Deletes a user from the database.\
 Response includes a success message.
 
 ### Article
-1. `/api/article/` \
-GET to get all articles. \
-POST to load an article into DB - protected route. Returns the saved article.
-2. `/api/article/:articleid/` \
-GET to get an existing article by MongoDB-generated _id
-3. `/api/article/:articleid/:type/` \
-where type = 'add' || 'del' \
-PUT to add || del an existing article _id to an existing user. Returns the user.
+#### Add Article
+POST `/api/article/post-article`\
+**Requires:** Authorization and userid\
+Request body:
+```
+{
+    "id": "id",
+    "name": "Article Name",
+    "url": "https://www.cnn.com/article.html",
+    "timestamp": "timestamp",
+    "description": "description",
+    "keywords": [ 
+        "keyword"
+    ],
+    "summary": "summary",
+    "content": "content",
+    "clickbait": "0",
+    "imageurl": "https://imageurl.com/image"
+}
+```
+`id`: String\
+`name`: String\
+`url`: String\
+`timestamp`: Date\
+`description`: String\
+`keywords`: [String]\
+`summary`: String\
+`content`: String\
+`clickbait`: String\
+`imageurl`: String
 
+Response:
+```
+{
+    "_id": "_id",
+    "id": "id",
+    "name": "Article Name",
+    "url": "https://www.cnn.com/article.html",
+    "timestamp": "timestamp",
+    "description": "description",
+    "keywords": [ 
+        "keyword"
+    ],
+    "summary": "summary",
+    "content": "content",
+    "clickbait": "0",
+    "createdAt": Date,
+    "imageurl": "https://imageurl.com/image"
+}
+```
+#### Get Articles by flag and activePage
+GET `/api/article/get-articles/:flag/:activePage`\
+Retrieves a list of articles based on flag and activePage.\
+`flag` can be either "0" or "1"\
+`activePage` is a string that represents a number in the 1-30 range.\
+Response:
+```
+[
+    {
+        "_id": "_id",
+        "id": "id",
+        "name": "Article Name",
+        "url": "https://www.cnn.com/article.html",
+        "timestamp": "timestamp",
+        "description": "description",
+        "keywords": [ 
+            "keyword"
+        ],
+        "summary": "summary",
+        "content": "content",
+        "clickbait": "0",
+        "createdAt": Date,
+        "imageurl": "https://imageurl.com/image"
+    }
+]
+```
+#### Get Article by id
+GET `/api/article/get/:articleid`\
+Retrieves an article based on `_id`.\
+Response:
+```
+[
+    {
+        "_id": "_id",
+        "id": "id",
+        "name": "Article Name",
+        "url": "https://www.cnn.com/article.html",
+        "timestamp": "timestamp",
+        "description": "description",
+        "keywords": [ 
+            "keyword"
+        ],
+        "summary": "summary",
+        "content": "content",
+        "clickbait": "0",
+        "createdAt": Date,
+        "imageurl": "https://imageurl.com/image"
+    }
+]
+```
+#### Get User saved_articles
+GET `/api/article/user-saved`\
+**Requires:** Authorization and userid\
+Retrieves articles from User's saved_articles.\
+Response:
+```
+[
+    {
+        "_id": "_id",
+        "id": "id",
+        "name": "Article Name",
+        "url": "https://www.cnn.com/article.html",
+        "timestamp": "timestamp",
+        "description": "description",
+        "keywords": [ 
+            "keyword"
+        ],
+        "summary": "summary",
+        "content": "content",
+        "clickbait": "0",
+        "createdAt": Date,
+        "imageurl": "https://imageurl.com/image"
+    }
+]
+```
+#### Get Top Five Keywords
+GET `/api/article/topfive`\
+Retrieves top 5 keywords.\
+Response:
+```
+[
+    "keyword_1",
+    "keyword_2",
+    "keyword_3",
+    "keyword_4",
+    "keyword_5"
+]
+```
+#### Get Articles by Keyword
+GET `/api/article/:keyword`\
+Retrieves non-clickbait articles containing the `keyword` passed in req.params.\
+Response:
+```
+[
+    {
+        "_id": "_id",
+        "id": "id",
+        "name": "Article Name",
+        "url": "https://www.cnn.com/article.html",
+        "timestamp": "timestamp",
+        "description": "description",
+        "keywords": [ 
+            "keyword"
+        ],
+        "summary": "summary",
+        "content": "content",
+        "clickbait": "0",
+        "createdAt": Date,
+        "imageurl": "https://imageurl.com/image"
+    }
+]
+```
+#### Update Article
+PUT `/api/article/:articleid/:type`\
+**Requires:** Authorization and userid\
+Updates or Deletes articles by `articleid` and `type` in User's saved_articles property.\
+`type` can be either "0" or "1"\
+Response:
+```
+{
+    "name": {
+        "first": "First Name",
+        "last": "Last Name"
+    },
+    "saved_articles": ["articleid"],
+    "updatedAt": "Date",
+    "_id": "_id_",
+    "username": "username",
+    "email": "user@email.com",
+    "password": "hashed_password"
+}
+```
 ## Installation
 `git clone git@github.com:Lambda-School-Labs/CS10-GoodNews.git`
 
