@@ -61,7 +61,6 @@ class App extends Component {
     sessionStorage.setItem('active-page', activePage)
     this.setState({ activePage })
     this.fetchArticles()
-    console.log(this.state)
   }
 
   fetchArticles = () => {
