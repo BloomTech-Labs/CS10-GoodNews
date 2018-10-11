@@ -1,25 +1,25 @@
-require('dotenv').config();
-const mongoose = require('mongoose');
-const express = require('express');
-const server = require('./server');
-const path = require('path');
-const port = process.env.PORT || 5000;
+require('dotenv').config()
+const mongoose = require('mongoose')
+const express = require('express')
+const server = require('./server')
+const path = require('path')
+const port = process.env.PORT || 5000
 
-//process.env if it exists OR local version for testing offline.
-const mongoURL = process.env.NODE_ENV === 'production' ? process.env.PROD_MONGODB : process.env.MONGODB_LOCAL;
+// process.env if it exists OR local version for testing offline.
+const mongoURL = process.env.NODE_ENV === 'production' ? process.env.PROD_MONGODB : process.env.MONGODB_LOCAL
 
-mongoose.set('useCreateIndex', true);
-mongoose.set('useNewUrlParser', true);
-mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true)
+mongoose.set('useNewUrlParser', true)
+mongoose.set('useFindAndModify', false)
 mongoose
-    .connect(mongoURL) //Whatever mongo db database we use will go here
-    .then(mongo => {
-        console.log('=== Connected to MongoDB server successfully! ===');
-    })
-    .catch(err => {
-        console.error('error', err);
-    });
+  .connect(mongoURL) // Whatever mongo db database we use will go here
+  .then(mongo => {
+    console.log('=== Connected to MongoDB server successfully! ===')
+  })
+  .catch(err => {
+    console.error('error', err)
+  })
 
 // For serving static files to root endpoint
-server.use(express.static(path.join(__dirname, 'client', 'build')));
-server.listen(port, () => console.log(`=== API running on port: ${port}! ===`));
+server.use(express.static(path.join(__dirname, 'client', 'build')))
+server.listen(port, () => console.log(`=== API running on port: ${port}! ===`))

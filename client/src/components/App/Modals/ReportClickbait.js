@@ -1,11 +1,11 @@
-import React from 'react';
-import { Modal, Button, Header, Form } from 'semantic-ui-react';
+import React from 'react'
+import { Modal, Button, Header, Form } from 'semantic-ui-react'
 
 const ReportClickbait = (props) => {
-  const modal = props.clickbait ? 'clickbaitModal' : 'nonClickbaitModal';
+  const modal = props.clickbait ? 'clickbaitModal' : 'nonClickbaitModal'
   return (
     <Modal closeIcon
-      onClose={()=>props.closeModal(modal)}
+      onClose={() => props.closeModal(modal)}
       open={props.open}
       style={{ padding: '2em' }}>
       <Modal.Content
@@ -15,37 +15,37 @@ const ReportClickbait = (props) => {
           justifyContent: 'space-between',
           alignItems: 'center'
         }}>
-        {props.clickbait && 
+        {props.clickbait &&
         (<React.Fragment>
-          <Header size="large" textAlign="center">IS THIS CLICKBAIT?</Header>
+          <Header size='large' textAlign='center'>IS THIS CLICKBAIT?</Header>
           <Form>
-            <Form.Checkbox label="I have read/scanned this article"/>
-            <Form.Checkbox label="The headline withholds information required to understand what the content of the article is"/>
-            <Form.Checkbox label="The headline exaggerates the article to create misleading expectations for the reader"/>
+            <Form.Checkbox label='I have read/scanned this article' />
+            <Form.Checkbox label='The headline withholds information required to understand what the content of the article is' />
+            <Form.Checkbox label='The headline exaggerates the article to create misleading expectations for the reader' />
           </Form>
         </React.Fragment>)}
         {props.notClickbait &&
         (<React.Fragment>
-          <Header size="large" textAlign="center">IS THIS LEGITIMATE NEWS?</Header>
+          <Header size='large' textAlign='center'>IS THIS LEGITIMATE NEWS?</Header>
           <Form>
-            <Form.Checkbox label="I have read/scanned this article"/>
-            <Form.Checkbox label="The headline includes information required for the reader to understand what the article is about"/>
-            <Form.Checkbox label="The headline creates accurate expectations for the reader and does not exaggerate"/>
+            <Form.Checkbox label='I have read/scanned this article' />
+            <Form.Checkbox label='The headline includes information required for the reader to understand what the article is about' />
+            <Form.Checkbox label='The headline creates accurate expectations for the reader and does not exaggerate' />
           </Form>
         </React.Fragment>)}
-        <div style={{ display: 'flex', justifyContent: 'center'}}>
-          <Button primary 
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <Button primary
             style={{ backgroundColor: '#37bc9b', margin: '10px' }}
             onClick={props.report}>
             SEND REPORT
           </Button>
-          <Button style={{ margin: '10px' }} onClick={()=>props.closeModal(modal)}>
+          <Button style={{ margin: '10px' }} onClick={() => props.closeModal(modal)}>
             CANCEL
           </Button>
         </div>
       </Modal.Content>
     </Modal>
-  );
+  )
 }
- 
-export default ReportClickbait;
+
+export default ReportClickbait
