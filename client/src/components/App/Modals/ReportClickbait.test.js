@@ -1,7 +1,7 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import ReportClickbait from './ReportClickbait';
+import React from 'react'
+import { shallow } from 'enzyme'
+import ReportClickbait from './ReportClickbait'
 
 it('renders without crashing', () => {
-  shallow(<ReportClickbait />);
-});
+  shallow(<ReportClickbait />)
+})
