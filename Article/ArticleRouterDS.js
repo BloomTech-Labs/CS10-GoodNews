@@ -5,6 +5,7 @@ const urlDs = 'https://lab7goodnews-ds.herokuapp.com/stories'
 module.exports = function () {
   return (
     setInterval(() => {
+      console.log('fetching articles')
       let newTimestamp = new Date(Date.now() - 1 * 60 * 60 * 1000)
       newTimestamp = newTimestamp.toISOString()
       https.get(`${urlDs}/?timestamp="${newTimestamp}"`, (res) => {
@@ -28,5 +29,5 @@ module.exports = function () {
         console.error(`Got error: ${e.message}`)
       })
     }, 1800000)
-  );
+  )
 }
