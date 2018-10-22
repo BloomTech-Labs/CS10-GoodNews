@@ -1,5 +1,5 @@
 # Good News
-[Good News](https://labs7goodnews.herokuapp.com/): A clickbait-free news aggregator
+[Good News](https://www.good-news.io/): A clickbait-free news aggregator
 
 ## Motivation
 This project exists to bring news from a variety of sources to readers, while filtering out clickbait articles. Users can browse through a list of article titles (with a brief description) that link to the original source.
@@ -390,7 +390,7 @@ npm test
 ``` 
 
 ## Usage
-First, visit [Good News](https://labs7goodnews.herokuapp.com/). Here you can browse the news. You can filter by topic, or search by keyword. 
+First, visit [Good News](https://www.good-news.io/). Here you can browse the news. You can filter by topic, or search by keyword. 
 
 If you'd like, you can create an account by clicking "Sign in" on the top right corner. With an account, you can save articles by adding them to your reading list and report clickbait if you encounter it. 
 
