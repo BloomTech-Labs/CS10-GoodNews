@@ -1,6 +1,6 @@
 import React from 'react'
 import { Container, Grid } from 'semantic-ui-react'
-import Weather from '../Widgets/Weather'
+// import Weather from '../Widgets/Weather'
 
 const NewsFeed = (props) => {
   return (
@@ -20,7 +20,7 @@ const NewsFeed = (props) => {
         </Container>
       </Grid.Column>
       <Grid.Column widescreen={4} largeScreen={4} computer={6} tablet={7}>
-        <Weather />
+        {/* <Weather /> */}
       </Grid.Column>
     </Grid>
   )
