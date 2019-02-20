@@ -1,4 +1,4 @@
-# Good News
+# Good News Project
 [Good News](https://www.good-news.io/): A clickbait-free news aggregator
 
 ## Motivation
