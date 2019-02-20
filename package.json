@@ -10,7 +10,7 @@
   "scripts": {
     "start": "node index.js",
     "start-dev": "nodemon index.js",
-    "heroku-postbuild": "cd client && npm install && npm run build && cd ..",
+    "heroku-postbuild": "cd client && npm install && npm run build && npm rebuild bcrypt --build-from-source && cd ..",
     "test": "jest ./tests/server.spec.js; cd ./client && npm test",
     "lint": "standard --fix ./**/*.js | snazzy"
   },
