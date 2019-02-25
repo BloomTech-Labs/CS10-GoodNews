@@ -5,7 +5,7 @@ const urlDs = 'https://lab7goodnews-ds.herokuapp.com/stories'
 module.exports = function () {
   return (
     setInterval(() => {
-      console.log('fetching articles')
+      // console.log('fetching articles')
       let newTimestamp = new Date(Date.now() - 1 * 60 * 60 * 1000)
       newTimestamp = newTimestamp.toISOString()
       https.get(`${urlDs}/?timestamp="${newTimestamp}"`, (res) => {
@@ -17,6 +17,7 @@ module.exports = function () {
         res.on('end', () => {
           try {
             const parsedData = JSON.parse(rawData)
+            // console.log(parsedData)
             Article
               .insertMany(parsedData, (err, data) => {
                 if (err) console.log('insertMany error: ', err)
