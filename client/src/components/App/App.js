@@ -23,8 +23,7 @@ class App extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      // visited: localStorage.getItem('visited'),
-      visited: true,
+      visited: localStorage.getItem('visited'),
       loggedIn: false,
       showModal: '',
       showMenu: false,
@@ -140,14 +139,13 @@ class App extends Component {
   }
 
   toggleLandingPage = () => {
-    // let visited = localStorage.getItem('visited')
-    let visited = true
+    let visited = localStorage.getItem('visited')
     if (visited === 'false' || visited === false || visited === null) {
       visited = true
     } else {
       visited = false
     }
-    // localStorage.setItem('visited', visited)
+    localStorage.setItem('visited', visited)
     this.setState({ visited })
     window.scrollTo(0, 0)
   }
