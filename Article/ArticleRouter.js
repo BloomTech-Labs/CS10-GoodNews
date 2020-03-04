@@ -3,9 +3,42 @@ const Article = require('./Article')
 const User = require('../User/User')
 const { isLoggedIn } = require('../controllers/auth')
 
-// POST to /api/article/ endpoint
+/**
+ * @api api/article/post-article
+ * @apiGroup Api group: Articles Router
+ * @apiParamExample {json} Request-Example:
+ * { "id": "id", "name": "Article Name","url": "https://www.cnn.com/article.html","timestamp": "timestamp","description": "description","keywords": [ "keyword"],"summary": "summary","content": "content","clickbait": "0","imageurl": "https://imageurl.com/image"}
+ * @apiDescription Post a new article
+ * @apiPermission needs-auth
+ *
+ */
 router.route('/post-article').post(isLoggedIn, post)
-// GET Articles with either 1 or 0 flag for clickbait
+/**
+ * @api {get} api/article/get-articles/:flag/:activePage
+ * @apiGroup Api group: Articles Router
+ * @apiDescripton Gets articles with either a 1 or 0 flag for clickbait
+ * @apiParamExample {json} Request-Example
+ * [
+ *{
+ *       "_id": "_id",
+ *       "id": "id",
+ *       "name": "Article Name",
+ *       "url": "https://www.cnn.com/article.html",
+ *       "timestamp": "timestamp",
+ *      "description": "description",
+ *       "keywords": [ 
+ *          "keyword"
+ *     ],
+ *       "summary": "summary",
+ *       "content": "content",
+ *       "clickbait": "0",
+ *       "createdAt": Date,
+ *       "imageurl": "https://imageurl.com/image"
+ *  }
+ * ]
+ *@apiParam flag can be either "0" or "1"
+ *@apiParam activePage string that represents a number in the 1-30 range
+ */
 router.route('/get-articles/:flag/:activePage').get(getArticles)
 // GET Article by its _id
 router.route('/get/:articleid').get(getArticleId)

@@ -12,7 +12,8 @@
     "start-dev": "nodemon index.js",
     "heroku-postbuild": "cd client && npm install && npm run build && cd ..",
     "test": "jest ./tests/server.spec.js; cd ./client && npm test",
-    "lint": "standard --fix ./**/*.js | snazzy"
+    "lint": "standard --fix ./**/*.js | snazzy",
+    "docs":"npx apidoc -i article/ -o docs/"
   },
   "standard": {
     "parser": "babel-eslint"
