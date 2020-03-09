@@ -19,7 +19,8 @@ mongoose
   .catch(err => {
     console.error('error', err)
   })
-
+//docs ssr
+server.use("/docs", express.static(path.join(__dirname,"docs")))
 // For serving static files to root endpoint
 server.use(express.static(path.join(__dirname, 'client', 'build')))
 server.listen(port, () => console.log(`=== API running on port: ${port}! ===`))
