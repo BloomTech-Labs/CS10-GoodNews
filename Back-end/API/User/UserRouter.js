@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const User = require('./User')
-const { newToken, isLoggedIn } = require('../controllers/auth')
+const { newToken, isLoggedIn } = require('../../Utils/auth')
 
 // Router to /api/user endpoint
 router.route('/').get(isLoggedIn, getAll)

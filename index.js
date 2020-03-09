@@ -1,7 +1,7 @@
-require('dotenv').config()
+require('./Tests/node_modules/dotenv').config()
 const mongoose = require('mongoose')
 const express = require('express')
-const server = require('./server')
+const server = require('./Back-end/API/server')
 const path = require('path')
 const port = process.env.PORT || 5000
 
