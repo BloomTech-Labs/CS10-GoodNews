@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const Article = require("./Article");
 const User = require("../User/User");
-const { isLoggedIn } = require("../controllers/auth");
+const { isLoggedIn } = require("../../Utils/auth");
 
 /**
  * @api {get} api/article/post-article

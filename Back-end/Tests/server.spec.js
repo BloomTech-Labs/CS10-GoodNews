@@ -1,10 +1,10 @@
-require('dotenv').config()
+require('./node_modules/dotenv').config()
 const mongoose = require('mongoose')
-const request = require('supertest')
-const server = require('../server')
-const User = require('../User/User')
-const Article = require('../Article/Article')
-const MongodbMemoryServer = require('mongodb-memory-server').MongoMemoryServer
+const request = require('./node_modules/supertest')
+const server = require('../API/server')
+const User = require('../API/User/User')
+const Article = require('../API/Article/Article')
+const MongodbMemoryServer = require('./node_modules/mongodb-memory-server').MongoMemoryServer
 const mongod = new MongodbMemoryServer()
 
 // tests server's User and Article routes

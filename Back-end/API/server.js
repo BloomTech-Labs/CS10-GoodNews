@@ -1,8 +1,8 @@
-require('dotenv').config()
-const express = require('express')
+require('./node_modules/dotenv').config()
+const express = require('./node_modules/express')
 const server = express()
-const helmet = require('helmet')
-const cors = require('cors')
+const helmet = require('./node_modules/helmet')
+const cors = require('./node_modules/cors')
 const User = require('./User/User')
 
 // const authMiddleware = (req, res, next) => {
@@ -32,10 +32,10 @@ articleRouterDS()
 
 // passport
 // const { getProfileTwitter, authTwitter } = require('./passport/twitter');
-const session = require('express-session')
-const passport = require('passport')
-const { isLoggedIn } = require('./controllers/auth')
-const cookieParser = require('cookie-parser')
+const session = require('./node_modules/express-session')
+const passport = require('./node_modules/passport')
+const { isLoggedIn } = require('../Utils/auth')
+const cookieParser = require('./node_modules/cookie-parser')
 server.use(cookieParser()) // read cookies (needed for auth)
 // server.use(bodyParser()); // get information from html forms
 // const twitter = require('./passport/twitter')
@@ -80,7 +80,7 @@ server.get('/auth/twitter/callback', (req, res, next) => {
 )
 
 // passport-facebook
-const { getProfileFacebook, authFacebook } = require('./passport/facebook')
+const { getProfileFacebook, authFacebook } = require('../Passport/facebook')
 // route for showing the profile page
 server.get('/facebook/profile', isLoggedIn, getProfileFacebook)
 // Facebook routes
@@ -91,7 +91,7 @@ server.get('/auth/facebook/callback',
   authFacebook)
 
 // passport-google-oauth
-const { getProfileGoogle, authGoogle } = require('./passport/google')
+const { getProfileGoogle, authGoogle } = require('../Passport/google')
 // route for showing the profile page
 server.get('/google/profile', isLoggedIn, getProfileGoogle)
 // Google routes

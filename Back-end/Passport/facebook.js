@@ -1,28 +1,26 @@
-const passport = require('passport')
-const GoogleStrategy = require('passport-google-oauth20').Strategy
-const User = require('../User/User')
+const passport = require('./node_modules/passport')
+const FacebookStrategy = require('./node_modules/passport-facebook').Strategy
+const User = require('../API/User/User')
 
-passport.use(new GoogleStrategy({
-  clientID: process.env.GOOGLE_CLIENT_ID,
-  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: process.env.GOOGLE_CALLBACK_URL
+passport.use(new FacebookStrategy({
+  clientID: process.env.FACEBOOK_CLIENT_ID,
+  clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+  callbackURL: process.env.FACEBOOK_CALLBACK_URL
 },
-function (token, tokenSecret, profile, done) {
+function (accessToken, refreshToken, profile, done) {
   // console.log(profile);
   process.nextTick(function () {
-    User.findOne({ 'google.id': profile.id }, function (err, user) {
+    User.findOne({ 'facebook.id': profile.id }, function (err, user) {
       if (err) return done(err)
       if (user) {
         return done(null, user) // user found, return that user
       } else {
         const newUser = new User()
-        newUser.google.id = profile.id
-        newUser.google.token = token
-        // newUser.google.tokenSecret = tokenSecret;
-        newUser.google.displayName = profile.displayName
-        newUser.username = profile.displayName
-        newUser.name.first = profile.name.givenName
-        newUser.name.last = profile.name.familyName
+        newUser.facebook.id = profile.id
+        newUser.facebook.accessToken = accessToken
+        newUser.facebook.refreshToken = refreshToken
+        newUser.facebook.fbname = profile.username
+        newUser.facebook.displayName = profile.displayName
         newUser.save(function (err) {
           if (err) throw err
           return done(null, newUser)
@@ -41,14 +39,14 @@ function (token, tokenSecret, profile, done) {
 //     });
 // });
 
-const getProfileGoogle = (req, res) => {
+const getProfileFacebook = (req, res) => {
   // console.log(req);
   res.status(200).json({
     user: req.user // get the user out of session and pass to template
   })
 }
 
-const authGoogle = (req, res) => {
+const authFacebook = (req, res) => {
   // console.log(req.user._id);
   req.session.save(() => {
     // res.redirect('/success');
@@ -59,6 +57,6 @@ const authGoogle = (req, res) => {
 }
 
 module.exports = {
-  getProfileGoogle,
-  authGoogle
+  getProfileFacebook,
+  authFacebook
 }

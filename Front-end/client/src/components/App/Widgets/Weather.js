@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import WeatherIcon from 'react-icons-weather'
 import { Grid, Loader } from 'semantic-ui-react'
 import axios from 'axios'
-import * as weatherIcons from './weatherIcons.json'
+import * as weatherIcons from './weatherIcons.json.js'
 
 class Weather extends Component {
   constructor (props) {
