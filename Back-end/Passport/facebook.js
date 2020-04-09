@@ -1,5 +1,5 @@
-const passport = require('./node_modules/passport')
-const FacebookStrategy = require('./node_modules/passport-facebook').Strategy
+const passport = require('passport')
+const FacebookStrategy = require('passport-facebook').Strategy
 const User = require('../API/User/User')
 
 passport.use(new FacebookStrategy({
