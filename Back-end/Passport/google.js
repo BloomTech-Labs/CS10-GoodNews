@@ -1,5 +1,5 @@
-const passport = require('./node_modules/passport')
-const GoogleStrategy = require('./node_modules/passport-google-oauth20').Strategy
+const passport = require('passport')
+const GoogleStrategy = require('passport-google-oauth20').Strategy
 const User = require('../API/User/User')
 
 passport.use(new GoogleStrategy({

@@ -1,8 +1,8 @@
-require('./node_modules/dotenv').config()
-const express = require('./node_modules/express')
+require('dotenv').config()
+const express = require('express')
 const server = express()
-const helmet = require('./node_modules/helmet')
-const cors = require('./node_modules/cors')
+const helmet = require('helmet')
+const cors = require('cors')
 const User = require('./User/User')
 
 // const authMiddleware = (req, res, next) => {
@@ -32,10 +32,10 @@ articleRouterDS()
 
 // passport
 // const { getProfileTwitter, authTwitter } = require('./passport/twitter');
-const session = require('./node_modules/express-session')
-const passport = require('./node_modules/passport')
+const session = require('express-session')
+const passport = require('passport')
 const { isLoggedIn } = require('../Utils/auth')
-const cookieParser = require('./node_modules/cookie-parser')
+const cookieParser = require('cookie-parser')
 server.use(cookieParser()) // read cookies (needed for auth)
 // server.use(bodyParser()); // get information from html forms
 // const twitter = require('./passport/twitter')
