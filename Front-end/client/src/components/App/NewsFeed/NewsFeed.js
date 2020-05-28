@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Grid } from "semantic-ui-react";
-import Weather from "../Widgets/Weather";
+import Weather from "../Widgets/Weather/Weather";
 
 const NewsFeed = props => {
   return (

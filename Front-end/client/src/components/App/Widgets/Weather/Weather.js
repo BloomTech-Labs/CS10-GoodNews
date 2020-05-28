@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import LoadingSpinner from "../../../utils/LoadingSpinner";
-
+import LoadingSpinner from "../../../../utils/LoadingSpinner";
+import "./Weather.css";
 const Weather = props => {
   /*
     First We Fetch Our Location and set it to our state
@@ -9,7 +9,12 @@ const Weather = props => {
     then we display the current weather
 
    */
-  const [location, setLocation] = useState({ latitude: 0, longitude: 0 });
+  const [location, setLocation] = useState({
+    latitude: 0,
+    longitude: 0,
+    city: null,
+    state: null,
+  });
   const [weatherData, setWeatherData] = useState({
     main: null,
     clouds: null,
@@ -18,7 +23,7 @@ const Weather = props => {
     rain: null,
     description: null,
   });
-  const [error, setError] = useState();
+  const [error, setError] = useState(null);
 
   const fetchLocation = () => {
     var options = {
@@ -29,12 +34,29 @@ const Weather = props => {
 
     function success(pos) {
       var crd = pos.coords;
-      let latitude = Math.floor(crd.latitude);
-      let longitude = Math.floor(crd.longitude);
-      setLocation({ latitude: latitude, longitude: longitude });
+      let latitude = crd.latitude;
+      let longitude = crd.longitude;
+
+      //Here we take the coordinates we get from the native web api and use them to get the city those coords lead to
+      let reverseGeocodeKey = "j5l5gEtlUQow2kzyIZmI0BvcAf4xo7By";
+      axios
+        .get(
+          `http://www.mapquestapi.com/geocoding/v1/reverse?key=${reverseGeocodeKey}&location=${latitude},${longitude}&includeRoadMetadata=true&includeNearestIntersection=true`,
+        )
+        .then(data => {
+          setLocation({
+            latitude: latitude,
+            longitude: longitude,
+            city: data.data.results[0].locations[0].adminArea5,
+            state: data.data.results[0].locations[0].adminArea3,
+          });
+        })
+        .catch(err => {
+          setError(err);
+        });
     }
     function error(err) {
-      console.warn(`ERROR(${err.code}): ${err.message}`);
+      setError(`ERROR(${err.code}): ${err.message}`);
     }
     navigator.geolocation.getCurrentPosition(success, error, options);
   };
@@ -69,21 +91,32 @@ const Weather = props => {
     if (location.latitude !== 0 && location.longitude !== 0) {
       fetchWeatherData();
     }
-    return(
+    return (
       <div>
-        Loading data
+        Loading
         <LoadingSpinner />
       </div>
-    )
+    );
   }
+  if (weatherData.clouds === null && error !== null) {
+    return <div>{error}</div>;
+  }
+
   return (
     <div>
+      <div>
+        <p>
+          {location.city},{location.state}
+        </p>
+        <p className="weather-icon"></p>
+      </div>
       <div>Temperature is {Math.round(weatherData.temp)}°F</div>
       <div>{weatherData.clouds}% cloudy</div>
       <div>
         <p>{weatherData.description}</p>
         <p>with winds at {weatherData.wind}meter/sec</p>
       </div>
+      {error !== null ? <p>{error}</p> : ""}
     </div>
   );
 };
