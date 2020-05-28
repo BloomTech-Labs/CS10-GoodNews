@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import LoadingSpinner from "../../../utils/LoadingSpinner";
 
 const Weather = props => {
   /*
@@ -68,7 +69,12 @@ const Weather = props => {
     if (location.latitude !== 0 && location.longitude !== 0) {
       fetchWeatherData();
     }
-    return <div></div>;
+    return(
+      <div>
+        Loading data
+        <LoadingSpinner />
+      </div>
+    )
   }
   return (
     <div>
