@@ -288,7 +288,6 @@ class App extends Component {
     return this.state.visited ? (
       <div className="App">
         <Auth0Nav />
-        {/* <Nav toggleMenu={this.toggleMenu}>{this.switchLoginLogout(this.state.loggedIn)}</Nav> */}
         {this.state.showMenu && (
           <MainMenu
             searchBar={

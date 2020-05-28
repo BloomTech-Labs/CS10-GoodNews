@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import LoadingSpinner from "../../../../utils/LoadingSpinner";
+import { WiDaySunny, WiCloudyGusts } from "weather-icons-react";
+
 import "./Weather.css";
 const Weather = props => {
   /*
@@ -104,11 +106,17 @@ const Weather = props => {
 
   return (
     <div>
-      <div>
+      <div className="top-of-weather">
         <p>
           {location.city},{location.state}
         </p>
-        <p className="weather-icon"></p>
+        <p className="weather-icon">
+          {weatherData.clouds > 30 ? (
+            <WiCloudyGusts size={24} color="#0000FF" />
+          ) : (
+            <WiDaySunny size={24} color="#FDB813" />
+          )}
+        </p>
       </div>
       <div>Temperature is {Math.round(weatherData.temp)}°F</div>
       <div>{weatherData.clouds}% cloudy</div>
