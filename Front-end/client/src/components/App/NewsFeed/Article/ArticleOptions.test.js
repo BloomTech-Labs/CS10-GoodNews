@@ -1,7 +1,7 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import ArticleOptions from './ArticleOptions';
+import React from "react";
+import { shallow } from "enzyme";
+import ArticleOptions from "./ArticleOptions";
 
-it('renders without crashing', () => {
+it("renders without crashing", () => {
   shallow(<ArticleOptions />);
 });

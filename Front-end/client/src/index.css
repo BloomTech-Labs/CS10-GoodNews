@@ -1,24 +1,92 @@
-@import url('https://fonts.googleapis.com/css?family=Oswald:700');
-@import url('https://fonts.googleapis.com/css?family=Montserrat');
+@import url("https://fonts.googleapis.com/css?family=Oswald:700");
+@import url("https://fonts.googleapis.com/css?family=Montserrat");
 
 /* http://meyerweb.com/eric/tools/css/reset/ 
   v2.0 | 20110126
   License: none (public domain)
 */
 
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
   margin: 0;
   padding: 0;
   border: 0;
@@ -28,8 +96,17 @@ time, mark, audio, video {
 }
 
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
   display: block;
 }
 
@@ -37,17 +114,21 @@ body {
   line-height: 1;
 }
 
-ol, ul {
+ol,
+ul {
   list-style: none;
 }
 
-blockquote, q {
+blockquote,
+q {
   quotes: none;
 }
 
-blockquote:before, blockquote:after,
-q:before, q:after {
-  content: '';
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
   content: none;
 }
 
@@ -64,16 +145,21 @@ html {
   font-size: 62.5%;
 }
 
-html, body {
+html,
+body {
   height: 100%;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 1rem;
 }
 
-h1, h2, h3, h4, h5 {
+h1,
+h2,
+h3,
+h4,
+h5 {
   font-size: 1.8rem;
   margin-bottom: 15px;
-  font-family: 'Rubik', sans-serif;
+  font-family: "Rubik", sans-serif;
 }
 
 p {
@@ -113,7 +199,7 @@ a.article-title:hover {
   margin-right: 20px;
   display: flex;
   justify-content: center;
-  background-color: #37bc9b9b
+  background-color: #37bc9b9b;
 }
 
 .article-image {
@@ -126,17 +212,17 @@ a.article-title:hover {
 }
 
 .article-image:hover {
-  opacity: 1.0;
+  opacity: 1;
   filter: alpha(opacity=100);
 }
 
 .articleOptionsButton {
   background-color: white !important;
-  color: 'grey';
+  color: "grey";
 }
 
 .meta {
-  display: flex; 
+  display: flex;
   justify-content: space-between;
   align-items: center;
 }
@@ -144,7 +230,7 @@ a.article-title:hover {
 .logo {
   font-size: 4.5em;
   font-weight: bold;
-  font-family: 'Oswald', sans-serif;
+  font-family: "Oswald", sans-serif;
 }
 
 .jumbotron {
@@ -152,19 +238,19 @@ a.article-title:hover {
 }
 
 .app-name {
-  font-family: 'Oswald', sans-serif;
+  font-family: "Oswald", sans-serif;
   font-weight: bold;
   font-size: 7rem;
 }
 
 .app-description {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   color: white;
   padding: 0.5rem;
   font-size: 1.2rem;
   font-weight: bold;
-  letter-spacing: .2rem;
-  text-align: center
+  letter-spacing: 0.2rem;
+  text-align: center;
 }
 
 .about-section {
@@ -179,7 +265,7 @@ a.article-title:hover {
   line-height: 1.5rem;
 }
 
-.main-menu { 
+.main-menu {
   background-color: #eeeeee !important;
   padding: 120px 50px 50px 50px;
   min-height: 500px;
@@ -202,8 +288,8 @@ a.article-title:hover {
 
 .weatherWidget {
   border-radius: 6px;
-  background-color: #eeeeee; 
-  max-width: 100%; 
+  background-color: #eeeeee;
+  max-width: 100%;
   min-height: 100px;
   padding: 30px;
   color: #3d3d3d;
@@ -215,11 +301,9 @@ a.article-title:hover {
 }
 
 @media only screen and (max-width: 1250px) {
-  .main-menu { 
-    box-shadow: 
-      4px 4px 5px 0 rgba(0,0,0,0.14), 
-      1px 1px 10px 0 rgba(0,0,0,0.12), 
-      2px 2px 4px -1px rgba(0,0,0,0.2) !important;
+  .main-menu {
+    box-shadow: 4px 4px 5px 0 rgba(0, 0, 0, 0.14),
+      1px 1px 10px 0 rgba(0, 0, 0, 0.12), 2px 2px 4px -1px rgba(0, 0, 0, 0.2) !important;
   }
 }
 
@@ -262,7 +346,7 @@ a.article-title:hover {
   .logo {
     font-size: 2.5em;
   }
-  .main-menu { 
+  .main-menu {
     height: 100vh;
     min-width: 100vw;
   }

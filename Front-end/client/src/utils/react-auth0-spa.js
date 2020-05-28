@@ -25,7 +25,10 @@ export const Auth0Provider = ({
       const auth0FromHook = await createAuth0Client(initOptions);
       setAuth0(auth0FromHook);
 
-      if (window.location.search.includes("code=") && window.location.search.includes("state=")) {
+      if (
+        window.location.search.includes("code=") &&
+        window.location.search.includes("state=")
+      ) {
         const { appState } = await auth0FromHook.handleRedirectCallback();
         onRedirectCallback(appState);
       }
@@ -81,11 +84,8 @@ export const Auth0Provider = ({
         getTokenSilently: (...p) => auth0Client.getTokenSilently(...p),
         getTokenWithPopup: (...p) => auth0Client.getTokenWithPopup(...p),
         logout: (...p) => auth0Client.logout(...p),
-      }}
-    >
+      }}>
       {children}
     </Auth0Context.Provider>
-
-
   );
 };
