@@ -1,124 +1,86 @@
-import React, { Component } from "react";
-import WeatherIcon from "react-icons-weather";
-import { Grid, Loader } from "semantic-ui-react";
-import axios from "axios";
-import * as weatherIcons from "./weatherIcons.json";
+import React,{useState,useEffect} from "react";
+import axios from 'axios';
 
-class Weather extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      current: null,
-      forecast: null,
-      location: null,
-      geolocation: false,
-      loading: true,
+
+ const Weather = (props) => {
+   /*
+    First We Fetch Our Location and set it to our state
+    Then we fetch the weather data
+    then we display the current weather
+
+   */
+  const [location,setLocation] = useState({latitude:0,longitude:0})
+  const [weatherData,setWeatherData] = useState({main:null,clouds:null,temp:null,wind:null,rain:null,description:null})
+  const [error,setError] = useState()
+
+
+
+  const fetchLocation = () => {
+    var options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0
     };
-  }
-
-  componentDidMount() {
-    this.getWeather();
-  }
-
-  getGeolocation = () => {
-    navigator.geolocation.getCurrentPosition((success) => {
-      this.setState({ loading: true });
-      const lat = success.coords.latitude;
-      const long = success.coords.longitude;
-      sessionStorage.setItem("lat", lat);
-      sessionStorage.setItem("long", long);
-      this.getWeather();
-    });
-  };
-
-  getWeather = (zip = null) => {
-    const weatherAPI = "https://api.apixu.com/v1/forecast.json";
-    const key = "61e020a41ccd4b1d945190151182409";
-
-    // if user's location is stored in session, use it to get weather
-    let lat = sessionStorage.getItem("lat");
-    let long = sessionStorage.getItem("long");
-
-    // if user doesn't provide a location and has not allowed access to geolocation,
-    // use zip code from Washington DC for weather data
-    let location = zip || 20500;
-    if (lat && long) {
-      this.setState({ geolocation: true });
-      location = `${lat},${long}`;
+    
+    function success(pos) {
+      var crd = pos.coords;
+      let latitude = Math.floor(crd.latitude)
+      let longitude = Math.floor(crd.longitude)
+      setLocation({latitude:latitude,longitude:longitude})
     }
-    axios.get(`${weatherAPI}?key=${key}&q=${location}&days=5`).then((weather) => {
-      this.setState({
-        current: weather.data.current,
-        forecast: weather.data.forecast.forecastday,
-        location: weather.data.location,
-        loading: false,
-      });
-    });
-  };
-
-  getDayOfWeek = (date) => {
-    var dayOfWeek = new Date(date).getDay();
-    return isNaN(dayOfWeek) ? null : ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"][dayOfWeek];
-  };
-
-  render() {
-    return (
-      <div className="weatherWidget">
-        <Grid centered>
-          <Grid.Row stretched columns={2}>
-            <Grid.Column textAlign="right" width={5} verticalAlign="middle">
-              <Loader active={this.state.loading} />
-              {this.state.loading === false && (
-                <WeatherIcon
-                  name="owm"
-                  style={{ fontSize: "4rem" }}
-                  iconId={weatherIcons[this.state.current.condition.code]}
-                />
-              )}
-            </Grid.Column>
-            <Grid.Column verticalAlign="middle" width={11}>
-              <Grid.Row style={{ fontSize: "1.4rem" }}>
-                {this.state.loading
-                  ? "Fetching weather data"
-                  : this.state.location.name.toUpperCase()}
-              </Grid.Row>
-              <Grid.Row style={{ fontSize: "3em" }}>
-                {this.state.loading ? "--" : this.state.current.temp_f}º
-              </Grid.Row>
-              <Grid.Row>{this.state.loading ? "--" : this.state.current.condition.text}</Grid.Row>
-            </Grid.Column>
-          </Grid.Row>
-          {this.state.loading === false && (
-            <Grid.Row columns="equal" only="computer tablet">
-              {this.state.forecast.map((day) => {
-                return (
-                  <Grid.Column verticalAlign="middle" key={day.date}>
-                    <Grid.Row>{this.getDayOfWeek(day.date)}</Grid.Row>
-                    <Grid.Row style={{ padding: "10px 0px 4px 0px" }}>
-                      <WeatherIcon
-                        name="owm"
-                        style={{ fontSize: "1.5em" }}
-                        iconId={weatherIcons[day.day.condition.code]}
-                      />
-                    </Grid.Row>
-                    <Grid.Row>{day.day.maxtemp_f}º</Grid.Row>
-                    <Grid.Row style={{ fontSize: "0.7rem" }}>{day.day.mintemp_f}º</Grid.Row>
-                  </Grid.Column>
-                );
-              })}
-            </Grid.Row>
-          )}
-          {this.state.geolocation === false && this.state.current && (
-            <Grid.Row textAlign="center">
-              <span className="geolocation" onClick={this.getGeolocation}>
-                Use my location
-              </span>
-            </Grid.Row>
-          )}
-        </Grid>
-      </div>
-    );
+    function error(err) {
+      console.warn(`ERROR(${err.code}): ${err.message}`);
+    }
+     navigator.geolocation.getCurrentPosition(success,error,options)
+    
   }
+  const fetchWeatherData = () => {
+
+
+      axios.get(`http://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=be0638dd3dd4ea9604b04e2419cbc848`)
+      .then(weather => {
+        console.log(weather,"weather")
+        //Converting Our Temperature response from Kelvin to F
+        let temperature = ((weather.data.main.temp-273.15)*1.8)+32
+        let stateObj = {main:weather.data.weather[0].main,clouds:weather.data.clouds.all,temp:temperature,wind:weather.data.wind.speed,rain:weather.data.rain,description:weather.data.weather[0].description}
+        setWeatherData(stateObj)
+      }).catch(err => {
+        setError(err)
+      })
+    
+
+  }
+
+
+
+
+//If no weather data has been fetched we stay in the loading state of the component
+  if(weatherData.clouds=== null){
+    fetchLocation()
+    
+    if(location.latitude!==0&&location.longitude!==0){
+      fetchWeatherData()
+
+    }
+    return(
+      <div>
+
+      </div>
+    )
+  }
+  return(
+    <div>
+      <div>
+        Temperature is {Math.round(weatherData.temp)}°F
+      </div>
+      <div>
+        {weatherData.clouds}% cloudy
+      </div>
+      <div>
+  {weatherData.description}with winds at {weatherData.wind}meter/sec
+      </div>
+    </div>
+  )
 }
 
 export default Weather;
