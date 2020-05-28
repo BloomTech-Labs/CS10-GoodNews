@@ -105,7 +105,7 @@ const Weather = props => {
   }
 
   return (
-    <div>
+    <div className="weather-container">
       <div className="top-of-weather">
         <p>
           {location.city},{location.state}
@@ -121,7 +121,7 @@ const Weather = props => {
       <div>Temperature is {Math.round(weatherData.temp)}°F</div>
       <div>{weatherData.clouds}% cloudy</div>
       <div>
-        <p>{weatherData.description}</p>
+        <p>Current Weather: {weatherData.description}</p>
         <p>with winds at {weatherData.wind}meter/sec</p>
       </div>
       {error !== null ? <p>{error}</p> : ""}

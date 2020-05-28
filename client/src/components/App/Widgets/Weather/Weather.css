@@ -1,3 +1,21 @@
 .top-of-weather {
   display: flex;
+  justify-content: space-around;
+}
+
+.weather-container {
+  display: flex;
+  flex-direction: column;
+  align-content: space-around;
+  border: 1px solid grey;
+  width: 28vw;
+  height: 25vh;
+  padding: 5px;
+  border-radius: 5%;
+}
+
+@media (min-width: 800px) {
+  .weather-container {
+    width: 24vw;
+  }
 }
