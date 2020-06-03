@@ -3,6 +3,10 @@ import { Grid, Icon, Button } from "semantic-ui-react";
 import Auth0Nav from "../Nav/Auth0Nav";
 // import { useAuth0 } from '../../utils/react-auth0-spa';
 const LandingPage = props => {
+  const setVisited = ( ) => {
+     localStorage.setItem("visited",true)
+     document.location.reload()
+  }
   return (
     <Grid style={{ justifyContent: "center" }} stackable>
       <Grid.Row
@@ -54,8 +58,8 @@ const LandingPage = props => {
           primary
           size="huge"
           style={{ backgroundColor: "#37bc9b" }}
-          onClick={props.toggleLandingPage}>
-          <Auth0Nav />
+          onClick={setVisited}>
+            Get Started!
         </Button>
       </Grid.Row>
     </Grid>

@@ -4,14 +4,12 @@ import initialState from "../../utils/initialState";
 import globalContext from "../contexts/context";
 import NewsFeedHome from "./NewsFeedHome/NewsFeedHome";
 import reducer from "../../utils/reducer";
-import { useAuth0 } from "../../utils/react-auth0-spa";
 export default function App() {
   const [state, dispatch] = useReducer(initialState, reducer);
-  const { isAuthenticated } = useAuth0();
-
+  const visited = localStorage.getItem("visited")
   return (
     <globalContext.Provider value={{ state, dispatch }}>
-      <div>{isAuthenticated ? <NewsFeedHome /> : <LandingPage />}</div>
+      <div>{visited ? <NewsFeedHome /> : <LandingPage />}</div>
     </globalContext.Provider>
   );
 }
