@@ -1,6 +1,6 @@
 const initialState = {
-    isAuthenticated:false,
-    token:null
-  }
+  isAuthenticated: false,
+  token: null,
+};
 
-  export default initialState
+export default initialState;
