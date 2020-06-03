@@ -1,6 +1,7 @@
 import React from "react";
 import { Grid, Icon, Button } from "semantic-ui-react";
-
+import Auth0Nav from '../Nav/Auth0Nav';
+// import { useAuth0 } from '../../utils/react-auth0-spa';
 const LandingPage = props => {
   return (
     <Grid style={{ justifyContent: "center" }} stackable>
@@ -54,7 +55,7 @@ const LandingPage = props => {
           size="huge"
           style={{ backgroundColor: "#37bc9b" }}
           onClick={props.toggleLandingPage}>
-          GET STARTED
+          <Auth0Nav />
         </Button>
       </Grid.Row>
     </Grid>
